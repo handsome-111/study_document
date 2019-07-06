@@ -1,0 +1,402 @@
+sass:
+	官方文档：https://www.sass.hk/docs/
+	1.安装：
+		1.安装ruby，因为sass是基于ruby的
+			安装过程中请注意勾选Add Ruby executables to your PATH添加到系统环境变量
+		2.安装sass：gem install sass
+
+		3.查看sass是否安装成功
+
+	2.编译sass
+		命令行格式：sass scss文件  输出的css文件
+			例：
+				1.sass index.scss index.css
+				2.sass sass/index.scss css/index.css			//进入到当前目录，然后编译当前目录下的sass文件夹的index.scss文件到当前目录下的css文件夹里的index.css文件
+				3.sass --watch sass:css     	//sass和css是当前路径下的两个文件夹
+
+		编译输出指定的CSS格式：
+			自动编译的，放在后台，只要保存scss文件，则css会自动编译
+			命令:--style 格式
+				如：sass --watch --style expadned sass:css
+			1.nested,嵌套，这是默认的格式
+			2.compact,紧凑
+			3.expanded,扩展,可读性最高
+			4.compressed,压缩
+
+	3.变量的声明，使用$即可，可以在值里使用，也可以在选择器和属性里使用
+
+		变量支持块级作用域，嵌套规则内定义的变量只能在嵌套规则内使用（局部变量），不在嵌套规则内定义的变量则可在任何地方使用（全局变量）。
+
+		如：
+			$pp-green : green;
+			$pp-border : 1px solid $pp-green;
+
+			div{
+				width: 40px;
+				height: 40px;
+				background-color: $pp-green; 
+				border: $pp-border; 
+			} 
+
+		在选择器 | 属性 | 值里函数 里使用变量：
+			如在值里的函数使用，不能用第一种方法：		
+				background-image: url(../images/icons/#{$icon}.png);
+
+
+			语法：#{变量} 
+			如：
+			scss:
+				$name: "info";
+				$attr: "border";
+
+				.alert-#{$name} {
+					width: 100px;
+					height: 100px;
+					#{$attr} : 1px solid green;
+				}
+
+			css:
+				.alert-info {
+				  width: 100px;
+				  height: 100px;
+				  border: 1px solid green;
+				}
+
+	数据类型：详见文档,
+		特殊：
+			list(用空格分开即可)：  colors:green blue yellow;
+			map(用括号来包住):	(name:success,bgc:green)
+
+
+
+	4.嵌入式：
+		scss:	
+			ul{
+				width: 100px;
+				height: 100px;
+				li {
+					width: 100px;
+					height: 20px;
+					background-color: green;
+					a{
+						font-size: 10px;
+					}
+				}
+			}
+
+		css:
+			ul {
+			  width: 100px;
+			  height: 100px;
+			}
+			ul li {
+			  width: 100px;
+			  height: 20px;
+			  background-color: green;
+			}
+			ul li a {
+			  font-size: 10px;
+			}
+
+
+		嵌入时，使用符号“&”获取父选择器，意思是获取父元素变量来自定义，
+			如：
+				ul{
+					width: 100px;
+					height: 100px;
+					li {
+						width: 100px;
+						height: 20px;
+						background-color: green;
+						&:hover {
+							background-color:yellow;
+						}
+					}
+				}
+
+				则那个符号就是li,得出那个属性如下：
+				ul li:hover {
+				  background-color: yellow;
+				}
+
+
+		嵌入属性：就是在嵌入时，可以根据CSS属性里的前缀在方便设置，入font-*系列或background-*系列
+			例子:
+			scss:
+				ul{
+					width: 100px;
+					height: 100px;
+					li {
+						font:{
+							size:12px;
+							weight:normal;
+						}
+					}
+				}
+
+			css:
+				ul {
+				  width: 100px;
+				  height: 100px;
+				}
+				ul li {
+				  font-size: 12px;
+				  font-weight: normal;
+				}
+
+	5.mixin:混合器，如果你的整个网站中有几处小小的样式类似（例如一致的颜色和字体），那么使用变量来统一处理这种情况是非常不错的选择。
+		使用@来晟声明mixin
+		使用@include来调用minxin
+		scss:
+			@mixin color-font{
+				background-color: blue;
+				font-size: 15px;
+			}
+			ul{
+				@include color-font;
+				width: 100px;
+				height: 100px;
+			}
+
+		css:
+			ul {
+			  	background-color: blue;
+			  	font-size: 15px;
+			  	width: 100px;
+			  	height: 100px;
+			}
+
+		带有参数的混合器,参数可以是常量也可以变量，但是带参的混合器里的不能是外面的
+
+			scss:
+				$ul-background-color:green;
+				@mixin color-font($text-color,$background-color){
+					background-color: $background-color;
+					color: $text-color;
+				}
+				ul{
+					@include color-font(blue,$ul-background-color);
+					width: 100px;
+					height: 100px;
+				}
+
+			css:
+				ul {
+				  background-color: green;
+				  color: blue;
+				  width: 100px;
+				  height: 100px;
+				}
+
+	6.继承：使用sass的时候，最后一个减少重复的主要特性就是选择器继承。
+		使用@extend,直接继承某个选择器的样式，不仅会继承该选择器的样式，还会继承该选择的子元素样式
+		如：
+		scss:
+			ul{
+				background-color: green;
+				li {
+					width: 100px;
+					height:100px;
+					font-size: 15px;
+				}
+			}
+
+			.ul2 {
+				@extend ul;
+				background-color: yellow;
+			}
+
+		css:
+			ul, .ul2 {
+			  background-color: green;
+			}
+			ul li, .ul2 li {
+			  width: 100px;
+			  height: 100px;
+			  font-size: 15px;
+			}
+
+			.ul2 {
+			  background-color: yellow;
+			}
+
+	7.导入@import和partials
+		1.@import每次使用，浏览器都会发出一次新的请求，因此消耗服务器的资源，所以sass是先编译成css，就不用在导入了
+		2.partials的scss的文件命名要用下划线开头，用来做片段的scss文件，如body的基本属性
+		例子：
+
+		使用方法：
+		_base.scss:
+			body {
+				margin: 0;
+				padding: 0;
+			}
+
+		scss:
+
+			@import "base";
+			ul{
+				background-color: green;
+				li {
+					width: 100px;
+					height:100px;
+					font-size: 15px;
+				}
+			}
+
+		css:
+			body {
+			  	margin: 0;
+			  	padding: 0;
+			}
+
+			ul {
+			  	background-color: green;
+			}
+			ul li {
+				width: 100px;
+				height: 100px;
+				font-size: 15px;
+			}
+
+	8.关于注释：
+		在scss里，“//”注释在css里会被移除，“/**/”注释在css里会被保留
+
+	9.函数，
+		1.scriptsass提供的函数
+			https://www.jianshu.com/p/ef2ca6fbf944
+		2.自定义函数
+			语法:@function 名称(参数1,参数2){...}
+			例：
+			scss:
+				$colors:(light:green,dark:blue);
+
+				@function color($key){
+					@return map-get($colors,$key);		// map函数
+				}
+
+				body {
+					background-color: color(dark);
+				}
+
+			css:
+				body {
+				  background-color: blue;
+				}
+
+
+
+	10.指令
+		@if，@else , @else if：
+			语法：@if 条件 {...}
+
+			如：
+			scss:
+				$name: "info";
+				$boo: true;
+
+				.alert-#{$name} {
+					width: 100px;
+					height: 100px;
+					@if boo {
+						background-color: yellow;
+					} @else {
+						background-color: blue;
+					}
+
+					@if $name == info {
+						color: orange;
+					}
+				}
+
+			css:
+				.alert-info {
+				  	width: 100px;
+				  	height: 100px;
+				  	background-color: yellow;
+				  	color: orange;
+				}
+
+
+		@for:
+			语法:@for $var from <开始值> to | through <结束值> {。。。}
+			解释：$var 表示开始值的变量名，to是不包含最后一个值,而through包含最后一个值
+			如：
+			sass:
+				$columns: 4;
+
+				@for $i from 1 through $columns {
+					.col-#{$i} {
+						width: 100% / $columns * $i;
+					}
+				}
+
+			css:
+				.col-1 {
+				  width: 25%;
+				}
+
+				.col-2 {
+				  width: 50%;
+				}
+
+				.col-3 {
+				  width: 75%;
+				}
+
+				.col-4 {
+				  width: 100%;
+				}
+
+		@each:根据一个列表迭代每一个值
+			语法：@each $var in $list{...}
+			scss:
+
+				$icons: success error warning;
+
+				@each $icon in $icons {
+					.icon-#{$icon} {
+						background-image: url(../images/icons/#{$icon}.png);
+					}
+				}
+
+			css:
+				.icon-success {
+				  background-image: url(../images/icons/success.png);
+				}
+
+				.icon-error {
+				  background-image: url(../images/icons/error.png);
+				}
+
+				.icon-warning {
+				  background-image: url(../images/icons/warning.png);
+				}
+
+		@while:
+			语法：@while 条件{...}
+
+			scss:
+				$i: 10;
+				@while $i > 0 {
+					.item-#{$i} {
+						width: (30 - $i)px;
+					}
+					$i : $i - 4;
+				}
+
+			css:
+				.item-10 {
+				  width: 20 px;
+				}
+
+				.item-6 {
+				  width: 24 px;
+				}
+
+				.item-2 {
+				  width: 28 px;
+				}
+
+		@wran和@error和@return：
+			警告和错误：分别输出在命令行里，而return则是返回，例子可以看本文档中的：自定义函数章节
