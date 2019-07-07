@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://www.cnblogs.com/lunatic-cto/p/6123490.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/blog-common.css.下载">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/bundle-CodingLife.css.下载">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/bundle-CodingLife-mobile.css.下载">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/lunatic-cto/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/lunatic-cto/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/lunatic-cto/wlwmanifest.xml">
+<script src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/hm.js.下载"></script><script async="" src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/analytics.js.下载"></script><script src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+<script type="text/javascript">var currentBlogApp = 'lunatic-cto', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/lunatic-cto/"><img id="blogLogo" src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/logo.gif.下载" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/lunatic-cto/">鹿王美伦</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/lunatic-cto/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E5%B0%8F%E9%AD%94%E7%8E%8B%E5%85%88%E7%94%9F">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/lunatic-cto/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/lunatic-cto/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 8&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 0</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/lunatic-cto/p/6123490.html">Centos7安装并配置mysql5.6完美教程</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p>Centos7安装并配置mysql5.6完美教程</p>
+<p>&nbsp;</p>
+<p>Centos7将默认数据库mysql替换成了Mariadb，对于我们这些还想使用mysql的开发人员来说并不是一个好消息。然而，网上关于Linux安装mysql数据库的教程数不胜数，但是，大多教程都是漏洞百出。今天，为了帮助各位需要的人，从而写下Centos7安装配置mysql5.6的教程。好了，话不多说，上教程：</p>
+<p>&nbsp;</p>
+<p>一、安装MySQL</p>
+<p>1、下载安装包mysql-5.6.34-linux-glibc2.5-x86_64.tar（可前往官网自行下载：<a href="http://dev.mysql.com/downloads/mysql/%EF%BC%89">http://dev.mysql.com/downloads/mysql/）</a></p>
+<p>2、卸载系统自带的Mariadb</p>
+<p><br>打开Terminal终端：</p>
+<p>&nbsp;</p>
+<div><div id="highlighter_397591" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;~]</code><code class="bash comments">#&nbsp;rpm&nbsp;-qa|grep&nbsp;mariadb&nbsp;&nbsp;//&nbsp;查询出来已安装的mariadb</code></div><div class="line number2 index1 alt1"><code class="bash plain">[root@localhost&nbsp;~]</code><code class="bash comments">#&nbsp;rpm&nbsp;-e&nbsp;--nodeps&nbsp;文件名&nbsp;&nbsp;//&nbsp;卸载mariadb，文件名为上述命令查询出来的文件</code></div></div></td></tr></tbody></table></div></div>
+<p><br>3、删除etc目录下的my.cnf</p>
+<div><div id="highlighter_458636" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;~]</code><code class="bash comments">#&nbsp;rm&nbsp;/etc/my.cnf</code></div></div></td></tr></tbody></table></div></div>
+<p>4、执行以下命令来创建mysql用户组</p>
+<div><div id="highlighter_500329" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;~]</code><code class="bash comments">#&nbsp;groupadd&nbsp;mysql</code></div></div></td></tr></tbody></table></div></div>
+<p>5、执行以下命令来创建一个用户名为mysql的用户并加入mysql用户组</p>
+<div><div id="highlighter_830856" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;~]</code><code class="bash comments">#&nbsp;useradd&nbsp;-g&nbsp;mysql&nbsp;mysql</code></div></div></td></tr></tbody></table></div></div>
+<p>6、将下载的压缩包放到 /usr/local/ 目录下（通过mv 要移动的文件&nbsp; /usr/local/）</p>
+<p>7、解压安装包</p>
+<div><div id="highlighter_320177" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;~]</code><code class="bash comments">#&nbsp;tar&nbsp;-xvf&nbsp;mysql-5.6.34-linux-glibc2.5-x86_64.tar</code></div></div></td></tr></tbody></table></div></div>
+<p>注：如果压缩包为：mysql-5.6.34-linux-glibc2.5-x86_64.tar.gz，</p>
+<div><div id="highlighter_784468" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">则解压命令为:&nbsp;</code><code class="bash functions">tar</code>&nbsp;<code class="bash plain">-zxvf&nbsp;mysql-5.6.34-linux-glibc2.5-x86_64.</code><code class="bash functions">tar</code><code class="bash plain">.gz</code></div></div></td></tr></tbody></table></div></div>
+<p>8、将解压好的文件夹重命名为mysql</p>
+<div><div id="highlighter_243519" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;</code><code class="bash functions">local</code><code class="bash plain">]</code><code class="bash comments">#&nbsp;mv&nbsp;解压出来的文件夹名&nbsp;mysql</code></div></div></td></tr></tbody></table></div></div>
+<p>9、在 etc 下新建配置文件my.cnf，并在该文件中添加一下代码：</p>
+<p>&nbsp;</p>
+<p>当然，也有简单方式：直接copy一份my.cnf文件到/etc下，然后再修改即可。</p>
+<p>e g：copy一份/usr/local/mysql/support-files/下的my-default.cnf文件到/etc下</p>
+<div><div id="highlighter_549654" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">命令为：[root@localhost&nbsp;support-files]</code><code class="bash comments">#&nbsp;cp&nbsp;my-default.cnf&nbsp;/etc/my.cnf</code></div></div></td></tr></tbody></table></div></div>
+<p>然后，配置/etc目录下的my.cnf文件</p>
+<div><div id="highlighter_913037" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;support-files]</code><code class="bash comments">#&nbsp;vim&nbsp;/etc/my.cnf</code></div></div></td></tr></tbody></table></div></div>
+<p>通过vim编辑器编辑my.cnf代码如下：</p>
+<div><div id="highlighter_616875" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div><div class="line number10 index9 alt1">10</div><div class="line number11 index10 alt2">11</div><div class="line number12 index11 alt1">12</div><div class="line number13 index12 alt2">13</div><div class="line number14 index13 alt1">14</div><div class="line number15 index14 alt2">15</div><div class="line number16 index15 alt1">16</div><div class="line number17 index16 alt2">17</div><div class="line number18 index17 alt1">18</div><div class="line number19 index18 alt2">19</div><div class="line number20 index19 alt1">20</div><div class="line number21 index20 alt2">21</div><div class="line number22 index21 alt1">22</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[mysql]</code></div><div class="line number2 index1 alt1"><code class="bash comments">#&nbsp;设置mysql客户端默认字符集</code></div><div class="line number3 index2 alt2"><code class="bash plain">default-character-</code><code class="bash functions">set</code><code class="bash plain">=utf8&nbsp;</code></div><div class="line number4 index3 alt1"><code class="bash plain">socket=</code><code class="bash plain">/var/lib/mysql/mysql</code><code class="bash plain">.sock</code></div><div class="line number5 index4 alt2">&nbsp;</div><div class="line number6 index5 alt1"><code class="bash plain">[mysqld]</code></div><div class="line number7 index6 alt2"><code class="bash plain">skip-name-resolve</code></div><div class="line number8 index7 alt1"><code class="bash comments">#设置3306端口</code></div><div class="line number9 index8 alt2"><code class="bash plain">port&nbsp;=&nbsp;3306&nbsp;</code></div><div class="line number10 index9 alt1"><code class="bash plain">socket=</code><code class="bash plain">/var/lib/mysql/mysql</code><code class="bash plain">.sock</code></div><div class="line number11 index10 alt2"><code class="bash comments">#&nbsp;设置mysql的安装目录</code></div><div class="line number12 index11 alt1"><code class="bash plain">basedir=</code><code class="bash plain">/usr/local/mysql</code></div><div class="line number13 index12 alt2"><code class="bash comments">#&nbsp;设置mysql数据库的数据的存放目录</code></div><div class="line number14 index13 alt1"><code class="bash plain">datadir=</code><code class="bash plain">/usr/local/mysql/data</code></div><div class="line number15 index14 alt2"><code class="bash comments">#&nbsp;允许最大连接数</code></div><div class="line number16 index15 alt1"><code class="bash plain">max_connections=200</code></div><div class="line number17 index16 alt2"><code class="bash comments">#&nbsp;服务端使用的字符集默认为8比特编码的latin1字符集</code></div><div class="line number18 index17 alt1"><code class="bash plain">character-</code><code class="bash functions">set</code><code class="bash plain">-server=utf8</code></div><div class="line number19 index18 alt2"><code class="bash comments">#&nbsp;创建新表时将使用的默认存储引擎</code></div><div class="line number20 index19 alt1"><code class="bash plain">default-storage-engine=INNODB</code></div><div class="line number21 index20 alt2"><code class="bash plain">lower_case_table_name=1</code></div><div class="line number22 index21 alt1"><code class="bash plain">max_allowed_packet=16M</code></div></div></td></tr></tbody></table></div></div>
+<p>10、进入安装mysql软件目录</p>
+<div><div id="highlighter_10451" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;~]</code><code class="bash comments">#&nbsp;cd&nbsp;/usr/local/mysql</code></div><div class="line number2 index1 alt1"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;chown&nbsp;-R&nbsp;mysql:mysql&nbsp;./&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改当前目录拥有着为mysql用户</code></div><div class="line number3 index2 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;./scripts/mysql_install_db&nbsp;--user=mysql&nbsp;--basedir=/usr/local/mysql/&nbsp;--datadir=/usr/local/mysql/data/&nbsp;安装数据库</code></div></div></td></tr></tbody></table></div></div>
+<p>注：若执行以上最后一个命令出现以下问题：</p>
+<div><div id="highlighter_784530" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">FATAL&nbsp;ERROR:&nbsp;please&nbsp;</code><code class="bash functions">install</code>&nbsp;<code class="bash plain">the&nbsp;following&nbsp;Perl&nbsp;modules&nbsp;before&nbsp;executing&nbsp;</code></div><div class="line number2 index1 alt1"><code class="bash plain">.</code><code class="bash plain">/scripts/mysql_install_db</code><code class="bash plain">:Data::Dumper</code></div></div></td></tr></tbody></table></div></div>
+<p>解决方法 ：安装autoconf库</p>
+<div><div id="highlighter_285430" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">命令:&nbsp;yum&nbsp;-y&nbsp;</code><code class="bash functions">install</code>&nbsp;<code class="bash plain">autoconf&nbsp;&nbsp;&nbsp;</code><code class="bash plain">//</code><code class="bash plain">此包安装时会安装Data:Dumper模块</code></div><div class="line number2 index1 alt1"><code class="bash plain">安装完成重新执行上述最后一个命令</code></div></div></td></tr></tbody></table></div></div>
+<p>&nbsp;</p>
+<p>重新回到上述第三个命令继续操作：</p>
+<div><div id="highlighter_560621" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;chown&nbsp;-R&nbsp;mysql:mysql&nbsp;data&nbsp;修改当前data目录的拥有者为mysql用户</code></div></div></td></tr></tbody></table></div></div>
+<p>到此数据库安装完毕！</p>
+<p>&nbsp;</p>
+<p>二、配置MySQL</p>
+<p>1、授予my.cnf最大权限</p>
+<div><div id="highlighter_319546" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;~]</code><code class="bash comments">#&nbsp;chown&nbsp;777&nbsp;/etc/my.cnf</code></div></div></td></tr></tbody></table></div></div>
+<p>设置开机自启动服务控制脚本：</p>
+<p>2、复制启动脚本到资源目录</p>
+<div><div id="highlighter_557728" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;cp&nbsp;./support-files/mysql.server&nbsp;/etc/rc.d/init.d/mysqld</code></div></div></td></tr></tbody></table></div></div>
+<p>3、增加mysqld服务控制脚本执行权限</p>
+<div><div id="highlighter_409245" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;chmod&nbsp;+x&nbsp;/etc/rc.d/init.d/mysqld</code></div></div></td></tr></tbody></table></div></div>
+<p>4、将mysqld服务加入到系统服务</p>
+<div><div id="highlighter_324664" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;chkconfig&nbsp;--add&nbsp;mysqld</code></div></div></td></tr></tbody></table></div></div>
+<p>5、检查mysqld服务是否已经生效</p>
+<div><div id="highlighter_357854" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;chkconfig&nbsp;--list&nbsp;mysqld</code></div></div></td></tr></tbody></table></div></div>
+<p>命令输出类似下面的结果:</p>
+<div><div id="highlighter_394756" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">mysqld&nbsp;0:off&nbsp;1:off&nbsp;2:on&nbsp;3:on&nbsp;4:on&nbsp;5:on&nbsp;6:off</code></div></div></td></tr></tbody></table></div></div>
+<p>表明mysqld服务已经生效，在2、3、4、5运行级别随系统启动而自动启动，以后可以使用service命令控制mysql的启动和停止</p>
+<div><div id="highlighter_595434" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">命令为:service&nbsp;mysqld&nbsp;start和service&nbsp;mysqld&nbsp;stop</code></div></div></td></tr></tbody></table></div></div>
+<p>6、启动mysqld</p>
+<div><div id="highlighter_625378" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;service&nbsp;mysqld&nbsp;start</code></div></div></td></tr></tbody></table></div></div>
+<p>7、将mysql的bin目录加入PATH环境变量，编辑 ~/.bash_profile文件</p>
+<div><div id="highlighter_2429" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;vim&nbsp;~/.bash_profile</code></div></div></td></tr></tbody></table></div></div>
+<p>在文件最后添加如下信息:</p>
+<div><div id="highlighter_404247" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash functions">export</code>&nbsp;<code class="bash plain">PATH=$PATH:</code><code class="bash plain">/usr/local/mysql/bin</code></div></div></td></tr></tbody></table></div></div>
+<p>然后按ESC键</p>
+<p>继续 shift键加冒号打出来=&gt; &nbsp;：</p>
+<p>接下来输入wq回车即可</p>
+<p>执行下面的命令是修改的内容立即生效:</p>
+<div><div id="highlighter_487292" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments"># source ~/.bash_profile</code></div></div></td></tr></tbody></table></div></div>
+<p>8、以root账户登录mysql,默认是没有密码的</p>
+<div><div id="highlighter_232073" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">[root@localhost&nbsp;mysql]</code><code class="bash comments">#&nbsp;mysql&nbsp;-uroot&nbsp;-p</code></div></div></td></tr></tbody></table></div></div>
+<p>要输入密码的时候直接回车即可。</p>
+<p>9、设置root账户密码为root（也可以修改成你要的密码）</p>
+<div><div id="highlighter_372527" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">mysql&gt;use&nbsp;mysql;</code></div><div class="line number2 index1 alt1"><code class="bash plain">mysql&gt;update&nbsp;user&nbsp;</code><code class="bash functions">set</code>&nbsp;<code class="bash plain">password=password(</code><code class="bash string">'root'</code><code class="bash plain">)&nbsp;where&nbsp;user=</code><code class="bash string">'root'</code>&nbsp;<code class="bash plain">and&nbsp;host=</code><code class="bash string">'localhost'</code><code class="bash plain">;</code></div><div class="line number3 index2 alt2"><code class="bash plain">mysql&gt;flush&nbsp;privileges;</code></div></div></td></tr></tbody></table></div></div>
+<p>10、设置远程主机登录，注意下面的your username 和 your password改成你需要设置的用户和密码</p>
+<div><div id="highlighter_197558" class="syntaxhighlighter  bash"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="bash plain">mysql&gt;GRANT&nbsp;ALL&nbsp;PRIVILEGES&nbsp;ON&nbsp;*.*&nbsp;TO&nbsp;</code><code class="bash string">'your&nbsp;username'</code><code class="bash plain">@</code><code class="bash string">'%'</code>&nbsp;<code class="bash plain">IDENTIFIED&nbsp;BY&nbsp;</code><code class="bash string">'your&nbsp;password'</code>&nbsp;<code class="bash plain">WITH</code></div><div class="line number2 index1 alt1"><code class="bash plain">GRANT&nbsp;OPTION;</code></div></div></td></tr></tbody></table></div></div>
+<p>&nbsp;</p>
+<p>本文版权归作者所有，欢迎转载，但须保留此段声明，并给出原文链接，谢谢合作！</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/lunatic-cto/category/917496.html" target="_blank">Linux</a>,<a href="http://www.cnblogs.com/lunatic-cto/category/917495.html" target="_blank">MySQL</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/lunatic-cto/tag/Centos7/">Centos7</a>, <a href="http://www.cnblogs.com/lunatic-cto/tag/linux/">linux</a>, <a href="http://www.cnblogs.com/lunatic-cto/tag/mysql5.6/">mysql5.6</a>, <a href="http://www.cnblogs.com/lunatic-cto/tag/%E6%95%99%E7%A8%8B/">教程</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(6123490,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;a3ff6948-ffbd-e511-9fc1-ac853d9f53cc&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/icon_weibo_24.png.下载" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/wechat.png.下载" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/lunatic-cto/" target="_blank"><img src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/20171109150313.png.下载" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/lunatic-cto/">小魔王先生</a><br>
+            <a href="http://home.cnblogs.com/u/lunatic-cto/followees">关注 - 48</a><br>
+            <a href="http://home.cnblogs.com/u/lunatic-cto/followers">粉丝 - 2</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;a3ff6948-ffbd-e511-9fc1-ac853d9f53cc&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(6123490,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(6123490,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/lunatic-cto/p/6132885.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/lunatic-cto/p/6132885.html" title="发布于2016-12-05 10:49">HashMap和Hashtable的区别</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2016-12-01 20:38</span> <a href="http://www.cnblogs.com/lunatic-cto/">小魔王先生</a> 阅读(<span id="post_view_count">12188</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=6123490" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/lunatic-cto/p/6123490.html#" onclick="AddToWz(6123490);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=264003,cb_entryId=6123490,cb_blogApp=currentBlogApp,cb_blogUserGuid='a3ff6948-ffbd-e511-9fc1-ac853d9f53cc',cb_entryCreatedDate='2016/12/1 20:38:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/lunatic-cto/p/6123490.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/lunatic-cto/p/6123490.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】超50万VC++源码: 大型组态工控、电力仿真CAD与GIS源码库！</a><br><a href="https://dnspod.cloud.tencent.com/act/yearendsales?from=IT&amp;fromSource=gwzcw.951778.951778.951778" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-T2-腾讯云&#39;)">【推荐】腾讯云新注册用户域名抢购1元起</a><br><a href="http://clickc.admaster.com.cn/c/a105960,b2436453,c1705,i0,m101,8a1,8b2,h" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-T2-华为云&#39;)">【活动】华为云社区全云总动员，华为云女郎邀您为她打call！</a><br><a href="https://www.upyun.com/products/prismcdn?utm_source=cnblogs&amp;utm_medium=banner&amp;utm_campaign=prismcdn&amp;utm_content=0614" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-T2-upyun&#39;)">【推荐】又拍云强势推出超低价、低延时、超强兼容的 P2P-CDN！</a><br><a href="http://challenge.xfyun.cn/?ch=bk" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-xfyun&#39;)">【大赛】2018首届“顶天立地”AI开发者大赛</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a href="https://cloud.tencent.com/freetier?fromSource=gwzcw.1027255.1027255.1027255" target="_blank"><img width="300" height="250" src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/24442-20180611171134854-1629599186.jpg.下载" alt="腾讯云0611" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;C1&#39;);"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/599569/" target="_blank">加州大学伯克利分校推出在线区块链课程</a><br> ·  <a href="https://news.cnblogs.com/n/599568/" target="_blank">共享单车遭遇水土不服 乱象丛生令西雅图心力交瘁</a><br> ·  <a href="https://news.cnblogs.com/n/599567/" target="_blank">谷歌全新人工智能算法可以预测病人死亡时间</a><br> ·  <a href="https://news.cnblogs.com/n/599566/" target="_blank">盟友变敌人：谷歌地图“卸载”Uber网约车</a><br> ·  <a href="https://news.cnblogs.com/n/599565/" target="_blank">斯皮格尔：Snapchat改版 用户不满意我妻子也不喜欢</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"><a href="http://click.aliyun.com/m/34770/" target="_blank"><img src="./Centos7安装并配置mysql5.6完美教程 - 小魔王先生 - 博客园_files/TB1gBPhgZLJ8KJjy0FnXXcFDpXa-468-60.jpg.下载" alt="" style="width: 468px; height: 60px;"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/522513/" target="_blank">如何提升你的能力？给年轻程序员的几条建议</a><br> ·  <a href="http://kb.cnblogs.com/page/553361/" target="_blank">程序员的那些反模式</a><br> ·  <a href="http://kb.cnblogs.com/page/598335/" target="_blank">程序员的宇宙时间线</a><br> ·  <a href="http://kb.cnblogs.com/page/597877/" target="_blank">突破程序员思维</a><br> ·  <a href="http://kb.cnblogs.com/page/597631/" target="_blank">云、雾和霭计算如何一起工作</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/lunatic-cto/">小魔王先生</a><br>园龄：<a href="https://home.cnblogs.com/u/lunatic-cto/" title="入园时间：2016-01-19">2年5个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/lunatic-cto/followers/">2</a><br>关注：<a href="https://home.cnblogs.com/u/lunatic-cto/followees/">48</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;a3ff6948-ffbd-e511-9fc1-ac853d9f53cc&#39;)">+加关注</a></div><script>getFollowStatus('a3ff6948-ffbd-e511-9fc1-ac853d9f53cc')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/05/01&#39;);return false;">&lt;</a></td><td align="center">2018年6月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/07/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td class="CalWeekendDay" align="center">2</td></tr><tr><td class="CalWeekendDay" align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td class="CalWeekendDay" align="center">9</td></tr><tr><td class="CalWeekendDay" align="center">10</td><td align="center">11</td><td align="center">12</td><td align="center">13</td><td align="center">14</td><td align="center">15</td><td class="CalWeekendDay" align="center">16</td></tr><tr><td class="CalWeekendDay" align="center">17</td><td align="center">18</td><td class="CalTodayDay" align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td class="CalWeekendDay" align="center">23</td></tr><tr><td class="CalWeekendDay" align="center">24</td><td align="center">25</td><td align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td class="CalWeekendDay" align="center">30</td></tr><tr><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/lunatic-cto/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/lunatic-cto/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/lunatic-cto/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/lunatic-cto/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/lunatic-cto/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/lunatic-cto/tag/Centos7/">Centos7</a>(1)</li><li><a href="http://www.cnblogs.com/lunatic-cto/tag/HashMap%20Hashtable%20%E5%8C%BA%E5%88%AB/">HashMap Hashtable 区别</a>(1)</li><li><a href="http://www.cnblogs.com/lunatic-cto/tag/JavaScript%20this%20%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%A8%A1%E5%BC%8F/">JavaScript this 函数调用模式</a>(1)</li><li><a href="http://www.cnblogs.com/lunatic-cto/tag/JSON%20Javascript/">JSON Javascript</a>(1)</li><li><a href="http://www.cnblogs.com/lunatic-cto/tag/linux/">linux</a>(1)</li><li><a href="http://www.cnblogs.com/lunatic-cto/tag/mysql5.6/">mysql5.6</a>(1)</li><li><a href="http://www.cnblogs.com/lunatic-cto/tag/Vue.js%20Directive%20%E7%9F%A5%E8%AF%86/">Vue.js Directive 知识</a>(1)</li><li><a href="http://www.cnblogs.com/lunatic-cto/tag/%E6%95%99%E7%A8%8B/">教程</a>(1)</li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="https://www.cnblogs.com/lunatic-cto/category/910740.html">Java(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="https://www.cnblogs.com/lunatic-cto/category/910739.html">JavaScript(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="https://www.cnblogs.com/lunatic-cto/category/917496.html">Linux(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="https://www.cnblogs.com/lunatic-cto/category/910742.html">Mybatis</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="https://www.cnblogs.com/lunatic-cto/category/917495.html">MySQL(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="https://www.cnblogs.com/lunatic-cto/category/918750.html">Spring/SpringMVC</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="https://www.cnblogs.com/lunatic-cto/category/910741.html">Struts2</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="https://www.cnblogs.com/lunatic-cto/category/919956.html">Vue.js(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="https://www.cnblogs.com/lunatic-cto/category/930426.html">软件开发回顾总结(1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="https://www.cnblogs.com/lunatic-cto/archive/2018/04.html">2018年4月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="https://www.cnblogs.com/lunatic-cto/archive/2017/09.html">2017年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="https://www.cnblogs.com/lunatic-cto/archive/2017/02.html">2017年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="https://www.cnblogs.com/lunatic-cto/archive/2016/12.html">2016年12月 (5)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap" style="display: none;">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"></div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/lunatic-cto/p/6123490.html">1. Centos7安装并配置mysql5.6完美教程(12189)</a></li><li><a href="https://www.cnblogs.com/lunatic-cto/p/6139934.html">2. Vue.js中Directive知识(2305)</a></li><li><a href="https://www.cnblogs.com/lunatic-cto/p/6387766.html">3. 简单谈谈JavaScript中的this(295)</a></li><li><a href="https://www.cnblogs.com/lunatic-cto/p/6132885.html">4. HashMap和Hashtable的区别(247)</a></li><li><a href="https://www.cnblogs.com/lunatic-cto/p/6150538.html">5. JSON的基本格式以及与JavaScript之间的转换(128)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap" style="display: none;">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap" style="display: none;">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2018 小魔王先生
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>

@@ -1,0 +1,155 @@
+一:资源的获取
+资源抽象接口(Resource):
+  实现类:
+    1.WritableResource:可写资源接口-->实现类:FileSystemResource和PathResource(Spring4.0).
+    2.ByteArrayResource:二进制数组表示的资源文件.
+    3.ClassPathResource:类路径下的资源(xxx/bin)下的文件.
+    4.FileSysttemResource:文件系统资源，以文件路径表示(D:/XXX/XXX)
+    5.InputStreamResource:以输入流返回表示的资源
+    6.ServletContextResource:访问Web容器上下文中的资源的类，负责以相对于Web应用根目录的路径加载资源
+    7.UrlResource:使用户能够访问任何可以通过URL表示的资源，如文件系统资源，HTTP，FTP等
+    8.PathResource(Spring4.0,Java7.0):读取资源文件，可以访问URL,Path,系统文件路径表示的资源。
+
+主要公用方法介绍（Resource接口下的）
+    1.getFilename():获得文件名称
+    2.contentLength():获得文件大小
+    3.createRelative(path):在资源的相对地址上创建新文件
+    4.exists():是否存在
+    5.getFile():获得Java提供的File 对象
+    6.getInputStream():获得文件的流
+
+访问资源文件例子:
+    1.WritableResource  wrs=new PathResource("D:/xxx/xxx/xxx.txt");
+    2.Resource  res=new ClassPathResource("xxx/xxx.xml");
+
+对资源文件进行编码:
+    1.当您使用 Resource 实现类加载文件资源时，它默认采用操作系统的编码格式。如果文件资源采用了特殊的编码格式（如 UTF-8）.
+
+    2.将资源文件进行编码保存至EncodedResource中
+    EncodedResource  enres=new EncodedResource(res,"UTF-8");//res表示资源文件类
+
+
+另一种更方便的资源加载:
+    资源加载的接口:
+    1.ResourceLoader:
+       此接口仅有一个getResource(String location)方法,资源地址只支持带前缀的表达式.(classpath:或file:)
+    2.ResourcePatternResolver(ResourceLoader的扩展接口)
+       多了一个方法getResources(String location),支持前缀，Ant格式的资源路径(ps:Ant格式指的是带*,?,**的通配符)
+    3.实现类:PathMatchingResourcePatternResolver();
+    4.例子:
+        (1).ResourcePatternResolver resolver=new PathMatchingResourcePatternResolver();
+            Resource resources[]=resolver.getResources("classpath*:com/smart/**/*.xml");  
+         资源路径是"classpath*:"将会扫描所有类路径下及JAR包中对于com.smart类包下的路径。
+
+
+
+
+
+
+
+
+二:
+  启动IoC容器
+    1.BeanFactory(面向Spring本身)
+     (1).BeanFactory(接口):装载配置文件，启动Spring IoC容器。
+     (2).实现类:XmlBeanDefinitionReader,DefaultListableBeanFactory
+     (3).例子:	
+	Resource res=new ClassPathResource("classpath路径");
+	DefaultListableBeanFactory  factory=new DefaultListableBeanFactory();
+	XmlBeanDefinitionReader reader=new XmlBeanDefinitionReader(factory);
+	reader.loadBeanDefinitions(res);//res表示资源文件
+	factory.getBean("xxx");
+
+    2.ApplicationContext(面向使用Spring框架的开发者,基本适合所有场合)
+     1.实现类:
+          (1).ClassPathXmlApplicationContext(从类路径加载配置文件) 
+		ApplicationContext ctx=new ClassPathXmlApplicationContext("com/smart/beans.xml");
+		ctx.getBean("XXX");
+		等同与  "classpath:com/smart/beans.xml"   
+	  (2).FileSystemXmlApplicationContext(从文件系统中装载配置文件)
+   		ApplicationContext ctx=new FileSystemApplicationContext("D:/xxx/beans.xml");
+  		等同于  "D:/xxx/beans.xml"
+
+    两者的区别：
+	BeanFactory在初始化容器时,并未实例化Bean,直到第一次访问某个Bean时才实例化。
+	ApplicationContext在初始化时就实例化所有单实例的Bean。
+	因此ApplicationContext的初始化时间会稍长一些
+
+
+    WebApplicationContext(专门为Web准备的)
+	作用:在web根目录的路径中装载配置文件完成初始化工作
+	初始化:在Web容器下才能启动工作,即是在web.xml中配置Servlet或Web容器监听器(ServletContextListener)
+
+    1.web容器的初始化:
+    (1).通过监听器初始化(web.xml)
+	<context-param>
+		<param-name>contextConfiglocation</param-name>
+		<param-value>/WEB-INF/smart-dao.xml,/WEB-INF/xxx.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+    (2).通过Servlet初始化(web.xml)
+	<context-param>
+		<param-name>contextConfiglocation</param-name>
+		<param-value>/WEB-INF/smart-dao.xml,/WEB-INF/xxx.xml</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>springContextLoaderServlet</servlet-name>
+		<servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>启动顺序
+	</servlet>
+    2.web添加日志功能:
+	(1).将Log4J的配置文件放在类路径WEB-INF/classes下即可
+	(2).在web.xml文件里配置如下:
+		<context-param>
+			<param-name>log4jConfigLocation</param-name>
+			<param-value>/WEB-INF/log4j.properties</param-value>
+		</context-param>
+		<servlet>
+			<servlet-name>log4jConfigServlet</servlet-name>
+		      	<servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
+			<load-on-startup>1</load-on-startup>启动顺序
+		</servlet>
+		<servlet>
+			<servlet-name>springContextLoaderServlet</servlet-name>
+			<servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>启动顺序
+	</servlet>
+	注:log4jConfigServlet启动顺序是在springContextLoaderServlet前面的，如果使用监听器，同理，Log4jConfigListener也要放在ContextLoaderListener前面
+
+    3.如果使用标注@Configuration的Java类提供配置信息(web.xml):
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>@Configuration标注的类,com.smart.AppConfig1</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	注:ContextLoaderListener如果发现配置了contextClass上下文参数,就会使用参数所指定的WebApplicationContgext的实现类(AnnotationConfigWebApplicationContext)初始化容器，该实现类会根据contextConfigLocation上下文参数指定的标注@Configuration的配置类所提供的Spring配置信息初始化容器
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

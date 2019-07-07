@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://www.cnblogs.com/V1haoge/p/6479118.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="origin">
+<title>Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园</title>
+<meta property="og:description" content="原创作品，可以转载，但是请标注出处地址http://www.cnblogs.com/V1haoge/p/6479118.html 适配器就是一种适配中间件，它存在于不匹配的二者之间，用于连接二者，将不">
+<link type="text/css" rel="stylesheet" href="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/bundle-darkgreentrip.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/bundle-darkgreentrip-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/V1haoge/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/V1haoge/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/V1haoge/wlwmanifest.xml">
+<script src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/osd.js.下载"></script><script src="https://cdn.ampproject.org/rtv/001810110036230/amp4ads-host-v0.js"></script><script src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/pubads_impl_rendering_264.js.下载"></script><script async="" src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/encoder.js.下载"></script><script src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+<script type="text/javascript">var currentBlogApp = 'V1haoge', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+<link rel="preload" href="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/integrator.js.下载" as="script"><script type="text/javascript" src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/integrator.js.下载"></script><script src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/pubads_impl_264.js.下载" async=""></script></head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="https://www.cnblogs.com/V1haoge/"><img id="blogLogo" src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="https://www.cnblogs.com/V1haoge/">唯一浩哥</a></h1>
+<h2>架构之路----Java有不少事</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li></li>
+<li></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E5%94%AF%E4%B8%80%E6%B5%A9%E5%93%A5">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/V1haoge/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="https://www.cnblogs.com/V1haoge/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/V1haoge/p/6479118.html">Java设计模式之《适配器模式》及应用场景</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p>&nbsp;原创作品，可以转载，但是请标注出处地址<a href="http://www.cnblogs.com/V1haoge/p/6479118.html" target="_blank">http://www.cnblogs.com/V1haoge/p/6479118.html</a></p>
+<p>　　适配器就是一种适配中间件，它存在于不匹配的二者之间，用于连接二者，将不匹配变得匹配，简单点理解就是平常所见的转接头，转换器之类的存在。</p>
+<p>　　适配器模式有两种：类适配器、对象适配器、接口适配器</p>
+<p>　　前二者在实现上有些许区别，作用一样，第三个接口适配器差别较大。</p>
+<p>1、类适配器模式：</p>
+<p>　　原理：通过继承来实现适配器功能。</p>
+<p>　　当我们要访问的接口A中没有我们想要的方法 ，却在另一个接口B中发现了合适的方法，我们又不能改变访问接口A，在这种情况下，我们可以定义一个适配器p来进行中转，这个适配器p要实现我们访问的接口A，这样我们就能继续访问当前接口A中的方法（虽然它目前不是我们的菜），然后再继承接口B的实现类BB，这样我们可以在适配器P中访问接口B的方法了，这时我们在适配器P中的接口A方法中直接引用BB中的合适方法，这样就完成了一个简单的类适配器。</p>
+<p>　　详见下方实例：我们以ps2与usb的转接为例</p>
+<p>ps2接口：Ps2</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span><span style="color: #000000"> Ps2 {
+</span><span style="color: #008080">2</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> isPs2();
+</span><span style="color: #008080">3</span> }</pre>
+</div>
+<p>USB接口：Usb</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span><span style="color: #000000"> Usb {
+</span><span style="color: #008080">2</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> isUsb();
+</span><span style="color: #008080">3</span> }</pre>
+</div>
+<p>USB接口实现类：Usber</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Usber <span style="color: #0000ff">implements</span><span style="color: #000000"> Usb {
+</span><span style="color: #008080">2</span> 
+<span style="color: #008080">3</span> <span style="color: #000000">    @Override
+</span><span style="color: #008080">4</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> isUsb() {
+</span><span style="color: #008080">5</span>         System.out.println("USB口"<span style="color: #000000">);
+</span><span style="color: #008080">6</span> <span style="color: #000000">    }
+</span><span style="color: #008080">7</span> 
+<span style="color: #008080">8</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>适配器：Adapter</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Adapter <span style="color: #0000ff">extends</span> Usber <span style="color: #0000ff">implements</span><span style="color: #000000"> Ps2 {
+</span><span style="color: #008080">2</span> 
+<span style="color: #008080">3</span> <span style="color: #000000">    @Override
+</span><span style="color: #008080">4</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> isPs2() {
+</span><span style="color: #008080">5</span> <span style="color: #000000">        isUsb();
+</span><span style="color: #008080">6</span> <span style="color: #000000">    }
+</span><span style="color: #008080">7</span> 
+<span style="color: #008080">8</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>测试方法：Clienter</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span><span style="color: #000000"> Clienter {
+</span><span style="color: #008080">2</span> 
+<span style="color: #008080">3</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">void</span><span style="color: #000000"> main(String[] args) {
+</span><span style="color: #008080">4</span>         Ps2 p = <span style="color: #0000ff">new</span><span style="color: #000000"> Adapter();
+</span><span style="color: #008080">5</span> <span style="color: #000000">        p.isPs2();
+</span><span style="color: #008080">6</span> <span style="color: #000000">    }
+</span><span style="color: #008080">7</span> 
+<span style="color: #008080">8</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>显示结果：</p>
+<div class="cnblogs_code">
+<pre>USB口</pre>
+</div>
+<p>实例讲解：</p>
+<p>　　我手中有个ps2插头的设备，但是主机上只有usb插头的插口，怎么办呢？弄个转换器，将ps2插头转换成为USB插头就可以使用了。</p>
+<p>　　接口Ps2：描述ps2接口格式</p>
+<p>　　接口Usb：描述USB接口格式</p>
+<p>　　类Usber：是接口Usb的实现类，是具体的USB接口格式</p>
+<p>　　Adapter：用于将ps2接口格式转换成为USB接口格式</p>
+<p>2、对象适配器模式</p>
+<p>　　原理：通过组合来实现适配器功能。</p>
+<p>　　当我们要访问的接口A中没有我们想要的方法 ，却在另一个接口B中发现了合适的方法，我们又不能改变访问接口A，在这种情况下，我们可以定义一个适配器p来进行中转，这个适配器p要实现我们访问的接口A，这样我们就能继续访问当前接口A中的方法（虽然它目前不是我们的菜），然后在适配器P中定义私有变量C（对象）（B接口指向变量名），再定义一个带参数的构造器用来为对象C赋值，再在A接口的方法实现中使用对象C调用其来源于B接口的方法。</p>
+<p>　　详见下方实例：我们仍然以ps2与usb的转接为例</p>
+<p>ps2接口：Ps2</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span><span style="color: #000000"> Ps2 {
+</span><span style="color: #008080">2</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> isPs2();
+</span><span style="color: #008080">3</span> }</pre>
+</div>
+<p>USB接口：Usb</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span><span style="color: #000000"> Usb {
+</span><span style="color: #008080">2</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> isUsb();
+</span><span style="color: #008080">3</span> }</pre>
+</div>
+<p>USB接口实现类：Usber</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Usber <span style="color: #0000ff">implements</span><span style="color: #000000"> Usb {
+</span><span style="color: #008080">2</span> 
+<span style="color: #008080">3</span> <span style="color: #000000">    @Override
+</span><span style="color: #008080">4</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> isUsb() {
+</span><span style="color: #008080">5</span>         System.out.println("USB口"<span style="color: #000000">);
+</span><span style="color: #008080">6</span> <span style="color: #000000">    }
+</span><span style="color: #008080">7</span> 
+<span style="color: #008080">8</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>适配器：Adapter</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080"> 1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Adapter <span style="color: #0000ff">implements</span><span style="color: #000000"> Ps2 {
+</span><span style="color: #008080"> 2</span>     
+<span style="color: #008080"> 3</span>     <span style="color: #0000ff">private</span><span style="color: #000000"> Usb usb;
+</span><span style="color: #008080"> 4</span>     <span style="color: #0000ff">public</span><span style="color: #000000"> Adapter(Usb usb){
+</span><span style="color: #008080"> 5</span>         <span style="color: #0000ff">this</span>.usb =<span style="color: #000000"> usb;
+</span><span style="color: #008080"> 6</span> <span style="color: #000000">    }
+</span><span style="color: #008080"> 7</span> <span style="color: #000000">    @Override
+</span><span style="color: #008080"> 8</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> isPs2() {
+</span><span style="color: #008080"> 9</span> <span style="color: #000000">        usb.isUsb();
+</span><span style="color: #008080">10</span> <span style="color: #000000">    }
+</span><span style="color: #008080">11</span> 
+<span style="color: #008080">12</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>测试类：Clienter</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span><span style="color: #000000"> Clienter {
+</span><span style="color: #008080">2</span> 
+<span style="color: #008080">3</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">void</span><span style="color: #000000"> main(String[] args) {
+</span><span style="color: #008080">4</span>         Ps2 p = <span style="color: #0000ff">new</span> Adapter(<span style="color: #0000ff">new</span><span style="color: #000000"> Usber());
+</span><span style="color: #008080">5</span> <span style="color: #000000">        p.isPs2();
+</span><span style="color: #008080">6</span> <span style="color: #000000">    }
+</span><span style="color: #008080">7</span> 
+<span style="color: #008080">8</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>结果显示：</p>
+<div class="cnblogs_code">
+<pre>USB口</pre>
+</div>
+<p>实例讲解：</p>
+<p>　　我手中有个ps2插头的设备，但是主机上只有usb插头的插口，怎么办呢？弄个转换器，将ps2插头转换成为USB插头就可以使用了。</p>
+<p>　　接口Ps2：描述ps2接口格式</p>
+<p>　　接口Usb：描述USB接口格式</p>
+<p>　　类Usber：是接口Usb的实现类，是具体的USB接口格式</p>
+<p>　　Adapter：用于将ps2接口格式转换成为USB接口格式</p>
+<p>3、接口适配器模式</p>
+<p>　　原理：通过抽象类来实现适配，这种适配稍别于上面所述的适配。</p>
+<p>　　当存在这样一个接口，其中定义了N多的方法，而我们现在却只想使用其中的一个到几个方法，如果我们直接实现接口，那么我们要对所有的方法进行实现，哪怕我们仅仅是对不需要的方法进行置空（只写一对大括号，不做具体方法实现）也会导致这个类变得臃肿，调用也不方便，这时我们可以使用一个抽象类作为中间件，即适配器，用这个抽象类实现接口，而在抽象类中所有的方法都进行置空，那么我们在创建抽象类的继承类，而且重写我们需要使用的那几个方法即可。</p>
+<p>目标接口：A</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">interface</span><span style="color: #000000"> A {
+</span><span style="color: #008080">2</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> a();
+</span><span style="color: #008080">3</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> b();
+</span><span style="color: #008080">4</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> c();
+</span><span style="color: #008080">5</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> d();
+</span><span style="color: #008080">6</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> e();
+</span><span style="color: #008080">7</span>     <span style="color: #0000ff">void</span><span style="color: #000000"> f();
+</span><span style="color: #008080">8</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>适配器：Adapter</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">abstract</span> <span style="color: #0000ff">class</span> Adapter <span style="color: #0000ff">implements</span><span style="color: #000000"> A {
+</span><span style="color: #008080">2</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> a(){}
+</span><span style="color: #008080">3</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> b(){}
+</span><span style="color: #008080">4</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> c(){}
+</span><span style="color: #008080">5</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> d(){}
+</span><span style="color: #008080">6</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> e(){}
+</span><span style="color: #008080">7</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> f(){}
+</span><span style="color: #008080">8</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>实现类：Ashili</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span> Ashili <span style="color: #0000ff">extends</span><span style="color: #000000"> Adapter {
+</span><span style="color: #008080">2</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> a(){
+</span><span style="color: #008080">3</span>         System.out.println("实现A方法被调用"<span style="color: #000000">);
+</span><span style="color: #008080">4</span> <span style="color: #000000">    }
+</span><span style="color: #008080">5</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">void</span><span style="color: #000000"> d(){
+</span><span style="color: #008080">6</span>         System.out.println("实现d方法被调用"<span style="color: #000000">);
+</span><span style="color: #008080">7</span> <span style="color: #000000">    }
+</span><span style="color: #008080">8</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>测试类：Clienter</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #008080">1</span> <span style="color: #0000ff">public</span> <span style="color: #0000ff">class</span><span style="color: #000000"> Clienter {
+</span><span style="color: #008080">2</span> 
+<span style="color: #008080">3</span>     <span style="color: #0000ff">public</span> <span style="color: #0000ff">static</span> <span style="color: #0000ff">void</span><span style="color: #000000"> main(String[] args) {
+</span><span style="color: #008080">4</span>         A a = <span style="color: #0000ff">new</span><span style="color: #000000"> Ashili();
+</span><span style="color: #008080">5</span> <span style="color: #000000">        a.a();
+</span><span style="color: #008080">6</span> <span style="color: #000000">        a.d();
+</span><span style="color: #008080">7</span> <span style="color: #000000">    }
+</span><span style="color: #008080">8</span> 
+<span style="color: #008080">9</span> }</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>4、适配器模式应用场景</p>
+<p>类适配器与对象适配器的使用场景一致，仅仅是实现手段稍有区别，二者主要用于如下场景：</p>
+<p>　　（1）想要使用一个已经存在的类，但是它却不符合现有的接口规范，导致无法直接去访问，这时创建一个适配器就能间接去访问这个类中的方法。</p>
+<p>　　（2）我们有一个类，想将其设计为可重用的类（可被多处访问），我们可以创建适配器来将这个类来适配其他没有提供合适接口的类。</p>
+<p>　　以上两个场景其实就是从两个角度来描述一类问题，那就是要访问的方法不在合适的接口里，一个从接口出发（被访问），一个从访问出发（主动访问）。</p>
+<p>接口适配器使用场景：</p>
+<p>　　（1）想要使用接口中的某个或某些方法，但是接口中有太多方法，我们要使用时必须实现接口并实现其中的所有方法，可以使用抽象类来实现接口，并不对方法进行实现（仅置空），然后我们再继承这个抽象类来通过重写想用的方法的方式来实现。这个抽象类就是适配器。</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="https://www.cnblogs.com/V1haoge/category/823239.html" target="_blank">Java</a>,<a href="https://www.cnblogs.com/V1haoge/category/961300.html" target="_blank">设计模式</a></div>
+<div id="EntryTag">标签: <a href="https://www.cnblogs.com/V1haoge/tag/java/">java</a>, <a href="https://www.cnblogs.com/V1haoge/tag/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>, <a href="https://www.cnblogs.com/V1haoge/tag/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">适配器模式</a>, <a href="https://www.cnblogs.com/V1haoge/tag/%E7%B1%BB%E9%80%82%E9%85%8D%E5%99%A8/">类适配器</a>, <a href="https://www.cnblogs.com/V1haoge/tag/%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8/">对象适配器</a>, <a href="https://www.cnblogs.com/V1haoge/tag/adapter/">adapter</a>, <a href="https://www.cnblogs.com/V1haoge/tag/%E5%9C%BA%E6%99%AF/">场景</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(6479118,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;fcf79cb4-4f66-e311-8d02-90b11c0b17d6&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/V1haoge/" target="_blank"><img src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/20170328225127.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/V1haoge/">唯一浩哥</a><br>
+            <a href="http://home.cnblogs.com/u/V1haoge/followees">关注 - 30</a><br>
+            <a href="http://home.cnblogs.com/u/V1haoge/followers">粉丝 - 180</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;fcf79cb4-4f66-e311-8d02-90b11c0b17d6&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(6479118,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">17</span>
+    </div>
+    <div class="buryit" onclick="votePost(6479118,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="https://www.cnblogs.com/V1haoge/p/6439313.html" class="p_n_p_prefix">« </a> 上一篇：<a href="https://www.cnblogs.com/V1haoge/p/6439313.html" title="发布于2017-02-24 17:04">极光推送经验之谈-Java后台服务器实现极光推送的两种实现方式</a><br><a href="https://www.cnblogs.com/V1haoge/p/6484128.html" class="p_n_p_prefix">» </a> 下一篇：<a href="https://www.cnblogs.com/V1haoge/p/6484128.html" title="发布于2017-03-01 14:28">Java设计模式之《外观模式》及应用场景</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2017-02-28 15:33</span> <a href="https://www.cnblogs.com/V1haoge/">唯一浩哥</a> 阅读(<span id="post_view_count">39093</span>) 评论(<span id="post_comment_count">8</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=6479118" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/V1haoge/p/6479118.html#" onclick="AddToWz(6479118);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=282931,cb_entryId=6479118,cb_blogApp=currentBlogApp,cb_blogUserGuid='fcf79cb4-4f66-e311-8d02-90b11c0b17d6',cb_entryCreatedDate='2017/2/28 15:33:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"><div id="comments_pager_top"></div>
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"></div>	
+
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/V1haoge/p/6479118.html#3628469" class="layer">#1楼</a><a name="3628469" id="comment_anchor_3628469"></a>  <span class="comment_date">2017-02-28 16:20</span> <a id="a_comment_author_3628469" href="https://www.cnblogs.com/yanglh6-jyx/" target="_blank">yanglh6</a> <a href="http://msg.cnblogs.com/send/yanglh6" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3628469" class="blog_comment_body">mark</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3628469,&#39;Digg&#39;,this)">支持(2)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3628469,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3628469_avatar" style="display:none;">http://pic.cnblogs.com/face/1048848/20161024180545.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/V1haoge/p/6479118.html#3737150" class="layer">#2楼</a><a name="3737150" id="comment_anchor_3737150"></a>  <span class="comment_date">2017-07-17 16:36</span> <a id="a_comment_author_3737150" href="https://www.cnblogs.com/mayucai/" target="_blank">Marsom</a> <a href="http://msg.cnblogs.com/send/Marsom" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3737150" class="blog_comment_body">写的真好。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3737150,&#39;Digg&#39;,this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3737150,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/V1haoge/p/6479118.html#3808350" class="layer">#3楼</a><a name="3808350" id="comment_anchor_3808350"></a>  <span class="comment_date">2017-10-12 14:17</span> <a id="a_comment_author_3808350" href="http://home.cnblogs.com/u/923003/" target="_blank">Robin_Chen</a> <a href="http://msg.cnblogs.com/send/Robin_Chen" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3808350" class="blog_comment_body">学习了</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3808350,&#39;Digg&#39;,this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3808350,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/V1haoge/p/6479118.html#3849721" class="layer">#4楼</a><a name="3849721" id="comment_anchor_3849721"></a>  <span class="comment_date">2017-11-24 20:03</span> <a id="a_comment_author_3849721" href="https://www.cnblogs.com/geyaofendou/" target="_blank">heart66_A</a> <a href="http://msg.cnblogs.com/send/heart66_A" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3849721" class="blog_comment_body">可以，例子写的也非常好</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3849721,&#39;Digg&#39;,this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3849721,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3849721_avatar" style="display:none;">http://pic.cnblogs.com/face/1075203/20170217205431.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/V1haoge/p/6479118.html#3947646" class="layer">#5楼</a><a name="3947646" id="comment_anchor_3947646"></a>  <span class="comment_date">2018-04-10 13:45</span> <a id="a_comment_author_3947646" href="https://www.cnblogs.com/Fly-Bob/" target="_blank">路过无痕飞飞</a> <a href="http://msg.cnblogs.com/send/%E8%B7%AF%E8%BF%87%E6%97%A0%E7%97%95%E9%A3%9E%E9%A3%9E" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_3947646" class="blog_comment_body">写的好</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(3947646,&#39;Digg&#39;,this)">支持(1)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(3947646,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_3947646_avatar" style="display:none;">http://pic.cnblogs.com/face/1171044/20170726145709.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/V1haoge/p/6479118.html#4049280" class="layer">#6楼</a><a name="4049280" id="comment_anchor_4049280"></a>  <span class="comment_date">2018-08-23 17:56</span> <a id="a_comment_author_4049280" href="https://www.cnblogs.com/drafire/" target="_blank">drafire</a> <a href="http://msg.cnblogs.com/send/drafire" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4049280" class="blog_comment_body">感觉最后那种方式，没什么作用？因为适配器都已经实现了所有的方法了（尽管只是加了{}，但是也是实现了），而继承适配器的类，还要自己重写/重载这个方法，那还有什么意义？难道是为了让不同的继承类，自己决定重写哪个方法，然后用于其他场景？不明白，请指教！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4049280,&#39;Digg&#39;,this)">支持(3)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4049280,&#39;Bury&#39;,this)">反对(0)</a></div>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/V1haoge/p/6479118.html#4049310" class="layer">#7楼</a><a name="4049310" id="comment_anchor_4049310"></a>[<span class="louzhu">楼主</span>]  <span class="comment_date">2018-08-23 18:25</span> <a id="a_comment_author_4049310" href="https://www.cnblogs.com/V1haoge/" target="_blank">唯一浩哥</a> <a href="http://msg.cnblogs.com/send/%E5%94%AF%E4%B8%80%E6%B5%A9%E5%93%A5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4049310" class="blog_comment_body"><a href="https://www.cnblogs.com/V1haoge/p/6479118.html#4049280" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4049280);">@</a>
+drafire<br>嗯，就是这个意思，其实从功能上来讲，这样纯属多余，但java的面向对象和多态继承等，就是为了给项目一个好的架构。<br>虽然置空是实现了接口的类，但是标注为Abstract表示这个类是抽象的，也就是不能直接使用的，虽然里面可能没有一个抽象方法，但架构上来说就是抽象的，因为里面没有任何实现，就和接口似的，但是功能上又实现了所有的接口，这样我们在只需要其中几个或一个方法时，只需要继承抽象类，这样只需要在这个实现类中出现需要的方法的重写逻辑即可，这样代码较为美观，不会在真正的逻辑实现类中出现一大窜的空方法。<br>这只是我的理解，你看看就好！</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4049310,&#39;Digg&#39;,this)">支持(0)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4049310,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_4049310_avatar" style="display:none;">http://pic.cnblogs.com/face/592104/20170328225127.png</span>
+			</div>
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;<span class="comment_actions"></span>
+				</div>
+				<a href="https://www.cnblogs.com/V1haoge/p/6479118.html#4051202" class="layer">#8楼</a><a name="4051202" id="comment_anchor_4051202"></a>[<span class="louzhu">楼主</span>]<span id="comment-maxId" style="display:none;">4051202</span><span id="comment-maxDate" style="display:none;">2018/8/27 10:25:15</span>  <span class="comment_date">2018-08-27 10:25</span> <a id="a_comment_author_4051202" href="https://www.cnblogs.com/V1haoge/" target="_blank">唯一浩哥</a> <a href="http://msg.cnblogs.com/send/%E5%94%AF%E4%B8%80%E6%B5%A9%E5%93%A5" title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+			</div>
+			<div class="feedbackCon">
+				<div id="comment_body_4051202" class="blog_comment_body"><a href="https://www.cnblogs.com/V1haoge/p/6479118.html#4049280" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4049280);">@</a>
+drafire<br>猜想：架构的原理是不是就是依靠java的面向对象特性和其他一些机制，比如多态、接口、抽象类等，通过其各个机制的功能来实现一些结构。这里功能是功能，功能仅为结构服务。<br>架构的目的是为了美观，解耦，易扩展，高可用之类，那么这些目的如何实现呢，就依靠那么多的设计模式，而设计模式又是怎么来的呢，是大牛们通过长期使用java总结出来的，是对java各种特性的高度概括与抽象。<br>有了架构，有时候我们就会发现很多在功能上看起来无意义的东西在架构上却起着不可或缺的作用。<br>就比如多态的解耦，功能上完全没有必要通过多态来实现，完全可以针对每种情况定义一个类来实现其功能，但是如此的话，代码会高度耦合，不利于修改与扩展，采用多态使用超类指向子类对象的方式来实现对应的方法调用，极大的缓解了代码的耦合度。</div><div class="comment_vote"><a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4051202,&#39;Digg&#39;,this)">支持(2)</a><a href="javascript:void(0);" class="comment_bury" onclick="return voteComment(4051202,&#39;Bury&#39;,this)">反对(0)</a></div><span id="comment_4051202_avatar" style="display:none;">http://pic.cnblogs.com/face/592104/20170328225127.png</span>
+			</div>
+		</div>
+	<div id="comments_pager_bottom"></div></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/V1haoge/p/6479118.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/V1haoge/p/6479118.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】超50万VC++源码: 大型组态工控、电力仿真CAD与GIS源码库！</a><br><a href="http://clickc.admaster.com.cn/c/a116493,b2949399,c1705,i0,m101,8a1,8b3,h" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-华为云&#39;)">【推荐】华为云全联接大会 高性能云服务器限时2折</a><br><a href="https://cloud.tencent.com/act/domainsales?fromSource=gwzcw.1351351.1351351.1351351" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-域名&#39;)">【推荐】腾讯云新注册用户域名抢购1元起</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a href="https://cloud.tencent.com/act/special/amd?fromSource=gwzcw.1351353.1351353.1351353" target="_blank"><img width="300" height="250" src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/24442-20181008121639348-1607410764.jpg" alt="腾讯云1008" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;C1&#39;);"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/609491/" target="_blank">Google Maps的故事：新时代</a><br> ·  <a href="https://news.cnblogs.com/n/609507/" target="_blank">苹果ID频现盗刷背后：免密支付风险有多大 谁应担责</a><br> ·  <a href="https://news.cnblogs.com/n/609506/" target="_blank">特斯拉在香港建立充电站：有50个充电位 为亚洲最大</a><br> ·  <a href="https://news.cnblogs.com/n/609504/" target="_blank">科学家拟建“诺亚方舟微生物库” 留存人体有益菌</a><br> ·  <a href="https://news.cnblogs.com/n/609503/" target="_blank">猴天花或将成新型致命流行病 能从动物体传播至人类</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<script async="async" src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/gpt.js.下载"></script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+</script>
+
+<script>
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/1090369/C2', [468, 60], 'div-gpt-ad-1539008685004-0').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
+<div id="cnblogs_c2" class="c_ad_block">
+    <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;" data-google-query-id="CIrP0dyqh94CFdMdvAodEukArA">
+    <script>
+    if (new Date() >= new Date(2018, 9, 13)) {
+        googletag.cmd.push(function() { googletag.display('div-gpt-ad-1539008685004-0'); });
+    }
+    </script>
+    <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C2_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" style="border: 0px; vertical-align: bottom;" data-load-complete="true" src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/saved_resource.html"></iframe></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="https://kb.cnblogs.com/page/606682/" target="_blank">为什么说 Java 程序员必须掌握 Spring Boot ？</a><br> ·  <a href="https://kb.cnblogs.com/page/606645/" target="_blank">在学习中，有一个比掌握知识更重要的能力</a><br> ·  <a href="https://kb.cnblogs.com/page/603663/" target="_blank">如何招到一个靠谱的程序员</a><br> ·  <a href="https://kb.cnblogs.com/page/573614/" target="_blank">一个故事看懂“区块链”</a><br> ·  <a href="https://kb.cnblogs.com/page/603697/" target="_blank">被踢出去的用户</a><br></div>» <a href="https://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/V1haoge/">唯一浩哥</a><br>园龄：<a href="https://home.cnblogs.com/u/V1haoge/" title="入园时间：2013-12-16">4年9个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/V1haoge/followers/">180</a><br>关注：<a href="https://home.cnblogs.com/u/V1haoge/followees/">30</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;fcf79cb4-4f66-e311-8d02-90b11c0b17d6&#39;)">+加关注</a></div><script>getFollowStatus('fcf79cb4-4f66-e311-8d02-90b11c0b17d6')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/09/01&#39;);return false;">&lt;</a></td><td align="center">2018年10月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/11/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">30</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td class="CalWeekendDay" align="center">6</td></tr><tr><td class="CalWeekendDay" align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td class="CalWeekendDay" align="center">13</td></tr><tr><td class="CalWeekendDay" align="center">14</td><td class="CalTodayDay" align="center">15</td><td align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td class="CalWeekendDay" align="center">20</td></tr><tr><td class="CalWeekendDay" align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td class="CalWeekendDay" align="center">27</td></tr><tr><td class="CalWeekendDay" align="center">28</td><td align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td></tr><tr><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td><td class="CalOtherMonthDay" align="center">10</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block"></div><div id="sidebar_recentposts" class="sidebar-block">
+<div class="catListEssay">
+<h3 class="catListTitle">最新随笔</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/V1haoge/p/9668381.html">1. Java面试系列--java基础</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9642105.html">2. RabbitMQ基础系列--客户端开发</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9619910.html">3. Spring基础系列--AOP织入逻辑跟踪</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9615720.html">4. Spring基础系列--AOP实践</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9560803.html">5. Spring基础系列-AOP源码分析</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9558825.html">6. Java设计模式之《模板模式》及使用场景</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9503210.html">7. Spring基础系列-容器启动流程(2)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9502069.html">8. Spring基础系列-容器启动流程(1)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9476550.html">9. Spring基础系列-Spring事务不生效的问题与循环依赖问题</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/9329798.html">10. Lombok常用注解解析</a></li>
+</ul>
+</div>
+</div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="https://www.cnblogs.com/V1haoge/tag/java/">java</a>(52)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>(14)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/MyBatis/">MyBatis</a>(11)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/spring/">spring</a>(8)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/%E5%9C%BA%E6%99%AF/">场景</a>(6)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/POOLED/">POOLED</a>(4)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/SpringBoot/">SpringBoot</a>(4)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/UNPOOLED/">UNPOOLED</a>(4)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/ORM%E6%A1%86%E6%9E%B6/">ORM框架</a>(4)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/DataSource/">DataSource</a>(4)</li><li><a href="https://www.cnblogs.com/V1haoge/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="https://www.cnblogs.com/V1haoge/archive/2018/09.html">2018年9月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="https://www.cnblogs.com/V1haoge/archive/2018/08.html">2018年8月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="https://www.cnblogs.com/V1haoge/archive/2018/07.html">2018年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="https://www.cnblogs.com/V1haoge/archive/2018/05.html">2018年5月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="https://www.cnblogs.com/V1haoge/archive/2018/03.html">2018年3月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="https://www.cnblogs.com/V1haoge/archive/2018/02.html">2018年2月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="https://www.cnblogs.com/V1haoge/archive/2018/01.html">2018年1月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="https://www.cnblogs.com/V1haoge/archive/2017/11.html">2017年11月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="https://www.cnblogs.com/V1haoge/archive/2017/09.html">2017年9月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="https://www.cnblogs.com/V1haoge/archive/2017/07.html">2017年7月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="https://www.cnblogs.com/V1haoge/archive/2017/06.html">2017年6月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="https://www.cnblogs.com/V1haoge/archive/2017/05.html">2017年5月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="https://www.cnblogs.com/V1haoge/archive/2017/04.html">2017年4月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="https://www.cnblogs.com/V1haoge/archive/2017/03.html">2017年3月 (18)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="https://www.cnblogs.com/V1haoge/archive/2017/02.html">2017年2月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="https://www.cnblogs.com/V1haoge/archive/2016/12.html">2016年12月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="https://www.cnblogs.com/V1haoge/archive/2016/11.html">2016年11月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="https://www.cnblogs.com/V1haoge/archive/2016/09.html">2016年9月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="https://www.cnblogs.com/V1haoge/archive/2016/06.html">2016年6月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_19" href="https://www.cnblogs.com/V1haoge/archive/2016/05.html">2016年5月 (3)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_scorerank" class="sidebar-block">
+<div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	100415
+	</li>
+	<li class="liRank">
+		排名 -	3801
+	</li>
+</ul>
+</div>
+
+
+</div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="https://www.cnblogs.com/V1haoge/p/6479118.html">1. Java设计模式之《适配器模式》及应用场景(39091)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6439313.html">2. 极光推送经验之谈-Java后台服务器实现极光推送的两种实现方式(34150)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/7183408.html">3. springBoot基础系列--properties配置(32091)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6510196.html">4. Java设计模式之《单例模式》及应用场景(24247)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6385312.html">5. SQL中如何使用EXISTS替代IN(16861)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/5860749.html">6. java静态代理与动态代理简单分析(15704)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6513651.html">7. Java设计模式之《观察者模式》及应用场景(15114)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6525527.html">8. Java设计模式之《代理模式》及应用场景(11435)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6497919.html">9. Java设计模式之《桥接模式》及应用场景(11017)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6530089.html">10. Java设计模式之《职责链模式》及应用场景(7438)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/5859556.html">11. Spring中Bean的配置(7203)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6634151.html">12. MyBatis源码解析（三）——Transaction事务模块(7084)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6542449.html">13. Java设计模式之《享元模式》及应用场景(6598)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/7126930.html">14. java基础系列--Date类(5675)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6489827.html">15. Java设计模式之《组合模式》及应用场景(5202)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="https://www.cnblogs.com/V1haoge/p/6439313.html">1. 极光推送经验之谈-Java后台服务器实现极光推送的两种实现方式(44)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6479118.html">2. Java设计模式之《适配器模式》及应用场景(8)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/7183408.html">3. springBoot基础系列--properties配置(5)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/7136575.html">4. java基础系列--Calendar类(4)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6797659.html">5. Java基础系列——序列化（一）(4)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6603926.html">6. MyBatis源码解析（一）——执行流程(4)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6634151.html">7. MyBatis源码解析（三）——Transaction事务模块(3)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6513651.html">8. Java设计模式之《观察者模式》及应用场景(3)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6497919.html">9. Java设计模式之《桥接模式》及应用场景(3)</a></li><li><a href="https://www.cnblogs.com/V1haoge/p/6510196.html">10. Java设计模式之《单例模式》及应用场景(3)</a></li></ul></div>
+</div>
+</div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2018 唯一浩哥
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+<iframe id="google_osd_static_frame_5988690757705" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;" src="./Java设计模式之《适配器模式》及应用场景 - 唯一浩哥 - 博客园_files/saved_resource(1).html"></iframe></body></html>

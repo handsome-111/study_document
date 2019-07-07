@@ -1,0 +1,68 @@
+  1.使用Java类提供Bean定义信息(自定义Bean的信息)
+    @Configuration:说明这个类可用于为Spring提供Bean的定义信息，也是一个普通的Bean，相当于本身也标注了@Component。
+    @Bean:将Bean装载进Spring容器中，Bean的类型由方法返回值的类型决定，bean的名称和方法名称一致
+
+	例子:@Configuration("Bean的名称")
+	     public class AppConf {
+	     @Scope("prototype")   //设置此Bean的作用域,此作用域每次调用都会返回新实例
+	     @Bean(name="Bean的名称")
+	     public UserDao getUserDao(){
+		return new UserDao();
+	     }
+	     @Bean
+	     public LogService getLogService(){
+	     LogService log=new LogService();
+	     log.setUserDao(getUserDao());
+		return log;
+	     }
+
+	     public static void main(String args[]){
+	     ApplicationContext con=new ClassPathXmlApplicationContext("com/smart/anno/beans.xml");
+	     UserDao user=(UserDao) con.getBean("getUserDao");//获取Bean
+	     }
+        等效于:
+	     <bean id="getUserDao" class="com.smart.UserDao"/>
+	     <bean id="getLogService" class="com.smart.LogService"
+		p:getUserDao-ref="getUserDao"/>
+
+   2.基于Java类的配置信息(class文件)启动Spring容器
+
+     @Import(类名.class):能将多个配置类组装到一个配置类中。也即是带有@Configuration或@Component的类
+	例子:如果不注册多个配置类，则只能获取初始化Spring容器时调用的参数的类里的Bean。也即是只能调用AppConf类里的Bean。
+
+	      @Configuration
+	      public class AppConf {....}
+    	      @Component("ss")
+	      public class ServiceConfig{....}
+
+		启动Spring容器:
+		此参数指的是:带有@Configuration或@Component注解的类
+		AnnotationConfigApplicationContext con=new AnnotationConfigApplicationContext(AppConf.class);
+		//注册多个@Configuration或@Component的配置类
+	   （1）con.regoster(ServiceConfig.class);
+	   （2）通过注解@Import(ServiceConfig.class);
+		例子：
+			@Import(ServiceConfig.class)
+			@Configuration
+			public class AppConf{...}
+
+     @ImportResource("classpath:com/beans.xml"):当要使用到其他配置文件里的Bean时，可以时候此注解引入XML配置文件
+	例子:
+	     @Configuration
+	     @Import(ServiceConfig.class)
+	     @ImportResource("classpath:com/beans.xml")
+	     public class AppConf {.....}
+
+
+
+    3.当通过XML配置文件启动Spring，将组装类组装到XML配置文件中:
+	<context:component-scan base-package="com.smart.anno" resource-pattern="AppConf.class"/>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+1.通过DefaultListableBeanFactory
+    解释：因为DefaultListableBeanFactory实现了ConfigurableListableBeanFactory接口，所以postProcessBeanFactory方法里的参数可以为DefaultListableBeanFactory，然后执行postProcessBeanFactory方法，就可以动态添加Bean了，如下例子
+    例子:
+	public class FactoryBean implements BeanFactoryPostProcessor{
+
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory bf) throws BeansException {
+		DefaultListableBeanFactory factory=(DefaultListableBeanFactory) bf;
+		BeanDefinitionBuilder builder=BeanDefinitionBuilder.genericBeanDefinition(UserServiceFactoryBean.class);
+		//设置该类里的属性名为userdao,bean名为uu的定义
+		builder.addPropertyReference("userDao", "userdao");
+		//注册Bean定义,但启动容器时不会初始化Bean,只有getBean时才调用
+		factory.registerBeanDefinition("userServiceFactoryBean", builder.getRawBeanDefinition());
+		//也直接注册一个Bean实例,容器启动时就将实例导入实例
+		//factory.registerSingleton("uuu", new UserServiceFactoryBean());		
+	}
+	public static void main(String args[]){
+		FactoryBean bf=new FactoryBean();
+		Resource  res=new ClassPathResource("com/smart/dynamic/beans.xml");
+		DefaultListableBeanFactory factory=new DefaultListableBeanFactory();
+		bf.postProcessBeanFactory(factory);		//执行动态导入Bean
+		XmlBeanDefinitionReader reader=new XmlBeanDefinitionReader(factory);
+		reader.loadBeanDefinitions(res);
+		factory.getBean("userServiceFactoryBean");
+	}
+
+}

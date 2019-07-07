@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://code.alibabatech.com/schema/dubbo 
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!-- 应用服务的名字 -->
+	<dubbo:application name="Twitter"/>
+	<!-- ref:接口的实现类的bean,registry:是否主要注册到注册中心上去 ，N/A表示不注册-->
+	<dubbo:service interface="dubbo.provider.HelloService" ref="helloService" registry="N/A"></dubbo:service>
+</beans>

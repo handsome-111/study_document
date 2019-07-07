@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:jee="http://www.springframework.org/schema/jee" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task.xsd
+            http://www.springframework.org/schema/rabbit
+            http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+    <!-- 定义RabbitMQ的连接工厂 -->
+    <rabbit:connection-factory id="rabbitConnectionFactory" username="admin" password="whj13379959770" 
+    	host="132.232.1.147" port="5672" virtual-host="/twitter" />
+    <!-- 定义Rabbit模板，指定连接工厂和指定交换机，改模板可以用来发出消息 -->
+    <rabbit:template id="amqpTemplate" connection-factory="rabbitConnectionFactory" exchange="fanoutExchange"/>
+    <!-- MQ的管理 -->
+    <rabbit:admin connection-factory="rabbitConnectionFactory"/>
+    <!-- 定义队列,自动声明，开启持久化 -->
+    <rabbit:queue name="queue1" auto-declare="true" durable="true"></rabbit:queue>
+    <!-- 定义交换机，自动声明 -->	
+    <rabbit:fanout-exchange name="fanoutExchange" auto-declare="true">
+    	<rabbit:bindings>
+    		<rabbit:binding queue="queue1"></rabbit:binding>
+    	</rabbit:bindings>
+    </rabbit:fanout-exchange>
+    
+    <!-- 队列监听 ，指定消费者监听某个队列-->
+    <rabbit:listener-container  connection-factory="rabbitConnectionFactory">
+    	<rabbit:listener ref="userConsumer" method="listen" queue-names="queue1"  />
+    </rabbit:listener-container>
+</beans>
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+Bean的作用域:
+   1.singleton:
+	(1)解释:此作用域为单例模式作用域，也是默认的作用域类型。
+	(2)例子:<bean id="xx" class="xxx.xxx" scope="singleton"/> 因为singleton是默认的，所以此属性可以不指定。
+	(3)lazy-init属性:如果lazy-init="true",则容器初始化时不会实例化bean，和BeanFactory的初始化是一样的。反之为初始化。
+		例:<bean id="xx" class="xxx.xxx" lazy-init="true"/>
+
+
+   2.prototype:
+	(1)解释:每次getBean("")都会返回一个新的实例。
+	(2)例:<bean id="xx" class="xxx.xx" scope="prototype" lazy-init="true"/>
+	(3):在默认情况下,使用此作用域不会初始化实例,等于是lazy-init="true"。
+
+
+   3.Web应用环境相关的作用域(request,session,globalSession):
+	使用这些作用域不仅要WebApplicationContext还要一些额外的配置:
+	   3.12种配置方式(web.xml):
+	     a.通过监听器配置:
+		<listener>
+			<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+		</listener>
+	     b.通过过滤器配置:
+		<fileter>
+			<filter>requestContextFilter</filter-name>
+			<filter-class>org.springframework.web.filter.RequestContextFilter</filter-class>
+		</filter>
+		<filter-mapping>
+			<filter-name>requestContextFilter</filter-name>
+			<url-pattern>/*</url-pattern>
+		</filter-mapping>
+	监听器:
+	ContextLoaderListener:负责监听Web容器的启动和关闭事件。
+	RequestContextListener:监听HTTP请求时间，Web服务器接收的每一次请求都会通知该监听器。
+
+	(1)request
+		作用域:每次HTTP请求调用Bean时，Spring会创建一个该Bean，请求处理完后，就会销毁这个Bean。
+		<bean name="xx" class="xxx" scope="request"/>	
+
+	(2)session
+		作用域:该Bean的作用域横跨整个HTTPSession，Session中的HTTP请求都共享该Bean。当HTTPSession结束后，实例才被销毁
+	
+	(3)globalSession
+		作用域:globalSession作用域类似于session，仅在Protlet的Web应用iai中使用，范围是全局Session的概念。
+
+    4.作用域的依赖
+	<aop:scoped-proxy/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,9 @@
+com.adventnet.afp.log
+com.adventnet.management.transport
+com.adventnet.snmp.beans
+com.adventnet.snmp.mibs
+com.adventnet.snmp.snmp2
+com.adventnet.snmp.snmp2.security.community
+com.adventnet.snmp.snmp2.usm
+com.adventnet.snmp.snmp2.vacm
+com.adventnet.utils

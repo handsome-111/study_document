@@ -1,0 +1,103 @@
+扫描注解定义的Bean
+   beans.xml的配置:
+      扫描注解定义的包或Bean:
+	1.生命context命名空间
+	2.扫描:<context:component-scan base-package="com.smart" resource-pattern="anno/*.class"/>扫描整个com/smart文件夹里的所有被标注的
+	<context:component-scan base-package="com.smart">
+		<context:include-filter type="regex" expression="com/.smart/.*"/>     //包括子包的类
+		<context:exclude-filter type="aspectj" expression="com.smart.ar+"/>
+	</context:component-scan>
+
+	type类型详解：
+	    regex:指包下的所有类。整个路径下的所有类
+
+
+  1.@Component("Bean的名字")
+	此注解在类的声明处对类进行标注，Spring会将POJO(JavaBean)转换为容器里的Bean。
+	等效于:<bean id="xx" class="xxx"/>
+   @Repository:用于对DAO实现类进行标注。
+   @Service:用于对Service实现类进行标注。
+   @Controller:用于对Controller实现类进行标注。
+
+  2.@Autowired(required="false")
+	默认按照类型在容器中查找匹配的Bean，找到了就注入@Autowired标注的变量中。找不到则抛出异常
+	required属性: false:不抛出异常，  true（默认）:抛出异常
+	
+	例:
+	   @Autowired
+	   private Car car;(必须是非基本数据类型)
+
+  3.@Qualifier
+	当Spring容器里出现同一类型不同名字的两个Bean时，则可以通过此标注限定bean的名称，从而注入属性。
+		例子:<bean id="car1" class="com.Car"/><bean id="car2" class="com.Car"/>
+	 
+	  @Autowired
+	  @Qualifier("car1")
+	   private Car car;(必须是非基本数据类型)
+
+  4.@RequestMapping
+	指定方法如何映射请求路径
+
+
+  5.对类方法进行标注(给方法传参)
+	解释:等于是初始化容器时，就调用了改方法，并从Spring容器里查找Bean，然后注入方法里。
+	例子:
+	  1.@Autowired
+	    public void setCar(Car c){....}
+
+	  2.@Autowired
+	    @Qualifier("car1")
+	    public void setCar(Car c){....}
+
+	  3.多个参数的
+	    @Autowired
+	    public void init(@Qualifier("car1")Car car,Boss boss){....}
+   
+  6.对集合类进行标注:
+	解释:Spring会将容器里所有该类型的Bean注入该集合属性里。
+	     当然，也和对象一样有着多态性，例如接口的实现类
+	例子:
+	   假如容器里有<bean id="car1" class="com.Car"/>  </bean id="car2" class="com.Car"/>
+	   Spring会将这两个属性注入集合里。
+	   @Autowired
+	   List<Car> cars=new ArrayList<Car>();
+
+
+
+  7.延迟依赖注入
+    @Lazy:延迟指的是在Spring容器启动的时候不会立即注入属性值，而是等到调用此属性时才会注入属性值，也即是调用getBean时
+	例子：
+	    @Lazy
+	    @Component("xxx")
+	    public class LogDao{
+		@Lazy
+		@Autowired
+		private Car car;
+		......
+	    }
+  8.Bean的作用范围和生命周期方法
+    @Scope:bean的作用范围
+    @PostConstruct:初始化时调用的方法
+    @PreDestroy:容器销毁时调用的方法
+	解释:
+	   1.Bean的生命周期，init-method属性，指的是在Bean初始化时调用的方法，在构造方法之后调用
+	   2.destory-nethod属性，指的是在容器销毁前执行的方法，容器烧毁后就不能调用getBean方法了。
+	例子:
+	   @Scope("prototype")   
+	   public class Car{
+		@PostConstruct   
+	 	public void init(){...}
+		@PreDestroy	
+		public void destroy(){...}
+	   }
+	
+
+   
+
+
+
+
+
+
+
+

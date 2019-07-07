@@ -1,0 +1,5 @@
+   BeanDefinition是配置文件<bean>元素标签在容器中的内部表示。BeanDefinition提供了相应的BeanClass，scipe，lazyInit类属性与<bean>元素里的属性一一对应。
+   BeanDefinition是常用的实现类，AbstractBeanDefinition是BeanDefinition抽象继承，父<bean>用RootBeanDefinition表示，子<bean>用ChildBeanDefinition表示，AbstractBeanDefinition对二者共同的类信息进行了抽象。
+   生成最终的BeanDefinition两个步骤：
+	1.BeanDefinitionReader读取承载配置信息的Resource，通过XML解析器解析配置信息的DOM对象，简单的为每个<bean>生成对应的半成品BeanDefinition对象，因为在配置文件中，可能通过占位符变量引用外部属性文件的属性，这些占位符变量在这一步没有被解析出来。
+	2.利用容器中注册的BeanFactoryPostProcessor对半成品的BeanDefinition进行加工处理，将以占位符表示的配置解析为最终的实际值，即成了成品的BeanDefinition。

@@ -1,0 +1,40 @@
+AdventNet SNMP API 4 (Release 4.0.4)
+Copyright (c) 1996-2006 AdventNet, Inc.
+All rights reserved.
+
+This software product, including software and documentation, with the
+exceptions listed in Acknowledgments (See Acknowledgments below) is the
+property of AdventNet, Inc.  No return-distribution or return-sale of any part
+of this software is permitted without the express written consent of
+AdventNet, Inc.
+
+This software may be used for evaluation purposes for a period of 45 days.
+
+ADVENTNET INC. DISCLAIMS ALL WARRANTIES, EITHER EXPRESS OR IMPLIED,
+INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS FOR A PARTICULAR PURPOSE, WITH REGARD TO THE SOFTWARE PRODUCT.
+
+IN NO EVENT SHALL ADVENTNET, INC. BE LIABLE FOR ANY SPECIAL, INCIDENTAL,
+INDIRECT, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING, WITHOUT LIMITATION,
+DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION, LOSS OF 
+BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF THE USE OF
+OR INABILITY TO USE THE SOFTWARE PRODUCT, EVEN IF ADVENTNET, INC. HAS BEEN
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+ACKNOWLEDGMENTS
+---------------
+
+We wish to acknowledge the following copyrighted works that make up portions of 
+AdventNet SNMP API 4 software.
+
+1. TOMCAT Version 3.1 developed by Apache Software Foundation. Please see the file 
+   tomcat/LICENSE
+
+2. Second technology release of XML[tm] library from Sun Microsystems Inc.
+   Please see the file jars/LICENCE_XML.txt and jars/LICENCE_ASF.txt 
+   
+3. Cryptix General License. Please see the file jars/LICENCE.txt_31, 
+   jars/LICENCE.txt_32 and jars/LICENCE.txt_jcecryptix
+
+4. JIMI SDK, Version 2.0 developed by Sun Microsystems.  Please see the file 
+   jars/LICENSE_JIMI.txt

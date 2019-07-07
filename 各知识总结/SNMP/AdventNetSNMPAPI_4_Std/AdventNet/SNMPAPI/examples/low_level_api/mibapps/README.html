@@ -1,0 +1,177 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>AdventNet SNMP API 4 README</title>
+</head>
+
+<body>
+
+<table border="0" cellpadding="5" cellspacing="0" width="100%" bgcolor="#33CCFF">
+  <tr>
+    <td width="50%" bgcolor="#808080">
+      <p align="left"><b><font face="Arial" size="4" color="#FFFFFF">README</font></b></td>
+    <td width="50%" bgcolor="#808080">
+      <p align="right"><b><font face="Arial" size="4" color="#FFFFFF">AdventNet
+      SNMP API 4</font></b></td>
+  </tr>
+  <tr>
+    <td width="50%" bgcolor="#C0C0C0">
+      <b><font face="Arial" size="2">&lt;AdventNet/SNMPAPI/examples/low_level_api_examples/mibapps&gt;</font></b></td>
+    <td width="50%" bgcolor="#C0C0C0">
+      <p align="right"><b><font face="Arial" size="1">Release 4.0.4</font></b></td>
+  </tr>
+  <tr>
+    <td width="100%" colspan="2" bgcolor="#FFFFFF"><font size="2" face="Arial">This directory contains examples of using the low-level APIs.
+      Use the setenv.bat or setenv.sh file for help on setting up your environment
+      to run the examples. Command line examples are given below.&nbsp;</font>
+      <p><font size="2" face="Arial">For using v3 features, the values for the command-line params are as
+      follows.</font></p>
+      <blockquote>
+        <p><font size="2" face="Arial"><b>-u</b> : The principal or user name on whose behalf the request is to be sent.&nbsp;<br>
+        <b>-a </b>: This is the authentication method to be used. The values are
+        MD5 for the HMAC-MD5 authentication SHA for the HMAC-SHA authentication&nbsp;<br>
+        <b>-w</b> : The password used for authentication. This is the non-localized
+        password.&nbsp;<br>
+        <b>-s </b>: The password used for encryption or privacy. This is the again the
+        non-localized password.&nbsp;<br>
+        <b>-i </b>: The context Name to be used for the pdu.&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2" face="Arial">Please note that the requests could fail, if sent with any other security
+      parameters apart from the ones configured on the agent. Moreover, the authentication scheme (-a) must be prvided when the auth password(-w)
+      is specified. All the v3 examples below use the case of a user initial2, using MD5 authentication,
+      and an authentication passphrase of initial2Pass.&nbsp;</font>
+    </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" bgcolor="#C0C0C0"><b><font face="Arial" size="2">Bundled
+      Examples</font></b></td>
+  </tr>
+  <tr>
+    <td width="100%"><font size="2" face="Courier New"><b> 1. snmpget.java</b></font><font size="2" face="Arial">
+      - Get one or more SNMP variables.</font>
+      <blockquote>
+      <p><font size="2" face="Arial"><b>Usage</b>:&nbsp;<br>
+      snmpget [-d] [-v version(v1,v2,v3)] [-c community] [-m MIB_files] [-p port] [-r retries] [-t timeout] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-i context_id] host OID [OID] ...&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java snmpget -m ../../../mibs/RFC1213-MIB 10.3.2.120 1.2.0&nbsp;<br>
+      java snmpget -m ../../../mibs/RFC1213-MIB -v v3 -u initial2 -w initial2Pass -a MD5 10.3.2.120 1.2.0&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2" face="Courier New"><b>2. snmpgetnext</b></font><font size="2" face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font size="2" face="Arial">
+      - Perform a getnext on one or more SNMP variables.</font></p>
+      <blockquote>
+      <p><font size="2" face="Arial"><b>Usage</b>:&nbsp;<br>
+      snmpgetnext [-d] [-v version(v1,v2,v3)] [-c community] [-m MIB_files] [-p port] [-r retries] [-t timeout] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-i context_id] host OID [OID] ...&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java snmpgetnext -m ../../../mibs/RFC1213-MIB 10.3.2.120 1.2.0&nbsp;<br>
+      java snmpgetnext -m ../../../mibs/RFC1213-MIB -v v3 -u initial2 -w initial2Pass -a MD5 10.3.2.120 1.2.0&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2" face="Courier New"><b>3. snmpset</b></font><font size="2" face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font size="2" face="Arial">
+      - Perform an SNMP set on one or more SNMP variables.</font></p>
+      <blockquote>
+      <p><font size="2" face="Arial"><b>Usage</b>:&nbsp;<br>
+      snmpset [-d] [-v version(v1,v2,v3)] [-c community] [-m MIB_files] [-p port] [-r retries] [-t timeout] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-i context_id] host [OID value] ...&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java snmpset -m ../../../mibs/RFC1213-MIB 10.3.2.120 1.5.0 whatever&nbsp;<br>
+      java snmpset -m ../../../mibs/RFC1213-MIB -v v3 -u initial2 -w initial2Pass -a MD5 10.3.2.120 1.5.0 whatever&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2" face="Courier New"><b>4. snmpbulk</b></font><font size="2" face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font size="2" face="Arial">
+      - Perform a getbulk operation. The agent must at least support v2c.</font></p>
+      <blockquote>
+      <p><font size="2" face="Arial"><b>Usage</b>:&nbsp;<br>
+      snmpbulk [-d] [-v version(v1,v2,v3)] [-c community] [-m MIB_files] [-p port] [-r retries] [-t timeout] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-i context_id] host OID [OID] ... nonRepeaters maxRepetions&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java snmpbulk -m ../../../mibs/RFC1213-MIB 10.3.2.120 1.1.0 0 20&nbsp;<br>
+      java snmpbulk -m ../../../mibs/RFC1213-MIB -v v3 -u initial2 -w initial2Pass -a MD5 10.3.2.120 1.1.0 0 20</font></p>
+      </blockquote>
+      <p><font size="2" face="Courier New"><b>5. snmpwalk</b></font><font size="2" face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font size="2" face="Courier New"><b>
+      - </b></font><font size="2" face="Arial">Perform an SNMP walk with one or more OIDs.</font></p>
+      <blockquote>
+      <p><font size="2" face="Arial"><b>Usage</b>:&nbsp;<br>
+      snmpwalk [-d] [-v version(v1,v2,v3)] [-m mibs] [-c community] [-p port] [-r retries] [-t timeout] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-i context_id] host OID&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java snmpwalk -m ../../../mibs/RFC1213-MIB 10.3.2.120 .1.3&nbsp;<br>
+      java snmpwalk -m ../../../mibs/RFC1213-MIB -v v3 -u initial2 -w initial2Pass -a MD5 10.3.2.120 .1.3&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2" face="Courier New"><b>6. snmpv1trap</b></font><font size="2" face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font size="2" face="Arial">
+      - Send an SNMP v1 trap PDU.</font></p>
+      <blockquote>
+      <p><font size="2" face="Arial"><b>Usage</b>:&nbsp;<br>
+      snmpv1trap [-d] [-c community] [-p port] -m MIB_files host enterprise agent-addr generic-trap specific-trap timeticks [OID value] ...&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java snmpv1trap -m ../../../mibs/RFC1213-MIB 10.3.2.120 snmp 10.3.2.118 3 0 16352 ifIndex.2 2&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2" face="Courier New"><b>7. snmpv2ctrap</b></font><font size="2" face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font size="2" face="Arial">
+      - Send an SNMPV2c trap notification PDU.</font></p>
+      <blockquote>
+      <p><font size="2" face="Arial"><b>Usage</b>:&nbsp;<br>
+      snmpv2ctrap [-d] [-c community] [-p port] -m MIB_files host TimeTicksvalue OIDvalue [OID value] ...&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java snmpv2ctrap -m ../../../mibs/RFC1213-MIB 10.3.2.120 16352 coldStartTrap ifIndex.2 2&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2" face="Courier New"><b>8. snmpv3trap</b></font><font size="2" face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font size="2" face="Arial">
+      - Send an SNMPV2c trap notification PDU using the SNMPV3 protocol.</font></p>
+      <blockquote>
+      <p><font size="2" face="Arial"><b>Usage</b>:&nbsp;<br>
+      snmpv3trap [-d] [-p port][-e engineID(0x....)] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-i context_id] -m MIB_files host TimeTicksvalue OIDvalue [OID value] ...&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java snmpv3trap -m "../../../mibs/RFC1213-MIB ../../../mibs/SNMPv2-MIB" -e 0x000012141516171819202121 -u intial2 -a MD5 -w initial2Pass -i initial 10.3.2.120 16352 coldStartTrap ifIndex.2 2&nbsp;</font>
+      </blockquote>
+    </td>
+  </tr>
+</table>
+<table border="0" cellpadding="5" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <p align="center"><b><font face="Arial" size="2">Support</font></b></td>
+    <td width="33%" bgcolor="#C0C0C0">
+      <p align="center"><b><font face="Arial" size="2">Feedback</font></b></td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top"><font face="Arial" size="2">For those with
+      support contracts, AdventNet provides priority support through email with a
+      reply usually provided within 24 hours.</font>
+      <p><font face="Arial" size="2">While sending your support questions or bug
+      report, please specify the SNMP package release version, the JDK version ,
+      the platform, and the browser you use .</font>
+      <p><font face="Arial" size="2">Send your support queries to:&nbsp;<a href="mailto:snmp-support@adventnet.com">snmp-support@adventnet.com</a></font>
+    </td>
+    <td width="33%" valign="top"><font face="Arial" size="2">We welcome your
+      feedback that will help us improve the APIs and provide future
+      enhancements.</font>
+      <p><font face="Arial" size="2">Send in your feedback to:&nbsp;<a href="mailto:snmp-support@adventnet.com">snmp-support@adventnet.com</a></font>
+      <p>&nbsp;</td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="5" width="100%">
+  <tr>
+    <td width="100%" bgcolor="#C0C0C0">
+      <p align="left"><b><font face="Arial" size="2">Copyright and License</font></b></td>
+  </tr>
+  <tr>
+    <td width="100%"><font face="Arial" size="2">Please refer <a href="../../../COPYRIGHT">COPYRIGHT</a>
+      and <a href="../../../LICENSE_AGREEMENT">LICENSE </a>before
+      using the package.</font></td>
+  </tr>
+  <tr>
+    <td width="100%"><img src="../../../images/logo.jpg">
+      <p><font face="Arial" size="1"><b>AdventNet, Inc.</b><br>
+      Web : <a href="http://www.adventnet.com">http://www.adventnet.com</a><br>
+      Email: <a href="mailto:info@adventnet.com">info@adventnet.com</a></font></p>
+      <hr size="1" color="#000000">
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>

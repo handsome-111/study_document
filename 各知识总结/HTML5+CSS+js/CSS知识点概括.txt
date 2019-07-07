@@ -1,0 +1,612 @@
+
+CSS:
+
+	水平/居中对齐：
+		可以使用flex弹性盒子来设置，以下属性是设置在父元素的
+			1.即justify-content和align-items，分别为水平和垂直方向上的对齐
+				水平居中对齐：
+					justify-content:center;
+					align-items:center;
+
+	水平居中：
+		1.盒子居中：margin:0 auto;		
+			注意：
+				1.可以使块级元素和行内元素居中,但不能使行内块元素居中
+				2.只有自身定义了宽度（否者就是继承父类的宽度，那还居中个毛），才能使用margin
+		2.内容居中：text-align:center
+			注意：会使子元素的行内块和行内元素居中，而对块级元素没有剧中的效果
+
+	垂直居中：
+		1.使用定位的方式，先设置top:50%,再减去元素自身高度的一半
+
+		2.vertical-align: middle;
+			会使自身（自身也得是行内块/块级元素）附近的，同级的行内块/行内元素居中对齐在该元素（即使用了该属性的元素）中
+			比如：文字在一个图片的右边中间显示。
+
+		3.line-height:
+			1.使行内元素,在父元素或子元素中使用都可以
+			2.也会使子元素下的行内块元素垂直居中（即必须在父元素中使用），
+
+	水平垂直居中：
+		1.父元素:display:flex,子元素:margin:auto;实现水平垂直居中
+
+	display:
+		1.块级元素(block): <div> ，h系列，<li>，<dt>，<dd>，<p> ，<form>，<ul>
+
+			特点：
+				1.总是从新的开始
+				2.默认宽度是容器的100%，占据一行
+			注意：
+				P标签不能放块级元素
+
+		2.行内元素(inline)：<span>，<a>，<b>，<i>，<u>，<em>，<strong>，<label>，<br>
+
+			注：
+				a比较特殊，可以放块级元素，但是链接里面不能再放链接。
+
+			特点：
+				1.不能设置宽高，但水平方向的padding和margin可以设置，垂直的不能
+				2.行内元素只能容纳文本和其他行内元素
+
+		3.行内块元素(inline-block): <img>，<input>,<td/>
+			可以对它们设置宽高的对齐属性，
+			特点：
+				1.和相邻的行内块元素在一行，但之间会有空白缝隙
+				2.盒子大小由内容决定,本身无宽高
+
+
+
+	background(背景)：
+		详见文档，特例：
+			半透明：
+				语法格式：
+					background:rgba(0,0,0,0.3);
+					最后一个参数是alpha透明度，取值范围0~1之间
+					注意：背景半透明是指盒子背景半透明，盒子里的内容不受影响
+					同样，可以给文字和边框透明，都是rgba的格式来写
+
+			CSS3的background:
+				CSS3中可以通过background-image属性添加背景图片。
+				background-size指定背景图像的大小
+				background-Origin属性指定了背景图像的位置区域。
+				CSS3 允许你在元素上添加多个背景图像。
+
+
+
+	CSS3文本效果：
+		text-shadow:文本阴影
+
+		box-shadow:盒子阴影
+
+		text-overflow：文本溢出属性指定应向用户如何显示溢出内容
+
+			注意：一定要和overflow属性搭配一起使用
+
+			clip:直接裁剪，没有省略号
+			ellipsis:溢出改成省略号
+
+		text-decoration:文本的修饰,去除默认效果等
+
+		word-break:自动换行，只用于英文
+
+		word-wrap:自动换行，中文
+
+		white-space:设置或检索对象内文本显示方式，通常我们使用于强制一行显示内容
+			white-space:normal;		默认处理方式
+			white-space:nowrap;强制一行显示文本，除非遇到<br>
+
+
+   	阴影效果(可实现立体效果)：
+   		值：rgba(0,0,0,0.3);  有内阴影和外阴影，详见文档
+   		text-shadow:文本阴影
+		box-shadow:盒子阴影
+
+	CSS3盒模型：
+		box-sizing: content-box | border-box
+			content-box:传统的盒子模型，默认的盒子模型，添加边距的时候会撑开，宽高=宽高+边距
+			border-box:宽高设置了之后不会变，尽管添加了边距,总的宽高不会变，不会被撑开
+
+
+	单位大小:
+		1.px(像素)：
+		2.rem:是基于html标签来控制大小
+			如：
+				html{
+					font-size:10px;
+				}
+				p {
+					font-size:1rem;			/*则大小为10px，为html的倍数*/
+				}
+		3.em:是根据上一级的大小来控制大小的。跟rem很相似
+		4.vh:相当于屏幕的百分比，1vh,屏幕的百分之1
+
+		角度单位:
+			deg:度，角度单位，1deg = 1°
+			rad:弧度。一个圆共2π个弧度
+			turn:转、圈（Turns）。一个圆共1圈
+			梯度（Gradians）。一个圆共400梯度
+
+			90deg = 100grad = 0.25turn ≈ 1.570796326794897rad
+
+	颜色：
+		rgb(red,green,blue):rgb(红，绿，蓝)
+		rgba(red,green,blue,alpha):rgb(红，绿，蓝，透明度)。透明度在0~1之间，0代表完全透明
+		hsl代表色相，饱和度和亮度 - 使用色彩圆柱坐标表示。
+			HSL颜色值指定：HSL（色调，饱和度，明度）。
+		HSLA颜色值：HSLA（色调，饱和度，亮度，α）	a透明度
+
+
+	选择器：
+		交集选择器：标记选择器和类别选择器,直接连在一起即可 如：（h3.red）
+		并集选择器：用逗号分隔，入（.red,p,.ff）
+		后代选择器：包括子元素里的子元素，即所有的子元素，孙元素等。用空格 如（.parent .child）
+		子元素选择器：只能选择子元素的元素，用大于号表示，如（.parent > .child）
+
+		伪类选择器：
+			格式：
+				例子：    
+					a：first-child{}
+					.child:first-child{}
+
+		伪类选择器和伪元素选择器的区别：
+			1.可以同时使用多个伪类选择器，但只能使用一个伪元素选择器
+			2.类选择器/伪类选择器的本质是选取对象，而伪元素选择器是插入一个元素，插入的是行内元素
+
+
+		属性选择器：选取标签带有某些特殊属性的选择器
+			如：
+				1.E[attr]{}			存在属性attr即可
+				2.E[attr=val]{}		属性值完全等于val			
+				3.e[attr*=val]{}	属性值包含val字符，并且在任意位置
+				4.E[attr^=val]{}	属性值包含val字符，并且在开始位置
+				5.E[attr$=val]{}	属性值包含val字符，并且在结束位置
+
+			例子：
+				input[value='11']{
+					color:red;
+				}
+
+		特殊的选择器例子：
+			1.当鼠标滑动到a标签时，a下的img显示
+				#lk_header .top-bar .top-bar-1 a:hover img{
+            		display: block;
+       	 		}
+
+
+	定位与浮动：
+
+		1.普通流,标准流：自上而下显示
+		2.浮动：浮动脱离标准流，不占位置，会影响标准流，浮动只会左右浮动，
+
+			具有行内块特性
+
+			目的：主要是让多个块级元素在一行上显示
+
+			使用：最好在DIV里浮动。在使用浮动的时候，最好套一个div，这个div是标准流，然后再套浮动，添加浮动后，会具有行内块的特性，
+			
+			清除浮动效果：
+				为什么：因为当浮动元素的父元素不知道高度的时候，就会影响整个布局，因此，只需要在同级浮动元素的末尾追加一个空标签清楚浮动元素，即可解决（即可得出父元素的高度，即子元素的高度），
+
+				方法1：在同级浮动元素的末尾追加一个空标签清楚浮动元素
+					如：
+						<div class="top">
+							<div class="float"></div>
+							<div class="float"></div>
+							<div class="clear"></div>
+						</div>
+						<div class="fotter"></div>
+
+				方法2：在浮动元素的父元素里添加：
+					/* 会触发BFC  BFC可以清除浮动，这是解决方案，  */
+					overflow: hidden;	
+					overflow: auto;
+
+				方法3：使用before和after双伪元素清除浮动，
+					使用方法 ：在浮动元素的父元素上使用 如下class即可
+						.clearfix:before,.clearfix:after {
+							content : "";
+							display : table;		/* 这句话可以触发BFC */
+						}
+						.clearfix:after {
+							clear:both;
+						}
+						.clearfix{
+							*zoom: 1;
+						}
+
+				clear : left;	
+				clear : both;		/* 同时清除两侧浮动的影响 */
+				clear : right;
+		3.定位：
+			目的：主要作用是移动位置
+
+			1.static：默认，自动定位
+			2.relative:相对定位(相对于自己来移动位置)，相对其原文档流的位置，占据空间，占据原来的空间，而不是移动后的空间
+				比喻：在课堂上，就算你走出了你的座位，你的座位还是你的，你一直占据着
+			3.absolute:绝对定位，不占据位置，相对于其上一个已经定位的元素进行定位。
+				若父元素没有定位：则以浏览器为基准对齐(document文档)，
+				若父元素有定位：可以是relative/absolute等，则以父元素为基准点对齐 （子绝父相）
+				绝对定位,水平居中：left : 50%
+			4.fixed:固定定位，相对于浏览器浏览器窗口进行定位
+
+			注意：如果行内元素添加了绝对定位或者固定定位，或浮动后，可以不转换为行内块/块元素，可以直接给宽度高度
+
+
+	版心和布局流程：
+		1.确定页面版心（可视区），就是内容的居中宽度，一般为1200
+		2.分析页面中的行模块，以及每个行模块中的列模块
+		3.制作HTML结构
+		4.CSS初始化，然后开始运用盒子模型的原理
+
+		一列固定宽度居中，一般为top,banner,main,footer
+
+	显示和隐藏：
+		隐藏：
+			display:none; 	隐藏元素之后，不占据空间
+			visibility:hidden;  	隐藏元素之后，依然占据空间
+
+		隐藏滚动条，但是还可以滑动的：
+			1.在子元素中使用:		如果溢出则使用滚动条
+				overflow-x:scroll;		
+				overflow-y:scroll;
+			2.在上面的子元素的父元素中使用:	如果元素移除则隐藏
+				overflow:hidden;
+			3.在父元素中使用：
+				.parent ::-webkit-scrollbar {
+			        display: none;
+			    }
+
+
+	CSS用户界面样式：
+		鼠标样式：
+			cursor:default;			默认
+			cursor:pointer;			小手指
+			cursor:move;			移动十字架
+			cursor:text;			文本
+
+		轮廓：
+			比如input文本框获取焦点的时候，会出现轮廓
+			语法: outerline : outline-color || outline-style || outline-width
+			一般都是去掉轮廓线：outerline : 0 ;  或 outerlin : none
+
+		防止拖拽文本域：
+			当使用textarea标签时，用户可以拖拽文本域 变大变小，不好，
+			
+		防止	拖拽：resize: none;
+
+	字体图标：
+		可以到阿里图标库里获取
+			1.本质是文字，可以随意改变颜色，产生阴影，透明效果等。。
+			2.本身体积小，几乎所有的浏览器的都支持
+
+
+		1.上传生成字体包
+			推荐网站：
+				国外：https://icomoon.io/
+				国内:https://www.iconfont.cn/
+
+			1.进入阿里图标库之后，添加到项目里，然后下载至本地，将全部解压出来
+
+
+		2.使用：
+			例子：
+
+			/**
+			 * 在样式里声明字体
+			 */
+			@font-face {
+				font-family: 'wifi';
+				/**
+				 * 为了兼容多个浏览器
+				 */
+				src: url('./wifi/iconfont.eot');
+				src: url('./wifi/iconfont.eot?#iefix') format('embedded-opentype'),
+				  url('./wifi/iconfont.woff2') format('woff2'),
+				  url('./wifi/iconfont.woff') format('woff'),
+				  url('./wifi/iconfont.ttf') format('truetype'),
+				  url('./wifi/iconfont.svg#iconfont') format('svg');
+			}
+			/**
+			 * 使用字体
+			 */
+			.wifi {
+				font-family: 'wifi';
+				font-size: 20px;
+				color: green;
+			}
+
+
+			WIFI:<span class="wifi">&#xe60e;<!-- 这个是在图标库要下载的时候可以获取到 --></span>
+
+
+
+	过渡：
+		详细属性见文档:https://www.runoob.com/css3/css3-transitions.html
+
+		从一种样式转变到另一个的时候，一般情况下搭配hover来使用。
+
+		语法格式：	
+			transition:要过度的属性  花费时间 运动曲线 何时开始;
+			如果要多组属性，需要用逗号隔开
+
+			例如：鼠标移动到div上，宽度慢慢变宽
+
+				div {
+					width: 200px;
+					height: 100px;
+					background-color: pink;
+					transition: width 0.5s ease-in 0s;
+
+					/*  设置两个属性 */
+					 *  transition: width 0.5s ease-in 0s,height 0.2s ease-in 0.1s;
+					 *  
+					 *  若所有属性都变化：
+					 *  transition:all 0.5s;
+					 *
+					 */
+
+				}
+				div:hover {
+					width: 600px;
+					/*height:300px;*/
+				}
+
+				<div></div>
+
+
+	2D转换/3D转换: 转换可以可以对元素进行移动、缩放、转动、拉长或拉伸。
+		详见文档
+
+
+	动画：即不需要任何操作就直接开始，一般会和2D/3D转换一起使用
+		语法：
+			创建动画。
+			@keyframes
+
+			使用动画：
+				动画文档:https://www.runoob.com/cssref/css3-pr-animation.html
+
+				animation-name:;					/*指定要绑定到选择器的关键帧的名称*/
+				animation-duration:;				/*动画指定需要多少秒或毫秒完成*/
+				animation-timing-function:; 		/*设置动画将如何完成一个周期*/
+				animation-delay:;					/*设置动画在启动前的延迟间隔。*/
+				animation-iteration-count:;			/*定义动画的播放次数。*/
+				animation-direction	:;				/*指定是否应该轮流反向播放动画。*/
+				animation-fill-mode	:;				/*规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式。*/
+				animation-play-state:;				/*指定动画是否正在运行或已暂停。*/			
+
+
+			使用多组动画，用逗号隔开，例如：
+				p{
+					position: fixed;
+					height: 5rem;
+					width: 100%;
+					font-size:3rem;
+					line-height: 5rem;
+					color: #8a6d3b;
+					text-align: center;
+					top: -5rem;
+					background-image: linear-gradient(to bottom,#fcf8e3 0,#f8efc0 100%);
+
+					animation-name:move,goback;					/*指定要绑定到选择器的关键帧的名称*/
+					animation-duration:2s,2s;					/*动画指定需要多少秒或毫秒完成*/
+					animation-timing-function:ease,ease; 		/*设置动画将如何完成一个周期*/
+					animation-delay:0s,5s;						/*设置动画在启动前的延迟间隔。*/
+					animation-iteration-count:1,1;				/*定义动画的播放次数。*/
+					animation-direction	:normal,normal;			/*指定是否应该轮流反向播放动画。*/
+					animation-fill-mode	:forwards,forwards;		/*规定当动画不播放时（当动画完成时，或当动画有一个延迟未开始播放时），要应用到元素的样式。*/
+					animation-play-state:running,running;		/*指定动画是否正在运行或已暂停。*/			
+				}
+
+
+			1.动画对行内元素无效，仅对行内块和块元素有效
+			2.动画不能在同一元素上同一时间使用
+
+			简单例子：
+				div {
+					width: 200px;
+					height: 100px;
+					background-color: pink;
+					/*animation:动画名称 动画时间 运动曲线 何时开始 播放次数 是否反方向 */
+					animation:go 2s ease 0s infinite alternate ;
+					
+				}
+				/**
+				 * 创建动画	
+				 * go : 动画名称
+				 */
+				@keyframes go {
+					form {
+						transform: translateX(0);
+					}
+
+					to {
+						transform: translateX(600px);
+					}
+				}
+
+
+
+
+			创建动画的方式：
+				注：优先使用百分比的方式，如 0%，100%，因为form不会继承原来的属性
+
+				1.
+					@keyframes go {
+						form {
+							transform: translateX(0);
+						}
+
+						to {
+							transform: translateX(600px);
+						}
+					}
+
+				2.用百分比
+					/**
+					 * 创建动画	
+					 * go : 动画名称
+					 */
+					@keyframes go {
+						0% {
+							transform: translateX(0);
+						}
+
+						25% {			
+							transform: translateX(600px);
+						}
+
+						50%{
+							transform: translateY(30px);
+						}
+
+						100%{
+							transform: translate3d(30px,600px);
+						}
+					}
+
+
+	CSS3伸缩布局/弹性盒子（flex）：	是一种当页面需要适应不同的屏幕大小以及设备类型时确保元素拥有恰当的行为的布局方式。
+		注意：
+			被定位(absolute,fixed)的盒子不能使用flex。只需要在最外层在嵌一个div即可，并设置宽和高即可
+
+		父元素：
+
+			可使用属性大全：
+
+				1.display:flex;		(使用了flex的时候，就可以不用添加浮动了)
+
+				2.可设置：
+					例：
+						min-width:最小值			父元素伸缩的最小宽度，到达改值时，就无法在伸缩
+						max-width:最大值			父元素伸缩的最大宽度，到达改值时，就无法在伸缩
+
+				3.flex-direction: 子元素伸缩的方向,即排列方向
+					值：
+						row：横向从左到右排列（左对齐），默认的排列方式。
+						row-reverse：反转横向排列（右对齐，从后往前排，最后一项排在最前面。
+						column：纵向排列。
+						column-reverse：反转纵向排列，从后往前排，最后一项排在最上面。
+
+				4.	水平对齐方式
+					justify-content：内容对齐，即子元素盒子的对齐方式，如居中等。	
+
+					(当子元素都是固定宽度的时候，没有把宽度用完时，可用上)
+
+					比如说所有的子元素都是固定宽度的时候，当子元素的总宽度加起来 < 父元素总宽度，则使用一下对齐方式会明显看出区别，空出来的宽度看起来就像是margin一样。
+
+						flex-start：弹性项目向行头紧挨着填充。这个是默认值。
+
+						flex-end：弹性项目向行尾紧挨着填充，和flex-start反向
+
+						center：盒子居中
+
+						space-between：平均分布。（“空出来的宽度”会平均分配在“子元素之间”）
+
+						space-around： 平均分布。（“空出来的宽度”会平均分配在“子元素的两侧”，但是“子元素最外侧的宽度”会是 “子元素之间的宽度的2/1”）讲的都是空出来的宽度
+						
+
+				5.垂直对齐方式：
+					align-items：内容对齐，但是是垂直方向的设置,但是是局限于“单行”的垂直对齐方式，若是多行，建议使用align-content
+
+						flex-start：所白了就是从上开始，严谨点说是：弹性盒子元素的侧轴（纵轴）起始位置的边界紧靠住该行的侧轴起始边界。
+
+						flex-end：所白了就是从下开始），严谨点说是：起始位置的边界紧靠住该行的侧轴结束边界。
+
+						center：垂直剧中
+
+						baseline：如弹性盒子元素的行内轴与侧轴为同一条，则该值与'flex-start'等效。其它情况下，该值将参与基线对齐。
+
+						stretch：让子元素的高度拉伸适用父容器（子元素不给高度的前提下）。如果指定侧轴大小的属性值为'auto'，则其值会使项目的边距盒的尺寸尽可能接近所在行的尺寸，但同时会遵照'min/max-width/height'属性的限制。
+
+				6.align-content:多行垂直方向上的对齐方式，
+					属性可以参考第五个
+
+					stretch - 默认。各行将会伸展以占用剩余的空间。
+
+					flex-start - 各行向弹性盒容器的起始位置堆叠。
+
+					flex-end - 各行向弹性盒容器的结束位置堆叠。
+
+					center -各行向弹性盒容器的中间位置堆叠。
+
+					space-between -各行在弹性盒容器中平均分布。
+
+					space-around - 各行在弹性盒容器中平均分布，两端保留子元素与子元素之间间距大小的一半。
+				
+
+				7.控制是否换行
+					flex-wrap:控制是否换行
+
+						nowrap :默认， 弹性容器为单行。尽管子元素的宽度都是固定宽度，加起来超出父元素都不会换行，都会按比例缩放
+
+						wrap ： 弹性容器为多行。该情况下弹性子项溢出的部分会被放置到新行，子项内部会发生断行
+
+						wrap-reverse : 反转 wrap 排列。
+
+				8.简写：
+					flex-flow : flex-direction flex-wrap;
+
+
+		子元素：
+
+			1.flex:
+
+			flex:1；		代表份数，
+			flex:0；		则不参与伸缩，相当于占百分之0.
+			flex:固定宽度  		如果子元素的总宽度超出父元素，详见flex-wrap属性确定是否换行，不然固定无效
+
+				
+				例子：
+					子元素A:	flex:1;		则占  1/总宽度
+					子元素B:	flex:2;		则占  2/总宽度
+					子元素C:	flex:3;		则占  3/总宽度
+
+				例子2：
+					子元素A:	width:300px;		若是固定的宽度,则无需使用flex
+					子元素B:	flex:2;		则占  2/剩余宽度			（剩余宽度 = 总宽度 - 固定宽度）
+					子元素C:	flex:3;		则占  3/剩余宽度			（剩余宽度 = 总宽度 - 固定宽度）
+
+
+			2.order:
+				排序的值，数值越小越往前，可以是负数
+
+				例子：
+					child {
+						flex:1;
+						order:2;
+					}
+
+
+
+
+
+
+
+	JS:
+		关于this:
+			1.直接使用this，则表示window对象，主要在最外层，没有对象，就是window对象
+			2.在对象里使用this，比如vue对象里的this，则this就是表示对象，即使对象里的方法中使用this，this还是表示那个对象，如：
+				var person = {
+					a : 'a',
+					b : () => {
+						console.log(this);		//表示person对象
+					}
+				}
+			3.直接script标签的函数使用this，都是window，跟1是同一个道理
+			4.在事件中使用this,则表示的是接受事件的元素，如：
+				<button onclick="click(this);" value="点击我">
+			5.在函数中使用this，但是如果对象new了，可以指向对象，因为不new的话，这个函数就是window的了，所以this还是window，如果new了，就是创建一个函数对象，如：
+				function A(){
+
+				}
+				new A();	//则创建一个A对象，如果不new，直接A(),则是window对象调用方法
+
+
+		关于箭头函数:
+			（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
+			 (2)箭头函数没有自己的this，所以当然也就不能用call()、apply()、bind()这些方法去改变this的指向。
+
+		预防多次点击/多次事件触发的解决方案
+			1.使用同步
+			2.在全局设置一个变量，在事件方法里根据变量来执行，事件结束后才恢复变量

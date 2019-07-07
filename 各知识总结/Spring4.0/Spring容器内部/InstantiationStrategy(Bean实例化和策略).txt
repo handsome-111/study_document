@@ -1,0 +1,7 @@
+   InstantiationStrategy负责根据BeanDefinition对象创建一个Bean实例。但并不会参与Bean属性设置的工作，所以返回的Bean实例还是半成品，属性填充工作留给BeanWrapper完成。
+	Spring之所以将实例化Bean的工作通过策略接口进行描述，是为了可以方便的采用不同的实例化策略，以满足不同的需求。
+   SimpleInstantiationStrategy是常用的实例化策略，该策略利用Bean实现类的默认构造函数，带参构造函数或工厂方法创建Bean的实例
+   CglibSubclassingInstantiationStrategy扩展了SimpleInstantiationStrategy接口，为需要进行方法注入的Bean提供了支持。
+	
+   
+	

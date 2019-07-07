@@ -1,0 +1,374 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>AdventNet SNMP API 4 README</title>
+</head>
+
+<body>
+
+<table border="0" cellpadding="5" cellspacing="0" width="100%" bgcolor="#33CCFF">
+  <tr>
+    <td width="50%" bgcolor="#808080">
+      <p align="left"><b><font face="Arial" size="4" color="#FFFFFF">README</font></b></td>
+    <td width="50%" bgcolor="#808080">
+      <p align="right"><b><font face="Arial" size="4" color="#FFFFFF">AdventNet
+      SNMP API 4</font></b></td>
+  </tr>
+  <tr>
+    <td width="50%" bgcolor="#C0C0C0">
+      <b><font face="Arial" size="2">&lt;AdventNet/SNMPAPI/examples/applications&gt;</font></b></td>
+    <td width="50%" bgcolor="#C0C0C0">
+      <p align="right"><b><font face="Arial" size="1">Release 4.0.4</font></b></td>
+  </tr>
+  <tr>
+    <td width="100%" colspan="2" bgcolor="#FFFFFF"><font size="2" face="Arial">This directory contains examples of using the new high-level Adventnet
+      SNMP APIs. The new APIs simplify the programmers' job, in addition to supporting the JDK 1.1 event model and Java beans.
+      See the setenv.bat file for help on setting up your environment to run the examples. Command line examples are given below.
+      For using v3 features, the values for the command-line params are as
+      follows.</font>
+      <blockquote>
+        <p><font size="2" face="Arial"><b>-u </b> : The principal or user name on whose behalf the request is to be sent.</font></p>
+        <p><font size="2" face="Arial"><b>-a</b> : This is the authentication method to be used.
+        The values are MD5 for the HMAC-MD5 authentication SHA for the HMAC-SHA authentication.</font></p>
+        <p><font size="2" face="Arial"><b>-w </b> : The password used for authentication. This is the non-localized
+      password.&nbsp;</font></p>
+        <p><font size="2" face="Arial"><b>-s</b> : The password used for encryption or privacy. This is the again the
+      non-localized password.&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2" face="Arial">Please note that the requests could fail, if sent with any other security
+      parameters apart from the ones configured on the agent. Moreover, the authentication scheme (-a) must be
+      provided when the auth password(-w) is specified. All the v3 examples
+      provided below use the case of a user initial, using MD5 authentication
+      and authentication passphrase of initialPass.&nbsp;</font>
+    </td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="5" cellspacing="0" width="100%">
+  <tr>
+    <td width="100%" bgcolor="#C0C0C0"><b><font face="Arial" size="2">Bundled
+      Examples</font></b></td>
+  </tr>
+  <tr>
+    <td width="100%"><font size="2"><b><font face="Courier New">1. snmpget.java</font></b><font face="Arial">&nbsp;</font>-
+      <font face="Arial">Get one or more SNMP variables.</font>
+      </font>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java snmpget [-v version(v1,v2)] [-m MIB_files] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-d] host OID [OID] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpget -m "../../mibs/RFC1213-mib" 10.3.2.120 ifType.2 ifDescr.2&nbsp;<br>
+      java snmpget -v v3 -u initial -w initialPass -a MD5 -m "../../mibs/RFC1213-mib" 10.3.2.120 ifType.2 ifDescr.2&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">2. snmpgetnext</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Perform a getnext on one or more SNMP variables.</font></font></p>
+      <blockquote>
+      <p><font size="2"><font face="Arial"><b>Usage</b>:&nbsp;<br>
+      java snmpgetnext [-v version(v1,v2)] [-m MIB_files] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-d] host OID [OID] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpgetnext -m "../../mibs/RFC1213-mib" 10.3.2.120 ipRouteDest ipRouteNextHop&nbsp;<br>
+      java snmpgetnext -v v3 -u initial -w initialPass -a MD5 -m "../../mibs/RFC1213-mib" 10.3.2.120 ipRouteDest ipRouteNextHop&nbsp;
+      </font></font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">3. </font><font size="2" face="Courier New">snmpgetbulk</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get SNMP variables in bulk.</font></font></p>
+      <blockquote>
+      <p><font size="2"><font face="Arial"><b>Usage</b>:&nbsp;<br>
+      java snmpgetbulk [-v version(v2,v3)] [-m MIB_files] [-c community] [-p port] [-t timeout] [-r retries] [-nr non-repeaters] [-mr max-repetitions] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-d] host OID [OID] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpgetbulk -m "../../mibs/RFC1213-mib" -nr 0 -mr 50 10.3.2.120 ifType.2 ifDescr.2&nbsp;<br>
+      java snmpgetbulk -v v3 -nr 0 -mr 50 -u initial -w initialPass -a MD5 -m "../../mibs/RFC1213-mib" localhost 10.3.2.120 ifType.2 ifDescr.2&nbsp;
+      </font></font></p>
+      </blockquote>
+      <p><font size="2"><font size="2" face="Courier New"><b>4. snmpset</b></font><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Perform an SNMP set on one or more SNMP variables.</font></font></p>
+      <blockquote>
+      <p><font size="2"><font face="Arial"><b>Usage</b>:&nbsp;<br>
+      java snmpset [-c community] [-p port] [-t timeout] [-r retries] [-v version(v1,v2,v3)] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] -m MIB_files host [OID value] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpset -m "../../mibs/RFC1213-mib" 10.3.2.120 sysLocation.0 paradise sysName.0 whatever&nbsp;<br>
+      java snmpset -v v3 -u initial -w initialPass -a MD5 -m "../../mibs/RFC1213-mib" 10.3.2.120 sysLocation.0 paradise sysName.0 whatever&nbsp;
+      </font></font></p>
+      </blockquote>
+      <p><font size="2"><font size="2" face="Courier New"><b>5. snmpset_without_mib</b></font><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Perform an SNMP set on one or more SNMP variables without the loading of MIBs.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java snmpset_without_mib [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a auth_protocol(MD5/SHA)] [-w auth_password] [-s priv_password] [-d debug] host OID {INTEGER | STRING | GAUGE | TIMETICKS | OPAQUE | IPADDRESS | COUNTER | OID } value [OID type value]&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpset_without_mib -v v2 10.3.2.120 1.5.0 STRING whatever 1.6.0 STRING here&nbsp;<br>
+      java snmpset -v v3 -u initial -w initialPass -a MD5 10.3.2.120 1.6.0 paradise 1.5.0 whatever&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><font face="Courier New"><b>6. </b></font><font size="2" face="Courier New"><b>snmpwalk</b></font><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Perform an SNMP walk with one or more OIDs.</font></font></p>
+      <blockquote>
+      <p><font face="Arial"> <b>Usage</b>:&nbsp;<br>
+      java snmpwalk [-v version(v1,v2,v3)] [-m MIB_files] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a
+      auth_protocol] [-w auth_password] [-s priv_password] host OID [OID] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpwalk -m &quot;../../mibs/RFC1213-mib&quot; 10.3.2.120 interfaces&nbsp;<br>
+      java snmpwalk -v v3 -u initial -w initialPass -a MD5 -m &quot;../../mibs/RFC1213-mib&quot; 10.3.2.120 interfaces&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">7. sendtrap</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Send SNMP v1 traps using the high-level APIs.</font></font></p>
+      <blockquote>
+      <p><font size="2"><font face="Arial"><b>Usage</b>:&nbsp;<br>
+      java sendtrap [-c community] [-m MIB_files] [-p port] \nhost enterprise agent-addr generic-trap specific-trap timeticks \n[OID value] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java sendtrap -m "../../mibs/RFC1213-mib" 10.3.2.121 snmp 10.2.2.120 3 0 1001 ifIndex.2 2
+      </font></font></p>
+      </blockquote>
+      <p><font size="2"><font size="2" face="Courier New"><b>8. sendv2trap</b></font><font face="Arial">.</font><font size="2" face="Courier New"><b>java&nbsp;</b></font><font face="Arial">-
+      Send SNMP v2c and v3 traps using the high-level APIs.</font></font></p>
+      <blockquote>
+      <p><font size="2"><font face="Arial"><b>Usage</b>:&nbsp;<br>
+      java sendv2trap [-d Debug] [-v version(v2,v3)] [-c community] [-p port] [-e engineID(0x...)] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-i contextName] -m MIB_file host timeticksvalue trapOID [ OID value ] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java sendv2trap -m "../../mibs/RFC1213-MIB" -v v3 -p 2000 -e 0x12345 -u testuser -a MD5 -w pass localhost 10000 .1.3.6.1.2.4.1.11 1.5.0 snmp&nbsp;
+      </font></font></p>
+      </blockquote>
+      <p><font size="2"><font size="2" face="Courier New"><b>9. sendinform</b></font><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Send SNMP inform messages using the high-level APIs.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java sendinform [-d Debug] [-v version(v2,v3)] [-c community] [-p port] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-i contextName] -m MIB_file host timeticksvalue trapOID [ OID value ] ...&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java sendinform -m "../../mibs/RFC1213-MIB" -v v3 -p 2000 -a MD5 -w pass localhost 10000 .1.3.6.1.4.1.11 1.5.0 snmp&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">10. trapreceiver</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Receive and print SNMP traps.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java trapreceiver [-v version(v1,v2)] [-m MIB_files] [-c community] [-p port]&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java trapreceiver -m "../../mibs/RFC1213-mib" -p 162&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">11. snmpinformreq_receiver</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Receive and print SNMP INFORM requests.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java snmpinformreq_receiver [-m MIB_files] [-c community] [-p port] [-u user] [-e engineID] [-a auth_protocol] [-w auth_password] [-s priv_password]&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpinformreq_receiver -m "../../mibs/RFC1213-MIB" -p 2000&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">12. getSnmpTable</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get an SNMP table row by row using the API's SnmpTable class.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java getSnmpTable [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-n contextname] [-i contextID] [-d debug] host tableOID MIB_files&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java getSnmpTable -v v2 -m "../../mibs/RFC1213-mib" 10.3.2.120 ipRouteTable&nbsp;<br>
+      java getSnmpTable -v v3 -u initial -w initialPass -a MD5 10.3.2.120 ipRouteTable ../../mibs/RFC1213-MIB</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">13. gettable</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get and print an SNMP table.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java gettable [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-n contextName] [-i contextID] [-d debug] host tableOID MIB_files&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java gettable -m "../../mibs/RFC1213-mib" 10.3.2.120 ifTable&nbsp;<br>
+      java gettable -v v3 -u initial -w initialPass -a MD5 10.3.2.120 ifTable ../../mibs/RFC1213-MIB&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><font face="Courier New"><b>14. </b></font><font face="Arial">&nbsp;</font><font size="2" face="Courier New"><b>walk_indexes</b></font><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get one or more SNMP variables.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java walk_indexes [-v version(v1,v2,v3)] [-m MIB_files] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-d] host OID&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java walk_indexes -v v2 -m "../../mibs/RFC1213-mib" 10.3.2.120 tcpConnLocalAddress&nbsp;<br>
+      java walk_indexes -v v3 -u initial -w initialPass -a MD5 -m "../../mibs/RFC1213-mib" 10.3.2.120 tcpConnLocalPort&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">15. snmpget_by_index</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get one or more SNMP variables.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java snmpget_by_index [-v version(v1,v2,v3)] [-m MIB_files] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-d] host OID index [index] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpget_by_index -v v2 -m "../../mibs/RFC1213-mib" 10.3.2.120 atIfIndex 2 128.253.154.1&nbsp;<br>
+      java snmpget_by_index -v v3 -u initial -w initialPass -a MD5 -m "../../mibs/RFC1213-mib" 10.3.2.120 atPhysAddrress 2 128.253.154.1&nbsp;<br>
+      java snmpget_by_index -v v3 -u initial -w initialPass -a MD5 -m "../../mibs/RFC1213-mib" 10.3.2.120 ifDescr 2&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">16. snmpaddrow</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Add a row to the table.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java snmpaddrow [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a
+      auth_protocol(MD5/SHA)] [-w auth_password] [-s priv_password] [-d debug] host MIB_files OID value
+      [OID value] ...&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpaddrow localhost &quot;../../mibs/agent-sample-mib.txt&quot; managerHost.5 local managerPort.5 2000 rowStatus.5 4-p 8001&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">17. snmpdelrow</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Delete a row to the table.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java snmpdelrow [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a
+      auth_protocol(MD5/SHA)] [-w auth_password] [-s priv_password] [-d debug] host MIB_files rowStatusOID.index&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java snmpdelrow localhost -p 8001 &quot;../../mibs/agent-sample-mib.txt&quot; rowStatus.5&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">18. setTableValue</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Set the value of a particular cell of the table.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java setTableValue [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a
+      auth_protocol(MD5/SHA)] [-w auth_password] [-s priv_password] [-n
+      contextname] [-i contextID] [-d debug] host MIB_files tableOID value rowIndex columnIndex&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java setTableValue localhost ../../mibs/agent-sample-mib.txt forwardingTable value 0 1 -p 8001&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">19. encodeTableIndex</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get all the column oids of the table with appended index (instance) values with
+      it. This example will encode the index if it is in type like octetstring .&nbsp;</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b> Usage</b> :&nbsp;<br>
+      java encodeTableIndex tableOID MIB-File index [indices..]&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java encodeTableIndex atTable ../../mibs/RFC1213-MIB 1 192.168.1.45&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">20. getColumn</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get a column from the table.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java getColumn [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a
+      auth_protocol(MD5/SHA)] [-w auth_password] [-s priv_password] [-n
+      contextname] [-i contextID] [-d debug] host MIB_files columnName&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java getColumn localhost ../../mibs/RFC1213-MIB ifType&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">21. getRow</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get a row from the table.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java getRow [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a
+      auth_protocol(MD5/SHA)] [-w auth_password] [-s priv_password] [-n
+      contextname] [-i contextID] [-d debug] host tableOID MIB_files rowIndex&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java getRow localhost ifTable ../../mibs/RFC1213-MIB 1&nbsp;</font></p>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">22. getTableInfo</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get the information about the table.</font>
+      </font>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java getTableInfo ColumnOID MIB_FILE&nbsp;<br>
+      <b>Example</b>:&nbsp;<br>
+      java getTableInfo ifType ../../mibs/RFC1213-MIB</font>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">23. requestServerDemo</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Perform asynchronous requests by using SnmpRequestServer.&nbsp;Edit the requestServerDemo.html file to put in the correct host&nbsp;and
+      community.</font>
+      </font>
+      <blockquote>
+      <p><font size="2"><font face="Arial"><b>Usage</b>:&nbsp;<br>
+      appletviewer requestServerDemo.html&nbsp;<br>
+      <b>Note</b>:&nbsp;<br>
+      For jdk1.2 the classpath should be specified in the command line as
+      follows.&nbsp;<br>
+      <i>appletviewer -J-Xbootclasspath:applications.jar;.\..\jars\AdventNetLogging.jar;..\..\jars\AdventNetSnmp.jar;&lt;JDK_HOME>\jre\lib\rt.jar</i><i>
+      requestServerDemo.html&nbsp;</i><br>
+      In addition, the HTML file should also be customized. Refer Help documentation for details.&nbsp;
+      </font>
+      </font>
+      </blockquote>
+      <p><font size="2"><font size="2" face="Courier New"><b>24. snmpPollerDemo</b></font><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Perform automatic polling of SNMP variables by using SnmpPoller.&nbsp;Edit the snmpPollerDemo.html file to put in the correct host&nbsp;and
+      community.</font>
+      </font>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      appletviewer snmpPollerDemo.html&nbsp;<br>
+      <b>Note</b>:&nbsp;<br>
+      For jdk1.2 the classpath should be specified in the command line as
+      follows:<br>
+      <i>appletviewer -J-Xbootclasspath:applications.jar;.\..\jars\AdventNetLogging.jar;..\..\jars\AdventNetSnmp.jar;&lt;JDK_HOME&gt;\jre\lib\rt.jar</i><i>
+      snmpPollerDemo.html&nbsp;<br>
+      </i>
+      In addition, the html file should also be customized. Refer Help documentation for details.&nbsp;</font>
+      </blockquote>
+      <p><font size="2"><b><font face="Courier New">25. getSnmpAugmentTable</font></b><font face="Arial">.</font><font size="2" face="Courier New"><b>java</b></font><font face="Arial">&nbsp;-
+      Get an SNMP Augment table row by row using the API's SnmpAugmentTable class.</font></font></p>
+      <blockquote>
+      <p><font face="Arial" size="2"><b>Usage</b>:&nbsp;<br>
+      java getSnmpAugmentTable [-v version(v1,v2,v3)] [-c community] [-p port] [-t timeout] [-r retries] [-u user] [-a auth_protocol] [-w auth_password] [-s priv_password] [-n contextname] [-i contextID] [-d debug] host tableOID MIB_files&nbsp;<br>
+      <b>
+      Example</b>:&nbsp;<br>
+      java getSnmpAugmentTable -v v2 -m "../../mibs/IF-MIB" 10.3.2.120 ifXTable&nbsp;<br>
+      java getSnmpAugmentTable -v v3 -u initial -w initialPass -a MD5 10.3.2.120 ifXTable ../../mibs/IF-MIB</font></p>
+      </blockquote>
+
+    </td>
+  </tr>
+</table>
+<table border="0" cellpadding="5" width="100%">
+  <tr>
+    <td width="33%" bgcolor="#C0C0C0">
+      <p align="center"><b><font face="Arial" size="2">Support</font></b></td>
+    <td width="33%" bgcolor="#C0C0C0">
+      <p align="center"><b><font face="Arial" size="2">Feedback</font></b></td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top"><font face="Arial" size="2">For those with
+      support contracts, AdventNet provides priority support through email with a
+      reply usually provided within 24 hours.</font>
+      <p><font face="Arial" size="2">While sending your support questions or bug
+      report, please specify the SNMP package release version, the JDK version ,
+      the platform, and the browser you use .</font>
+      <p><font face="Arial" size="2">Send your support queries to:&nbsp;<a href="mailto:snmp-support@adventnet.com">snmp-support@adventnet.com</a></font>
+    </td>
+    <td width="33%" valign="top"><font face="Arial" size="2">We welcome your
+      feedback that will help us improve the APIs and provide future
+      enhancements.</font>
+      <p><font face="Arial" size="2">Send in your feedback to:&nbsp;<a href="mailto:snmp-support@adventnet.com">snmp-support@adventnet.com</a></font>
+      <p>&nbsp;</td>
+  </tr>
+</table>
+
+<table border="0" cellpadding="5" width="100%">
+  <tr>
+    <td width="100%" bgcolor="#C0C0C0">
+      <p align="left"><b><font face="Arial" size="2">Copyright and License</font></b></td>
+  </tr>
+  <tr>
+    <td width="100%"><font face="Arial" size="2">Please refer <a href="../../COPYRIGHT">COPYRIGHT</a>
+      and <a href="../../LICENSE_AGREEMENT">LICENSE </a>before
+      using the package.</font></td>
+  </tr>
+  <tr>
+    <td width="100%"><img src="../../images/logo.jpg">
+      <p><font face="Arial" size="1"><b>AdventNet, Inc.</b><br>
+      Web : <a href="http://www.adventnet.com">http://www.adventnet.com</a><br>
+      Email: <a href="mailto:info@adventnet.com">info@adventnet.com</a></font></p>
+      <hr size="1" color="#000000">
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- saved from url=(0343)https://cee2.iteye.com/hwwy?khl=loj&zlg=loj&gl=dmmqolrl&owx=Tcc-bLmtLlyLlyNX_SLJObPZLJZQcLlyiT_diTUfQZSMZSLlyMacUOXQLlyPQcMUXbLlyonmkpoqq&dul=l&gul=j&glv=j&gf=m&fhf=DCyKr&dqw=k&sdu=kmppgqlr&wsu=komjrossnsjjn&sv=lqogj&svv=kmnsgkjjks&slv=KkgKk&surw=l&gwp=0C54J87BC&gdl=o&sfv=kmnsgpms&hasv=kkkjjk&n2=37qqhmvq1j97ywg66r&c5=c2tmd7fw3ykhzx5hfr&swt=1 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <!--20001-->
+        <title>百度网盟推广</title>
+        <script type="text/javascript">
+newDomain = "cee2.iteye.com";
+targetHostList = {
+"f11.baidu.com":true,
+"f12.baidu.com":true,
+"cm.baidu.com":true,
+"cpro.baidu.com":true,
+"pos.baidu.com":true,
+"cpro.baidustatic.com":true,
+"f10.baidu.com":true,
+"t12.baidu.com":true,
+"t11.baidu.com":true,
+"t10.baidu.com":true,
+"show.findqc.com":true,
+"img.findqc.com":true,
+"cm.pos.baidu.com":true,
+"dup.baidustatic.com":true,
+"wn.pos.baidu.com":true
+}
+targetTemplateList = {
+"template_inlay_all_mobile_lu_native_ad_topic_2":true,
+"template_inlay_all_pc_lu_info_flow_image_no_des":true,
+"template_inlay_all_mobile_lu_native_ad_image":true,
+"template_inlay_all_mobile_lu_native_ad_topic_1":true,
+"template_inlay_all_pc_lu_info_flow_images":true,
+"baiduCustSTagLinkUnitFlexEqualExp":true,
+"baiduCustITagLinkUnitRankCol":true,
+"baiduCustNativeADImageCarousel":true,
+"baiduCustNativeADImage":true,
+"template_inlay_all_mobile_lu_app_pk":true,
+"template_inlay_all_pc_lu_info_flow_image_txt":true,
+"baiduCustITagLinkUnitRankImage":true,
+"baiduCustITagLinkUnitFlexN":true,
+"template_inlay_all_mobile_l":true,
+"template_inlay_all_mobile_lu_rank_pk_5":true,
+"template_inlay_all_mobile_lu_searchrec_zhidao_v2":true,
+"baiduCustNativeADImageTxt_1":true,
+"template_inlay_all_mobile_lu_native_ad_topic_pk_1":true,
+"baiduCustITagLinkUnitRankImage_imageplus_only_data":true,
+"baiduCustNativeADTxt":true,
+"template_inlay_all_mobile_lu_app_banner_api_image":true,
+"template_inlay_all_mobile_lu_searchrec_text":true,
+"template_inlay_all_mobile_lu_app_banner_api":true,
+"template_inlay_all_mobile_lu_native_ad_title_pk_1":true,
+"template_inlay_all_mobile_lu_searchrec_img":true,
+"template_inlay_all_mobile_lu_native_ad_txt":true,
+"template_inlay_all_mobile_lu_native_ad_topic_specific_2":true,
+"template_inlay_all_mobile_lu_native_ad_topic_big":true
+}
+targetPathList={"tps/noexpire/js":1};var apiHook={hookTable:{innerHTML:"rawInnerHTML",outerHTML:"rawOuterHTML",HTMLImageElement:"rawHTMLImageElement",HTMLScriptElement:"rawHTMLScriptElement",HTMLSourceElement:"rawHTMLSourceElement",HTMLEmbedElement:"rawHTMLEmbedElement",HTMLLinkElement:"rawHTMLLinkElement",HTMLIFrameElement:"rawHTMLIFrameElement",HTMLAnchorElement:"rawHTMLAnchorElement"},urlSplit:function(url){var parseUrl=/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;var tempUrl=url.match(parseUrl)||"";var fields=["url","scheme","slash","host","port","path","query","hash"];var urlSplit=new Array();fields.forEach(function(field,index){urlSplit[field]=tempUrl[index]});return urlSplit},randomNum:function(num){return parseInt(Math.random()*num)+1},encodeShift:function(str,ranNum,addNum){var result="";var tempVal=null;for(var idx=0;idx<str.length;idx++){var tempChr=str.charAt(idx);if(tempChr>="0"&&tempChr<="9"){tempVal=(tempChr.charCodeAt()-22+ranNum+idx*addNum)%36;result+=(tempVal<26)?String.fromCharCode(tempVal+97):String.fromCharCode(tempVal+22)}else{if(tempChr>="a"&&tempChr<="z"){tempVal=(tempChr.charCodeAt()-97+ranNum+idx*addNum)%36;result+=(tempVal<26)?String.fromCharCode(tempVal+97):String.fromCharCode(tempVal+22)}else{if(tempChr>="A"&&tempChr<="Z"){tempVal=(tempChr.charCodeAt()-65+ranNum+idx*addNum)%26;result+=String.fromCharCode(tempVal+65)}else{result+=tempChr}}}}return result},encodeURIWithDomain:function(domain,url,sourceHost){var url=url.replace(/\s+/g,"");var urlSplitRes=this.urlSplit(url);if(sourceHost){urlSplitRes["host"]=sourceHost}var tag="";domain.split(".").forEach(function(idx){tag+=idx[0]});tag+=urlSplitRes["host"].replace(/\./g,"_");if(urlSplitRes["port"]){tag+=":"+urlSplitRes["port"]}var key="";for(var i=0;i<this.randomNum(7);i++){key+=String.fromCharCode(97+this.randomNum(25))}var ranNum=this.randomNum(25);var addNum=this.randomNum(25);if(urlSplitRes["path"]){var prefix="";var pathSuffix=urlSplitRes["path"].split(".");var pathSuffixLen=pathSuffix.length;if(pathSuffixLen>1){prefix+=pathSuffix.slice(0,pathSuffixLen-1).join(".");var prefixEncode=this.encodeShift(prefix,ranNum,addNum)+"."+pathSuffix[pathSuffixLen-1]}else{prefix+=pathSuffix;var prefixEncode=this.encodeShift(prefix,ranNum,addNum)}}else{var prefixEncode=""}if(urlSplitRes["query"]){var queryBeforeEncode=key+"="+tag+"&"+urlSplitRes["query"];var queryEncode=this.encodeShift(queryBeforeEncode,ranNum,addNum);prefixEncode+="?"+String.fromCharCode(ranNum+97)+String.fromCharCode(addNum+97)+queryEncode}else{var queryBeforeEncode=key+"="+tag;var queryEncode=this.encodeShift(queryBeforeEncode,ranNum,addNum);prefixEncode+="?"+String.fromCharCode(ranNum+97)+String.fromCharCode(addNum+97)+queryEncode}if(urlSplitRes["scheme"]){prefixEncode=urlSplitRes["scheme"]+"://"+domain+"/"+prefixEncode}else{prefixEncode="http://"+domain+"/"+prefixEncode}if(urlSplitRes["hash"]){prefixEncode+="#"+urlSplitRes["hash"]}return prefixEncode},needEncode:function(host){if(targetHostList["all"]&&(host!=newDomain)){return true}else{return targetHostList[host]}},checkNodes:function(node,addScript){function done(node){if(node.src){var host=this.urlSplit(node.src)["host"];if(this.needEncode(host)&&node.tagName=="SCRIPT"){var newScript=document.createElement("script");newScript.type="text/javascript";newScript.src=node.src;node.parentNode.appendChild(newScript)}else{node.src=node.src}}if(node.children.length!=0){var childrenNodes=node.children;for(var index=0;index<childrenNodes.length;index++){done.apply(this,[childrenNodes[index]])}}}done.apply(this,[node])},htmlEncodeURI:function(value){var tmp=document.createElement("div");this.hookTable["innerHTML"].apply(tmp,[value]);this.checkNodes(tmp,false);return tmp.innerHTML},encodeURI:function(src){if(targetHostList["allhost"]&&(this.urlSplit(src)["host"]!=newDomain)){return this.encodeURIWithDomain(newDomain,src)}else{if(targetHostList[this.urlSplit(src)["host"]]){return this.encodeURIWithDomain(newDomain,src)}else{var sourceHost="cpro.baidustatic.com";for(var p in targetPathList){if(this.urlSplit(src)["path"]&&this.urlSplit(src)["path"].indexOf(p)>=0){return targetPathList[p]===1?this.encodeURIWithDomain(newDomain,src,sourceHost):this.encodeURIWithDomain(newDomain,src)}}return src}}},hookElement:function(){var rawElementInsertAdHTML=Element.prototype["insertAdjacentHTML"];Element.prototype["insertAdjacentHTML"]=function(position,txt){rawElementInsertAdHTML.apply(this,[position,apiHook.htmlEncodeURI(txt)])};this.hookTable["innerHTML"]=Element.prototype.__lookupSetter__("innerHTML");Element.prototype.__defineSetter__("innerHTML",function(value){apiHook.hookTable["innerHTML"].apply(this,[apiHook.htmlEncodeURI(value)])});this.hookTable["outerHTML"]=Element.prototype.__lookupSetter__("outerHTML");Element.prototype.__defineSetter__("outerHTML",function(value){apiHook.hookTable["outerHTML"].apply(this,[apiHook.htmlEncodeURI(value)])})},hookHTMLDocument:function(){var rawWrite=HTMLDocument.prototype.write;HTMLDocument.prototype.write=function(txt){rawWrite.apply(this,[apiHook.htmlEncodeURI(txt)])};var rawWriteln=HTMLDocument.prototype.writeln;HTMLDocument.prototype.writeln=function(txt){rawWriteln.apply(this,[apiHook.htmlEncodeURI(txt)])}},hookHTMLAttrElement:function(obj,method){var prototype=obj.prototype||obj;this.hookTable[obj]=prototype.__lookupSetter__(method);prototype.__defineSetter__(method,function(value){apiHook.hookTable[obj].apply(this,[apiHook.encodeURI(value)])});this.hookTable[obj].set=prototype["setAttribute"];prototype["setAttribute"]=function(){if(arguments[0]===method){arguments[1]=apiHook.encodeURI(arguments[1]);apiHook.hookTable[obj].set.apply(this,arguments)}else{apiHook.hookTable[obj].set.apply(this,arguments)}}},hookAjax:function(){var rawXMLHTTPRequestOpen=XMLHttpRequest.prototype.open;XMLHttpRequest.prototype.open=function(){if(arguments[1].indexOf("http")==-1){var newUrl="http://"+document.domain+"/"+arguments[1]}else{var newUrl=arguments[1]}arguments[1]=apiHook.encodeURI(newUrl);rawXMLHTTPRequestOpen.apply(this,arguments)}},apiHookCheck:function(){if(window.getComputedStyle(window.div).display=="none"){apiHook.checkNodes(document.head,true);apiHook.checkNodes(document.body,true)}},judgement:function(){window.div=document.createElement("div");div.className="ad_728 text-ad textAd text-ads text-ad-links pub_300x250";div.style="height:0;width:0;filter:alpha(Opacity=0);-moz-opacity:0;opacity:0";document.body.appendChild(div);window.intervalId=window.setTimeout(apiHook.apiHookCheck,100)},eventBind:function(dom,eventname,callback){if(window.addEventListener){dom.addEventListener(eventname,callback,false)}else{if(window.attachEvent){dom.attachEvent("on"+eventname,callback)}}},main:function(){var meta=document.getElementsByTagName("meta");if(Object.prototype.__defineSetter__&&Object.prototype.__lookupSetter__){if(targetTemplateList["all"]||(meta&&meta["template-name"]&&targetTemplateList[meta["template-name"]["content"]])){this.hookHTMLAttrElement(HTMLImageElement,"src");this.hookHTMLAttrElement(HTMLScriptElement,"src");this.hookHTMLAttrElement(HTMLSourceElement,"src");this.hookHTMLAttrElement(HTMLEmbedElement,"src");this.hookHTMLAttrElement(HTMLIFrameElement,"src");this.hookHTMLDocument();this.hookElement();this.hookAjax();this.eventBind(window,"load",this.judgement)}}}};apiHook.main();
+
+</script>
+<link rel="stylesheet" href="./template.min.css.下载">
+        <style type="text/css">.container{padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;margin-top:0px;border-style:solid;border-top-width:0px;border-right-width:0px;border-bottom-width:0px;border-left-width:0px;border-color:#ffffff;width:250px;height:250px;background-color:#ffffff;position:relative;overflow:hidden;float:none;}.item{width:250px;height:250px;}.item a{width:250px;height:250px;}.item a:hover{}.item img{width:250px;height:250px;}.column-space{width:20px;height:0px;}.row-space{width:100%;height:0px;}.logoArea{height:16px;width:30px;position:absolute;bottom:0px;right:0px;cursor:pointer;z-index:2147483648;}.logInfoDiv{display:none;}.dspDiv{display:none;}.fbTipDiv{height:14px;width:96px;position:absolute;bottom:18px;right:0px;cursor:pointer;padding:2px;background-color:#ccc;opacity:0.95;filter:alpha(Opacity=80);-moz-opacity:0.5;font-family:宋体;font-size:12px;display:none;z-index:2147483648;}.fbTipSpan1{color:#000;}.fbTipSpan2{color:#7eccff;}.fbIconDiv{height:16px;width:30px;position:absolute;bottom:0px;right:0px;cursor:pointer;z-index:2147483648;}.feedbackCon{background:url(https://cee1.iteye.com/cpro/exp/closead/img/bg_rb.png) no-repeat bottom right;width:250px;height:250px;background-color:#fff;font-family:微软雅黑;display:none;position:absolute;z-index:2147483649;left:0px;top:0px;}.feedbackDiv{width:225px;height:225px;padding:11.25px 11.25px;}.feedbackTit{width:225px;font-weight:bold;}.feedbackBorder{}.spanBorderL{border-left:2px solid #7eccff;}.spanBorderR{border-left:2px solid #408fef;}.feedbackCX{margin-right:5px;width:225px;color:#7eccff;text-decoration:underline;cursor:pointer;}.feedbackQue{margin-top:5px;width:225px;}.feedbackAns1 input{margin-top:5px;}.feedbackAns1{float:left;cursor:pointer;}.feedbackTSBtn{clear:both;width:160px;color:#7eccff;border:1px solid #7eccff;-moz-border-radius:75px;-webkit-border-radius:75px;border-radius:75px;text-align:center;margin-left:5px;margin-top:5px;float:left;cursor:pointer;}.feedbackTSBtn:hover{color:#fff;background-color:#7eccff;cursor:pointer;}.feedbackTS{width:225px;height:225px;padding:11.25px 11.25px;display:none;}.feedbackTit2{width:225px;font-weight:bold;}.spanBorderL2{border-left:2px solid #7eccff;}.spanBorderR2{border-left:2px solid #408fef;}.feedbackCX2{width:225px;color:#7eccff;text-decoration:underline;cursor:pointer;}.feedbackQue2{margin-top:5px;width:225px;}.feedbackQueDiv{height:25px;line-height:25px;width:225px;color:#999;position:relative;}.feedbackQueInput{width:225px;vertical-align:top;}.feedbackQueArrow{background:#fff url("https://cpro.baidustatic.com/cpro/ui/noexpire/img/2.0.0/radio_btn.png") no-repeat scroll right -85px;height:18px;line-height:18px;width:25px;position:absolute;top:2px;right:0px;overflow:hidden;}.feedbackQueUl{height:65px;width:200px;border:1px solid #999;background-color:#fff;color:#999;list-style:none;display:none;position:absolute;z-index:1;left:11.25px;}.feedbackQueList1{border-bottom:1px solid #999;cursor:pointer;width:200px;}.feedbackQueList2{border-bottom:1px solid #999;cursor:pointer;}.feedbackQueList3{cursor:pointer;}.feedbackQueList1:hover{background-color:#ccc;width:200px;}.feedbackQueList2:hover{background-color:#ccc;}.feedbackQueList3:hover{background-color:#ccc;}.feedbackEDiv{}.feedbackEmail{height:25px;line-height:25px;width:225px;border:1px solid #999;}.feedbackBtn2{width:160px;color:#7eccff;border:1px solid #7eccff;-moz-border-radius:32.142857142857146px;-webkit-border-radius:32.142857142857146px;border-radius:32.142857142857146px;text-align:center;margin-top:10px;cursor:pointer;}.feedbackBtn2:hover{color:#fff;background-color:#7eccff;cursor:pointer;}.feedbackLogo{height:19px;width:59px;position:absolute;right:10px;bottom:10px;}</style>
+    </head>
+    <body><script type="text/javascript"> 
+try{window.postMessage && window.parent && window.parent.postMessage(
+{
+"queryid" : "f323b561ed913dbe",
+"tuid" : "u3375282_0",
+"placement" : {
+    "basic" : {"sspId":1,"userId":1574361,"flowType":1,"cname":"csdnbaidu_cpr","tuId":9223372032563183794,"sellType":2,"rspFormat":1,"conBackEnv":1,"publisherDomain":{"dup":"cee1.iteye.com","ubmc":"cee2.iteye.com/glxoiy","pos":"cee2.iteye.com","wn":"cee2.iteye.com/tlcrx"}},  
+    "container" : {"height":250,"width":250,"sizeType":1,"anchoredType":1,"floated":{}},  
+    "fillstyle" : {"elements":[1,5,2,7],"layout":[1,2],"txt":{"number":0},"lu":{},"video":{},"search":{},"styleType":2},
+    "userdefine" : "%7Ccpro%5Flayout%5Ffilter%3Drank%2Ctabcloud%7Ccpro%5Ftemplate%3Dtext%5Fdefault%5F250%5F250%7Ccpro%5Fversion%3D2%2E0",
+    "encode_userdefine" : "encoded",
+    "complement_type" : 2,
+    "update" : "1520231885_1521160056"
+},
+"extends" : {"ssph":250,"sspw":250}
+,
+"bidder" : "1",
+"noadx" : "0",
+"pdb_deliv" : {
+    "deliv_id" : "0",
+    "deliv_des" : {},
+    "brandad" : 0
+},
+"order_deliv" : { 
+    "deliv_id" : "0",
+    "demand_id" : "0"
+},
+"rtb_deliv" : { 
+    "deliv_id" : "0",
+    "demand_id" : "3375282"
+}
+}
+, '*')}
+catch(e) {window.console && window.console.log(e);};
+</script>
+<!--sid=ed913dbef323b561-->
+        <div class="container" id="container"><div class="item"><a style="" target="blank" href="https://m.baidu.com/mobads.php?K60000K6ZiyXBnabr40MoS2HnloZQMERbHDfMfYOPZS3RH77ZIbbAk23dJdkmT1YSG3rgeQcEk-bM7lQ5Fd6Tuv_FBqYcY-7eTV_lGMBaCDkwIiI_sAqjrjot_Ds0lxGCNmKuXMm3gqbD-pzkv_Y6fQjY_icgrvfew9dlEr8RQqd6WZ_36.DR_NR2Ar5Od66u9C5S9qjw4NmAXKQ3pQ_7zcQbOfhBeAhU-kYymCPE5E6CpXyPvap7QZ0hOOuXlQ-Eukmr8a9G4I2UM3PQDrPMo6CpXy7MHWuxJrIhA6OlZYPAX45YFC8kGhl32AM-9I7fH7fmEukmnenPKOY5CpnqzxCHwIWHPMOPSUo6CpXy6hUikX1BsuvmpjOCxfYuebOfhBeAhU5SUtvxF8_14PdBknfkLwg_3_ZQjWhyAp7WIg8z20.pywW5yIlpZ940APspyfq0Z9GTjYznH68P1T8nHbYQWczPsKhpgF1I7qYTh7buHYL0ZP-mvq8u7qYTh7buHYLnjf0TZFEIh-8mvRqP0KWpgw45H6Y0APCUyfqnfK1mv9VujYk0ZPs5HD0IvsqnfKWpA78UhN_5H00IgP-T-qYXgK-5H00ug9WpA78uvNxIZ-suHYs0Ad9IAPCgvPEuARqn0K9uAP_mgP15H00IZRqIHn1P1Rzrjc0IAYqnH0Lnjm1r0KYujY1n1TdnW6z0Zw9TWYk0ZP1TjYk0Au85yP1uA4Bmy-bINqWTZc0IZws5HD0UMwYTjYk0AFz5HDz0Aw-Ih-WuNqGujYk0AwYTjYk0ZNzUjdCIZwsT1CEQvF_UvT8mLPbUB48ugfEXh9EIgGCpgI-UhI9UhTEmgFYpyP_uiqbugw9pyk1Q1RYn1DvPHTL0APC5H00uh4z5H00Tv3qPRPjPDDvfRDdrHIaPYFKf1P7PHD1fbc3wbuDrjbLrjb0mgwEUNqGujYznWm4PWRLn1n0UyNbpy7xIZ-suHYz0A4ETjY0mgKxpyfq0Aw-I-qYTjY0Tvwo5fK1uAVxIWY0uAPxThNkgLKou1Y0uAPxmLNGujY0myPWIjY0mgKspyfqmLPbUB48ugf0ULPxpyfq0AFzmy4b5fKLmgKxmvqEpv--5HNjf1wKPb7KPHbLfWIafRn1wHRknYFarDuAwj64P1640A78uZFEpywxpyfq0ZP1TjcqnfKWIA_q0ZIG5Hm0mywxT1dBuHPbrH7-ujmkmWRznvm1g100mgKsmv7YuNqGujY0IgF_gv7sTAP9IANxpyfq0AkBTdqGujY0mMN1py4-TLPxpyfq0AwGTLwzpyPYgv-b5fK9mLwGIhNxmgKs5fK9mLwGIhNxmv7YuyIETMbq0AuGTMPYgv-Y5fK1uyPEUhwxpgfq0ZKCUv4-5H00mvkomgwYTjdWpA7zuvR0Tv9EI1Ys0AP_pyPo5HD0UMfqn6KETZwxIZ-suHYk0A7WIjYk0Z7YUHYkPHnsrjR4rHR10ZFW5fKzmy4o5H00XjYs0ZKzUvfq0AFMIZ0qn0KGIMwz5H00ugFsmvqbuHdfnWTYnsK9mLwGIh7YuHYs0Aw1TA-b5Hm0TLFWgLIG5HDv0ZKWIMcqn0K9uAcqnfKMuy4bugcqnW0k0A7MuHYkrHc0mLFW5HfYnWck00" title="activity.huaweicloud.com" id="res0"><img style="" src="./0f000Q1oFCwL3P5h3jw00s.jpg.下载"></a></div><a class="bd-logo" href="http://wangmeng.baidu.com/" title="百度网盟推广" target="_blank" id="bd-logo">&nbsp;</a><div class="bd-adIcon" id="bd-adIcon">&nbsp;</div><div class="logoArea" id="logoArea" style="display: none;"></div><div class="logInfoDiv" id="logInfoDiv">T1dBuHPbrH7-ujmkmWRznvm10AP8IA3qmLPbUhF9pywdgvPsT6KYIHddn1nLPHc3n6KYIZ0qnfKdThsqmLPbUB48ugf0Tv3qPRPjPDDvfRDdrHIaPYFKf1P7PHD1fbc3wbuDrjbLrjb0IvfqnWnkrjR4PH00uv-b5HnsPWmYrHR0TAk9Uh-b5HDsnHRYPjf0Iy-b5Hczn1mvnWck0Au_mMfqnf0</div><div class="dspDiv" id="dspDiv">0dsp</div><div class="fbTipDiv" id="fbTipDiv"><span class="fbTipSpan1" id="fbTipSpan1">不想看，</span><span class="fbTipSpan2" id="fbTipSpan2">停止显示</span></div><div class="fbIconDiv" id="fbIconDiv" flowtype="1"></div><div class="feedbackCon" id="feedbackCon"><a target="_blank" class="feedbackLogo" id="feedbackLogo" href="http://www.baidu.com/"><img class="feedbackLogoImg" src="./bd_logo.png.下载"></a><div class="feedbackDiv" id="feedbackDiv"><div class="feedbackBorder" id="feedbackBorder"><span class="spanBorderL"></span><span class="spanBorderR"></span><span class="feedbackTit" id="feedbackTit">&nbsp;&nbsp;&nbsp;&nbsp;将为您停止此次推广展示&nbsp;&nbsp;</span><span class="feedbackCX" id="feedbackCX">撤销</span></div><div class="feedbackQue" id="feedbackQue">此推广有什么问题？</div><div class="feedbackAns1" id="feedbackAns1"><input name="feedbackAns" type="radio" value="丑陋" id="ans1" reasonid="11"><label for="ans1"> 丑陋</label><br><input name="feedbackAns" type="radio" value="动画干扰" id="ans2" reasonid="12"><label for="ans2"> 动画干扰</label><br><input name="feedbackAns" type="radio" value="内容不宜" id="ans3" reasonid="19"><label for="ans3"> 内容不宜</label><br><input name="feedbackAns" type="radio" value="不感兴趣" id="ans4" reasonid="20"><label for="ans4"> 不感兴趣</label><br></div><div class="feedbackTSBtn" id="feedbackTSBtn">投诉跟踪</div></div><div class="feedbackTS" id="feedbackTS"><div class="feedbackBorder2" id="feedbackBorder2"><span class="spanBorderL2"></span><span class="spanBorderR2"></span><span class="feedbackTit2" id="feedbackTit2">&nbsp;&nbsp;&nbsp;&nbsp;将为您停止此次推广展示&nbsp;&nbsp;</span><span class="feedbackCX2" id="feedbackCX2">撤销</span></div><div class="feedbackQue2" id="feedbackQue2">您投诉该推广的原因是：</div><div class="feedbackQueDiv" id="feedbackQueDiv"><input class="feedbackQueInput" id="feedbackQueInput" value="请输入…"><div class="feedbackQueArrow" id="feedbackQueArrow"></div></div><ul class="feedbackQueUl" id="feedbackQueUl"><li class="feedbackQueList1" id="feedbackQueList1">内容低俗</li><li class="feedbackQueList2" id="feedbackQueList2">内容虚假</li><li class="feedbackQueList3" id="feedbackQueList3">不美观</li></ul><div class="feedbackEDiv" id="feedbackEDiv">（选填）您的邮箱：</div><input class="feedbackEmail" id="feedbackEmail"><div class="feedbackBtn2" id="feedbackBtn2">确认</div></div><div class="feedbackDiv" id="feedbackGX"><div class="feedbackBorder" id="feedbackBorder3"><span class="spanBorderL"></span><span class="spanBorderR"></span><span class="feedbackTit" id="feedbackTit3">&nbsp;&nbsp;&nbsp;&nbsp;感谢您的反馈！&nbsp;&nbsp;</span><span class="feedbackCX" id="feedbackCX3">撤销</span><a class="feedbackCX" target="_blank" id="feedbackLJXQ" href="http://yingxiao.baidu.com/zhichi/knowledge/detail.action?channelId=3&amp;classId=10845&amp;knowledgeId=14394">了解详情</a></div><div class="feedbackGXDes">我们将努力改善您的浏览体验。</div></div></div></div><script type="text/javascript" src="./logoIsShowEvents_1.min.js.下载"></script>
+        <script type="text/javascript" src="./oojs.js.下载"></script>
+        <script type="text/javascript">
+            var config = {"0":1,"1":2,"2":2,"3":7,"ext":"{\"elements\":[1,5,2,7],\"layout\":[1,2],\"txt\":{\"number\":0},\"lu\":{},\"video\":{},\"search\":{},\"styleType\":2}","adslot_type":0,"offset":2611,"markedOffset":-1,"length":2830,"littleEndian":true,"number":0,"styleType":2,"templateWidth":250,"templateHeight":250};
+            var antiArray = [83];          
+        </script>  
+        <script type="text/javascript" src="./common.min.js.下载"></script>         
+        <script type="text/javascript" src="./anticheat.js.下载"></script>
+        <script>var winUrlArr = [["https://cee2.iteye.com/tlcrx/c?c=d25pZD1iZTNkOTFlZDYxYjUyM2YzXzAAcz1iZTNkOTFlZDYxYjUyM2YzAHQ9MTUzMDg1OTk1MwBzZT0xAGJ1PTgAcHJpY2U9V3o4UnNRQU5xa2Q3akVwZ1c1SUE4alVoeUkwWncxOC1YcXR3SHcAY2hhcmdlX3ByaWNlPTIwAHNoYXJpbmdfcHJpY2U9MjAwMDAAd2luX2RzcD04AGNobWQ9MQBiZGlkPTVDQzRBNkFBNTk3QjdCQUMzRTUxM0JCOEZGRDg5Nzg5AGNwcm9pZD0Ad2Q9MjMxODU5NTAAdHU9dTMzNzUyODIAYWRjbGFzcz0wAHNyY3Q9MABwb3M9MABiY2htZD0wAHY9MQBpPTI2M2U3NTVi&ext=cHJpY2U9MTc5MyZwbGFuaWQ9MTAxNTQ0NA"]];</script><script src="./winnotice.min.js.下载"></script>
+        <script type="text/javascript" src="./feedbackPC.min.js.下载"></script>
+    
+</body></html>
