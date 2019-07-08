@@ -27,3 +27,12 @@ Vue:
 		// 在一个Vue实例内使用$http
 		this.$http.get('/someUrl', [options]).then(successCallback, errorCallback);
 		this.$http.post('/someUrl', [body], [options]).then(successCallback, errorCallback);
+
+		3.格式：	
+			get(url, [options])
+			head(url, [options])
+			delete(url, [options])
+			jsonp(url, [options])
+			post(url, [body], [options])
+			put(url, [body], [options])
+			patch(url, [body], [options])
