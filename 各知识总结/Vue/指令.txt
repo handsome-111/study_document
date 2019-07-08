@@ -1,0 +1,303 @@
+指令：
+	文档：https://cn.vuejs.org/v2/api/#%E6%8C%87%E4%BB%A4
+		v-text : 更新元素的 textContent。
+		
+			例子：
+				两种方式结果相同，但是使用{{}}会更灵活些
+				<div id="app">
+					<p>{{ msg }}</p>
+		        	<span v-text="msg"></span>
+	        	</div>
+
+	        	<script>
+			        var vue = new Vue({
+			            el : "#app",
+			            data: {
+			                msg : "哈哈哈",
+			            }
+			        })
+			    </script>
+
+        v-html : 
+        	更新元素的 innerHTML 注意：内容按普通 HTML 插入 - 不会作为 Vue 模板进行编译 。如果试图使用 v-html 组合模板，可以重新考虑是否通过使用组件来替代。
+
+        	例子：
+        		<div id="app">
+        			<div v-html="content"></div>
+        		</div>
+
+        		 <script>
+			        var vue = new Vue({
+			            el : "#app",
+			            data: {
+			                content : '<h1><font color="red">我是H1</font></h1>'
+			            }
+			        })
+			    </script>
+
+
+		v-show:根据表达式之真假值，切换元素的 display CSS 属性。每次不会重新进行dom的删除操作，只是切换元素的隐藏和显示，而v-if会对元素进行删除和操作
+
+
+		v-if：根据表达式的值的真假条件渲染元素。如果值为空，则是false,反之是true
+		v-else：
+		v-else-if：
+
+			例子：
+				<div id = "app">
+			        <h1 v-if="awesome">Vue is awesome!</h1>
+			        <h1 v-else>Oh no 😢</h1>
+			    </div>
+			    <script>
+			        var vue = new Vue({
+			            el : "#app",
+			            data: {
+			                awesome : "false",
+			            }
+			        })
+			    </script>
+
+		v-for：
+
+			格式：
+				迭代对象的所有属性：<div v-for="(值,键值,索引) in 对象"></div>
+					 例：<div v-for="(val,key,i) in user"></div>
+
+				迭代集合：<div v-for="(值,索引) in 集合"></div>
+				迭代数字：<div v-for="count in 10"></div>
+
+				关于key:
+					是每一行的唯一的值，从data里面挑选，必须是string/number类型的，如果不添加key的话，就是没有唯一值那么就会重复了，重复出现，有了key之后再添加的时候就会覆盖掉原来的key
+
+			例子：
+				<div id="app" v-for="item in users" :key="item.id">
+			        <p>id:{{item.id}}</p>
+			        <p>name:{{item.name}}</p>
+			    </div>
+			    <script>
+			        var vue = new Vue({
+			            el : "#app",
+			            data: {
+			                'users' : [
+			                    {
+			                        'id' : '216549744564',
+			                        "name" : "德莱文"
+			                    }
+			                ]
+			            }
+			        })
+			    </script>
+
+
+		v-on：Vue提供的事件绑定机制
+			如：v-on:click	缩写：@click
+			修饰符：
+				.stop - 调用 event.stopPropagation()。  禁止冒泡		
+				.prevent - 调用 event.preventDefault()。   阻止默认行为
+				.capture - 添加事件侦听器时使用 capture 模式。   
+					和冒泡事件相反，是从最外层到最内层，只需要在最外层添加这个即可
+				.self - 只当事件是从侦听器绑定的元素本身触发时才触发回调。
+					只会阻止自己冒泡，而不会阻止别人冒泡，除非他点我这个元素时候 我才会触发
+				.{keyCode | keyAlias} - 只当事件是从特定键触发时才触发回调。
+				.native - 监听组件根元素的原生事件。
+				.once - 只触发一次回调。
+				.left - (2.2.0) 只当点击鼠标左键时触发。
+				.right - (2.2.0) 只当点击鼠标右键时触发。
+				.middle - (2.2.0) 只当点击鼠标中键时触发。
+				.passive - (2.3.0) 以 { passive: true } 模式添加侦听器
+
+				例子：v-on:click.stop   (禁止冒泡)   
+			例子：
+				<div id="app">
+			        <button v-on:click="show">fuck me </button>
+			        <!-- 用@来缩写 -->
+			        <button @click="show">fuck me </button>
+			    </div>
+
+			    <script>
+			        var vue = new Vue({
+			            el : "#app",
+			            data: {
+			                'imgsrc' : './aa.gif'
+			            },
+			            methods:{
+			                show : () => {
+			                    alert("fuck me babe");
+			                }
+			            }
+			        })
+			    </script>
+
+		v-bind:用于绑定属性的指令，Vue提供的属性绑定机制
+			文档：https://cn.vuejs.org/v2/api/#v-bind
+			例子：
+				<div id="app">
+			        <img v-bind:src="imgsrc">
+			        <!-- 缩写 -->
+			        <!-- <img :src="imgsrc"> -->
+			    </div>
+
+			    var vue = new Vue({
+		            el : "#app",
+		            data: {
+		                'imgsrc' : './aa.gif'
+		            }
+		        })
+
+		v-model:跟v-bind是一样的作用，但是v-model是双向绑定的，而v-bind是单向的（vue里的data值改变了，元素属性会改变，但元素属性改变后，data的值不会改变，这就是单向）
+			例子：
+				<div id="app">
+			        <input type="text" v-model:value="msg">
+			        {{msg}}
+			    </div>
+			    <script>
+			        var vue = new Vue({
+			            el : "#app",
+			            data: {
+			                'msg' : 'you son of bitch啊大苏打撒旦'
+			            }
+			        })
+			    </script>
+
+		v-cloak:
+			这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。
+
+			不会显示，直到编译结束。
+
+			例：
+				[v-cloak] {
+				  display: none;
+				}
+
+				<div v-cloak>
+				  {{ message }}
+				</div>
+
+		:class   
+			这个指令会通过属性绑定为元素设置class类样式
+			例子：
+				<style>
+			        .red{
+			            color:red;
+			        }
+			        .blue{
+			            color:blue;
+			        }
+			        .thin{
+			            font-weight: 200;
+			        }
+			    </style>
+
+			    <div id="app">
+		        	<!-- 也可以试用正则表达式-->
+		        	<h1 :class="[flag ? 'red': 'blue' ,'thin']"> 这是一个很大的H1哦</h1>
+			    </div>
+			    <script>
+			        var vue = new Vue({
+			            el : "#app",
+			            data: {
+			                flag: false
+			            }
+			        })
+			    </script>
+
+
+自定义指令:	全局指令 和 局部指令
+	1.不管是Vue自带的指令还是自定义指令，都是以“v-”开头
+	2.使用Vue.directive()来自定义全局指令，
+
+		语法：Vue.directive(name,obj);
+
+			obj对象可选的钩子函数：
+
+				bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+
+				inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+
+				update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。
+				
+				componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用。
+
+				unbind：只调用一次，指令与元素解绑时调用。
+
+
+			以上钩子函数的参数：
+				指令钩子函数会被传入以下参数：
+
+				el：指令所绑定的元素，可以用来直接操作 DOM 。
+				binding：一个对象，包含以下属性：
+					name：指令名，不包括 v- 前缀。
+					value：指令的绑定值，例如：v-my-directive="1 + 1" 中，绑定值为 2。
+					oldValue：指令绑定的前一个值，仅在 update 和 componentUpdated 钩子中可用。无论值是否改变都可用。
+					expression：字符串形式的指令表达式。例如 v-my-directive="1 + 1" 中，表达式为 "1 + 1"。
+					arg：传给指令的参数，可选。例如 v-my-directive:foo 中，参数为 "foo"。
+					modifiers：一个包含修饰符的对象。例如：v-my-directive.foo.bar 中，修饰符对象为 { foo: true, bar: true }。
+				vnode：Vue 编译生成的虚拟节点。移步 VNode API 来了解更多详情。
+				oldVnode：上一个虚拟节点，仅在 update 和 componentUpdated 钩子中可用。
+
+
+
+			例子：
+				<div id="app">
+					<input type="text" v-focus>
+				</div>
+
+
+				Vue.directive('focus',{
+					//每当指令绑定到元素上的时候，会立即执行该函数，只执行一次 
+					//el表示当前
+					bind: function (el){
+					},
+					//当元素插入到dom的时候，才会执行该函数
+					inserted: function(el,bind){
+						console.log("指令名称:" + bind.name + "," + "指令值：" + bind.value)
+						el.focus();
+					},
+					//当Vnode更新的时候，会执行update，可能触发多次
+					updated: function(){
+					}
+				})
+
+				var app = new Vue({
+					el:"#app"
+				});
+
+	3.定义局部指令，私有指令,需要在Vue的实例里指定directives即可
+
+		<div id="app">
+			<input type="text" v-focus v-color:red>
+		</div>
+
+
+		var app = new Vue({
+			el: "#app",
+			directives: {
+				'focus' : {
+					inserted: function(el) {
+						el.focus();
+					}
+				},
+				'color' : {
+					inserted: function(el,binding){
+						var color = binding.arg;
+						el.style.color = color;
+					}
+				}
+			}
+		});
+
+
+	4.指令函数的简写:你可能想在 bind 和 update 时触发相同行为，而不关心其它的钩子。比如这样写:
+		
+		var app = new Vue({
+			el: "#app",
+			directives: {
+				'focus' : function (el){
+					el.focus();
+				},
+				'color' : function(el,binding){
+					var color = binding.arg;
+					el.style.color = color;
+				}
+			}
+		});

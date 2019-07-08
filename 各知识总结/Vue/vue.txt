@@ -1,0 +1,29 @@
+Vue:
+	1.Vue实例的生命周期：
+		1.beforeCreate:Vue实例创建之前，this里的属性不能调用，即是未定义的，this指的是Vue实例
+		2.created:Vue实例已经创建，this里的属性就可以调用了。
+		3.beforeMount:模板已经在内存中编译完成，但未把模板渲染到页面中，如何测试？直接在这个函数里使用document.getElementById(),获取测试有没有值即可
+		4.mouted:实例已经完全被创建好了
+
+		例子:
+			new Vue(){
+				el:"",
+				beforeCreate :() =>{},
+				created: () => {},
+				beforeMount: () => {},
+				mouted:() => {}
+			}
+
+	2.vue-resource:发起get,post,jsonp发起请求
+	
+		详见文档：https://www.runoob.com/vue2/vuejs-ajax.html
+
+		1.导入vue-resource.js文件
+		2.
+		// 基于全局Vue对象使用http
+		Vue.http.get('/someUrl', [options]).then(successCallback, errorCallback);
+		Vue.http.post('/someUrl', [body], [options]).then(successCallback, errorCallback);
+
+		// 在一个Vue实例内使用$http
+		this.$http.get('/someUrl', [options]).then(successCallback, errorCallback);
+		this.$http.post('/someUrl', [body], [options]).then(successCallback, errorCallback);

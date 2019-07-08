@@ -1,0 +1,64 @@
+全局API：直接在js里调用即可
+
+	1.过滤器:
+
+		api文档：https://cn.vuejs.org/v2/guide/filters.html
+
+		当data里的数据到渲染的这个时候，想要对数据进行过滤，替换，筛选,格式化（时间等），等，可以用到Vue的过滤器
+
+		使用格式:
+			/**
+			 * 注册过滤器
+	 		 */
+			Vue.filter('testFilter',(msg) => {
+				return msg.replace('英俊','潇洒');
+			});
+
+		使用环境：过滤器可以用在两个地方：双花括号插值和 v-bind 表达式 
+			如：
+				<!-- 在双花括号中 -->
+				{{ message | 过滤器名称 }}
+
+				<!-- 在 `v-bind` 中 -->
+				<div v-bind:id="message | 过滤器名称"></div>
+
+
+		以上是全局过滤器，
+		定义私有过滤器：
+			在指定的Vue实例里添加即可：
+			
+				<div id="app">
+					<input type="text" v-bind:value="message | testFilter">
+				</div>
+				<script>
+					var vm = new Vue({
+						el: "#app",
+						data: {
+							message : '我是一个非常英俊的帅比'
+						},
+						filters: {
+							testFilter : (msg) => {
+								return msg.replace('英俊','玉树临风');
+							}
+						}		
+					});
+				</script>
+
+
+	2.全局配置：
+		Vue.config,是一个对象，包含VUE的全局配置
+			1.keyCodes:按键修饰符，按键绑定方法，元素
+				详细键码值文档：https://www.cnblogs.com/yiven/p/7118056.html
+
+				类型：{ [key: string]: number | Array<number> }
+				语法：<input type="text" @keyup.code名字="method">
+
+
+				例子：当光标，进入input标签之后，按下f2键，即可触发add方法
+
+					Vue.config.keyCodes = {
+						test : 113,
+						v : 86
+					}
+
+					<input type="button" value="添加" @keyup.test="add">

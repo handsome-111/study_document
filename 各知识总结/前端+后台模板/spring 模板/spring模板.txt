@@ -1,0 +1,17 @@
+1.spring boot 返回页面：
+	注：需要在application.yml配置文件里添加属性:spring.mvc.view.suffix = .html
+	@RequestMapping("/home")
+	public ModelAndView home(){
+		return new ModelAndView("hello");		
+		//则会返回到页面路径为:/resources/static/templates/hello.html		
+	}
+
+2.返回JSONOString:
+	@RequestMapping("/getUserSession")
+	@ResponseBody
+	public String getUserSession(HttpSession session){
+    	User user = userService.getUserByNick((String) session.getAttribute("nick"));
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("user", user);
+		return jsonObject.toJSONString();
+	}
