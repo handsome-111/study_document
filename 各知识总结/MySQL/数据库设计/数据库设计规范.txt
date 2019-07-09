@@ -200,6 +200,7 @@ Mysql分区表：
 
 
 执行计划分析(Explain)：
+	Explain可以对SELECT UPDATE INSERT DELETE REPLACE进行分析
 	使用Explain会获得以下信息:
 		1.SQL如何使用索引
 		2.连接查询的执行顺序
@@ -210,3 +211,52 @@ Mysql分区表：
 			ID列中的数据为一组数字，表示执行SELECT语句的顺序
 			ID值相同时，执行顺序由上至下
 			ID值越大优先级越高，越先被执行
+		2.SELECT_TYPE:
+			值：含义
+			SIMPLE:不包含子查询或是UNION操作的查询
+			PRIMARY:查询中包含任何子查询，那么最外层的查询被标记为PRIMARY
+			SUBQUERY:SELECT列表的子查询
+			DEPENDENT SUBQUERY:依赖外部结果的子查询
+
+			例：EXPLAIN SELECT c.category_name,a.product_name,b.title FROM product_info a JOIN product_comment b ON a.product_id = b.product_id JOIN product_category c ON c.category_id = a.one_category_id;
+
+		3.TABLE列：
+			值：含义
+			<unionM,N>由ID为M,N查询uinon产生的结果集
+			<derivedN>/<subqueryN>由ID为N的查询产生的结果
+		4.TYPE列：
+			代表访问数据的方式，从上往下，效率越来越低
+			System:这是const联接类型的一个特例，
+			const:当查询的表只有一行时使用表中有且只有一个匹配的行时使用，如对主键或是唯一索引的查询，这是效率最高的方式
+			eq_ref:唯一索引或主键索引查找，对于没个索引键，表中只有一条匹配记录与之匹配
+			ref:非唯一索引查找，返回匹配某个单独值的所有行
+			ref_or_null:类似于ref类型的查询，但是附加了对NULL值列的查询
+			index_merge:该联接类型表示使用了索引合并优化方法
+			range:索引范围扫描，常见于between,>,<这样的查询条件
+			index:FULL index Scan 全索引扫描，同ALL的区别是，遍历的是索引树
+			ALL FULL TABLE Scan 全表扫描，效率最差的
+
+		5.Extra列：
+			Distinct:优化distinct操作，在找到第一匹配的元组后即停止找相同的值的动作
+			No exists:使用not exists来优化查询
+			Using filesort：使用额外操作进行排序，通常会出现在order by 或 group by查询中
+			Using index:使用覆盖索引进行查询
+			Using temporary:需要使用临时表来处理查询，常见于排序，子查询，和分组查询
+			Using where:需要在MYsql服务器层使用WHERE条件来过滤数据
+			select tables optimized away:直接通过索引来获取数据，不用访问表
+
+		6.POSSIBLE_KEYS:
+			查询中可能会使用到的索引
+			指出Mysql能使用哪些索引来优化查询
+			查询列所涉及的列上的索引都会被列出来，但不一定会被使用
+
+		7.KEY列：
+			查询优化器在查询时实际所使用的索引，如果没有可用的索引则显示NULL,如果使用了覆盖索引，则该索引仅出现在KEY列中
+
+
+
+备份表：
+	1.采用SQL来备份（备份表都要以bak为开头）：
+		1.CREATE TABLE bak_customer_login_20190710 LIKE customer_login;
+		2.INSERT INTO bak_customer_login_20190710 SELECT * FROM customer_login;
+	2.采用SQL文件来备份
