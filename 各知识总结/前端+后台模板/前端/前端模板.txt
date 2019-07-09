@@ -63,6 +63,8 @@ vue + ajax请求：
 
 
 vue+vue-resource模板:
+	//具体参数可以见文档：https://www.runoob.com/vue2/vuejs-ajax.html
+
 	// 在一个Vue实例内使用$http
 	this.$http.get('/someUrl', [options]).then(successCallback, errorCallback);
 	this.$http.post('/someUrl', [body], [options]).then(successCallback, errorCallback);

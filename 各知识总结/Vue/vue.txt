@@ -36,3 +36,115 @@ Vue:
 			post(url, [body], [options])
 			put(url, [body], [options])
 			patch(url, [body], [options])
+
+	3.Vue动画：
+		Vue的动画比较简单，不如CSS3里的
+
+
+	4.组件
+		1.组件化和模块化的区别
+			1.组件化是从UI界面的角度去划分的
+			2.模块化是从代码的逻辑进行划分的
+
+		2.创建组件：
+			1.使用Vue.extend来创建组件
+				1.使用ue.extend()方法来创建组件
+				2.使用Vue.component()来声明组件
+				3.使用组件需要注意大小写，大小写之间用'-'来连接，例子如下
+				4.注意：在template属性里只能有一个标签，不能有多个
+				4.例子：
+					<div id="app">
+						<my-com1></my-com1>	   			
+					</div>
+
+					<script type="text/javascript">
+						//创建组件模板
+						var com1 = Vue.extend({
+							template:'<h1>这是我自己创建的组件{{message}}</h1>'
+						})
+
+						Vue.component('myCom1',com1);	//声明组件，大小写之间必须用'-'来连接
+
+						new Vue({
+							el:"#app",
+						})
+					</script>
+
+			2.创建组件模板的最佳方式:
+				<div id="app">
+					<my-com1></my-com1>	   			
+				</div>
+
+				Vue.component('myCom1',{
+					template: '<h1>这是我自己创建的组件</h1>'
+				});	
+
+			3.使用<template>来创建组件
+				1.在app的外层使用template标签定义模板
+				2.直接通过Vue.component来定义全局组件，并指定模板组件
+				3.例子：
+					<div id="app">
+						<my-com1></my-com1>		
+					</div>
+
+					<template id="aaa">
+						<!-- 最外层一定只有一个div -->
+						<div>
+							<h1>欢迎来到德莱联盟</h1>
+							<h4>哈哈哈</h4>
+						</div>
+					</template>
+
+					<script type="text/javascript">
+
+						Vue.component('myCom1',{
+							template:'#aaa'
+						});	
+
+
+						new Vue({
+							el:"#app",
+						})
+					</script>
+
+			4.创建私有组件（建议采用的方法）:
+				1.使用components属性来声明私有组件
+				2.在组件里声明模板，并且使用即可
+				3.例子：
+					<div id="app">
+						<my-com1></my-com1>		
+					</div>
+
+					<template id="aaa">
+						<!-- 最外层一定只有一个div -->
+						<div>
+							<h1>欢迎来到德莱联盟</h1>
+							<h4>哈哈哈{{ message }}</h4>
+						</div>
+					</template>
+
+					<script type="text/javascript">
+						new Vue({
+							el:"#app",
+							//声明局部组件
+							components:{
+								//声明自定义模板
+								myCom1:{
+									template:'#aaa',
+									data:function(){
+										return {message:'模板局部data'}
+									}，
+									methods:{
+										aa:function(){...}
+									}
+								}
+							}
+						})
+					</script>
+
+			5.组件里的的data
+				1.组件里的是一个函数和实例中的data不一样，组件里的data是一个函数，返回值是一个object，该函数是个匿名函数，所以返回的值也是模板局部的值
+				2.因此，组件也有自己的methods，所以也可以在methods里写ajax
+				3.例子：
+					见上面的例子
+
