@@ -148,3 +148,62 @@ Vue:
 				3.例子：
 					见上面的例子
 
+			5.动态组件：
+				1.尝尝用于组件切换，比如注册和登录的切换，通过v-if和修改data的值来使用
+				2.通过component来切换组件，:is里的值是一个属性（是属性名，不是属性值），通过改变属性的值来切换模板名称
+
+				<div id="app">
+					<!-- 2.通过点击修改属性的值来切换模板 -->
+					<button @click="myCom='myCom1'">切换1</button>
+					<button @click="myCom='myCom2'">切换2</button>
+					<!-- 1.属性名为myCom的模板 -->
+					<component :is="myCom"></component>
+				</div>
+
+				<!-- 定义的两个模板 -->
+				<template id="aaa">
+					<!-- 最外层一定只有一个div -->
+					<div>
+						<h1>欢迎来到德莱联盟</h1>
+						<h4>哈哈哈{{ message }}</h4>
+					</div>
+				</template>
+
+				<template id="bbb">
+					<!-- 最外层一定只有一个div -->
+					<div>
+						<h1>111111</h1>
+						<h4>哈哈哈{{ message }}</h4>
+					</div>
+				</template>
+
+
+
+				<script type="text/javascript">
+					new Vue({
+						el:"#app",
+						data : {
+							myCom :'myCom1'
+						},
+						//声明局部组件
+						components:{
+							//声明自定义模板
+							myCom1:{
+								template:'#aaa',
+								data:function(){
+									return {message:'模板局部data'}
+								}
+							},
+							myCom2:{
+								template:"#bbb",
+								data:function(){
+									return {message:'you son of bitch'}
+								}
+							}
+						}
+					})
+				</script>
+
+			6.作用和场景:
+				
+
