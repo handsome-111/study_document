@@ -260,3 +260,35 @@ Mysql分区表：
 		1.CREATE TABLE bak_customer_login_20190710 LIKE customer_login;
 		2.INSERT INTO bak_customer_login_20190710 SELECT * FROM customer_login;
 	2.采用SQL文件来备份
+
+数据库备份：数据库复制不能取代备份的作用
+	逻辑备份和物理备份：
+		1.逻辑备份：逻辑备份的结果为SQL语句，适用于所有存储引擎
+		2.物理备份:物理备份是数据库目录的拷贝，对于内存表只备份结构
+
+	全量备份和增量备份:
+		1.全量备份是对整个数据库的一个完整备份
+		2.增量备份是是在上次全量或增量备份基础上，对于更改数据进行的备份
+
+	备份:
+		1.使用mysqldump进行备份(逻辑备份):
+			语法:
+				//多个表用空格来分割
+				mysqldump [options] database [tables]
+				
+				//多个数据库之间用空格来分割
+				mysqldump [options] --databases [options] DB1 [DB2...]
+
+				//对所有数据库进行备份
+				mysqldump [options] --all-databases [options]
+
+
+捕获有问题的SQL
+	1.启用慢查询日志：
+		在my.cnf下配置如下：
+			1.设置慢查询日志的位置：slow_query_log_file=/sql_log/show_log.log;
+			2.是否对未使用索引的SQL进行抓取：log_queries_not_using_indexs = on;
+			3.抓取执行超过多少时间的SQL（秒）：long_query_time=0.001;
+
+		正式启用慢查询日志：slow_query_log=1;
+
