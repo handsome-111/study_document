@@ -1,0 +1,56 @@
+
+组件：
+	1.组件模板：
+		组件文档:https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/
+
+		1.创建组件：
+			1.在组件.json下设置:
+				{
+				  "component": true
+				}
+
+			2.在组件.js下，需要用Component构造器来注册：
+				Component文档:https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html	
+
+				Component构造器文档:https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/component.html
+
+				Component({
+				  properties: {
+				    // 这里定义了innerText属性，属性值可以在组件使用时指定
+				    innerText: {
+				      type: String,
+				      value: 'default value',
+				    }
+				  },
+				  data: {
+				    // 这里是一些组件内部数据
+				    someData: {}
+				  },
+				  methods: {
+				    // 这里是一个自定义方法
+				    customMethod: function(){}
+				  }
+				})
+
+		2.使用组件:
+			直接在.json文件里设置:
+				"usingComponents": {
+	    			"标签名称": "组件路径"
+	  			}
+
+	  			如：
+	  			"usingComponents": {
+	    			"my-component": "/components/custom-component"
+	  			}
+
+
+	  	3.组件的生命周期：
+	  		2.组件所在页面的生命周期：
+	  			show	无	组件所在的页面被展示时执行	2.2.3
+				hide	无	组件所在的页面被隐藏时执行	2.2.3
+				resize	Object Size	组件所在的页面尺寸变化时执行	2.4.0
+
+	2.组件样式:
+		组件对应 wxss 文件的样式，只对组件wxml内的节点生效。注意：
+			1.组件和引用组件的页面不能使用id选择器（#a）、属性选择器（[a]）和标签名选择器，请改用class选择器。
+			2.组件和引用组件的页面中使用后代选择器（.a .b）在一些极端情况下会有非预期的表现，如遇，请避免使用。
