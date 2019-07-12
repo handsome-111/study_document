@@ -319,6 +319,12 @@ CSS:
 			WIFI:<span class="wifi">&#xe60e;<!-- 这个是在图标库要下载的时候可以获取到 --></span>
 
 
+		3.从阿里图标库下载到本地，如使用class的方法
+			先将项目下载到本地，记住必须是全部，不仅仅是CSS，然后引用CSS文件即可使用
+
+			使用：<span class="iconfont icon-wode"></span>
+
+
 
 	过渡：
 		详细属性见文档:https://www.runoob.com/css3/css3-transitions.html
