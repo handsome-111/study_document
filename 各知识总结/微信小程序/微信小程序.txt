@@ -1,5 +1,5 @@
 
-组件：
+1.组件：
 	1.组件模板：
 		组件文档:https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/
 
@@ -50,6 +50,12 @@
 				hide	无	组件所在的页面被隐藏时执行	2.2.3
 				resize	Object Size	组件所在的页面尺寸变化时执行	2.4.0
 
+		4.组件间的通信：
+			组件间的基本通信方式有以下几种。
+				1.WXML 数据绑定：用于父组件向子组件的指定属性设置数据，仅能设置 JSON 兼容数据（自基础库版本 2.0.9 开始，还可以在数据中包含函数）。具体在 组件模板和样式 章节中介绍。
+				2.事件：用于子组件向父组件传递数据，可以传递任意数据。
+				3.如果以上两种方式不足以满足需要，父组件还可以通过 this.selectComponent 方法获取子组件实例对象，这样就可以直接访问组件的任意数据和方法。
+
 	2.组件样式:
 		1.组件对应 wxss 文件的样式，只对组件wxml内的节点生效。注意：
 			1.组件和引用组件的页面不能使用id选择器（#a）、属性选择器（[a]）和标签名选择器，请改用class选择器。
@@ -61,3 +67,9 @@
 		2.在WXSS里导入其他样式：
 			在WXSS文件下使用如下代码即可：
 				@import "nav-bottom-font/iconfont.wxss";
+
+
+2.路由：
+3.页面：
+	官方文档：https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html|	
+	1.注册页面
