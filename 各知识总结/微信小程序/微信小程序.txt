@@ -1,7 +1,8 @@
 
-1.组件：
-	1.组件模板：
-		组件文档:https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/
+1.自定义组件：
+		自定义组件文档:https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/
+
+		组件参数配置文档：https://developers.weixin.qq.com/miniprogram/dev/reference/api/Component.html
 
 		1.创建组件：
 			1.在组件.json下设置:
@@ -45,23 +46,33 @@
 
 
 	  	3.组件的生命周期：
-	  		2.组件所在页面的生命周期：
+	  		文档：https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/lifetimes.html
+	  		1.组件所在页面的生命周期：
 	  			show	无	组件所在的页面被展示时执行	2.2.3
 				hide	无	组件所在的页面被隐藏时执行	2.2.3
 				resize	Object Size	组件所在的页面尺寸变化时执行	2.4.0
 
-		4.组件间的通信：
+		4.组件间的通信和事件：
+			文档：https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/events.html
+
 			组件间的基本通信方式有以下几种。
 				1.WXML 数据绑定：用于父组件向子组件的指定属性设置数据，仅能设置 JSON 兼容数据（自基础库版本 2.0.9 开始，还可以在数据中包含函数）。具体在 组件模板和样式 章节中介绍。
+
 				2.事件：用于子组件向父组件传递数据，可以传递任意数据。
+
 				3.如果以上两种方式不足以满足需要，父组件还可以通过 this.selectComponent 方法获取子组件实例对象，这样就可以直接访问组件的任意数据和方法。
 
 	2.组件样式:
+
 		1.组件对应 wxss 文件的样式，只对组件wxml内的节点生效。注意：
 			1.组件和引用组件的页面不能使用id选择器（#a）、属性选择器（[a]）和标签名选择器，请改用class选择器。
+
 			2.组件和引用组件的页面中使用后代选择器（.a .b）在一些极端情况下会有非预期的表现，如遇，请避免使用。
+
 			3.子元素选择器（.a>.b）只能用于 view 组件与其子节点之间，用于其他组件可能导致非预期的情况。
+
 			4.继承样式，如 font 、 color ，会从组件外继承到组件内。
+
 			5.除继承样式外， app.wxss 中的样式、组件所在页面的的样式对自定义组件无效（除非更改组件样式隔离选项）。
 
 		2.在WXSS里导入其他样式：
@@ -70,6 +81,74 @@
 
 
 2.路由：
+
+	API文档：https://developers.weixin.qq.com/miniprogram/dev/api/route/wx.switchTab.html
+
+	路由组件：https://developers.weixin.qq.com/miniprogram/dev/component/navigator.html
+
+	1.switchTab：跳转到tabBar（即底部tab栏的表现）页面，这个tabBar是在app.json下设置的，可以使用官方自带的导航栏，也可以自定义样式的导航栏
+		注：
+			1.该跳转方式不能带有参数
+			2.该跳转方式再每次跳转的时候，都会触发onshow等事件，具体看文档
+
+		(1)系统自带的tabBar文档：	
+			https://developers.weixin.qq.com/miniprogram/dev/reference/configuration/app.html#tabBar
+
+		(2)自定义tabBar:	
+			1.文档:https://developers.weixin.qq.com/miniprogram/dev/framework/ability/custom-tabbar.html
+			2.配置：
+				1.在app.json 中的 tabBar 项指定 custom 字段，同时其余 tabBar 相关配置也补充完整。
+				2.所有 tab 页的 json 里需声明 usingComponents 项，也可以在 app.json 全局开启。
+
+	2.navigateTo：保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面。
+
+	3.navigateBack：关闭当前页面，返回上一页面或多级页面。
+
+	3.redirectTo：关闭当前页面，跳转到应用内的某个页面。
+
+	4.reLaunch：关闭所有页面，打开到应用内的某个页面
+
+
+
 3.页面：
+
 	官方文档：https://developers.weixin.qq.com/miniprogram/dev/reference/api/Page.html|	
 	1.注册页面
+
+
+
+4.关于WXML：和VUE类似
+
+	官方文档：https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/
+
+	1.数据绑定：https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/data.html
+
+	2.列表渲染：https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/list.html
+
+	3.条件渲染：https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/conditional.html
+
+	4.模板：WXML提供模板（template），可以在模板中定义代码片段，然后在不同的地方调用。
+		https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/template.html
+
+	5.API：
+		文档：https://developers.weixin.qq.com/miniprogram/dev/api/wxml/wx.createSelectorQuery.html
+		
+		1.SelectorQuery：查询节点信息的对象
+			1.wx.createSelectorQuery()：返回一个 SelectorQuery 对象实例，在自定义组件或包含自定义组件的页面中，应使用 this.createSelectorQuery() 来代替。 
+			2.具体方法见文档
+			3.对象的方法简单介绍：
+				1.将选择器的选取范围更改为自定义组件 component 内。
+				2.在当前页面下选择第一个匹配选择器 selector 的节点。
+				3.在当前页面下选择匹配选择器 selector 的所有节点
+				4.选择显示区域。可用于获取显示区域的尺寸、滚动位置等信息。
+				5.执行所有的请求。请求结果按请求次序构成数组，在callback的第一个参数中返回。
+
+		2.NodesRef：用于获取 WXML 节点信息的对象
+			1.NodesRef SelectorQuery.select(string selector)：在当前页面下选择第一个匹配选择器 selector 的节点。返回一个 NodesRef 对象实例，可以用于获取节点信息
+			2.获取方式主要见SelectorQuery对象的方法
+			3.对象的方法简单介绍：
+				1.获取节点的相关信息
+				2.添加节点的布局位置的查询请求。相对于显示区域，以像素为单位。其功能类似于 DOM 的 getBoundingClientRect。返回 NodesRef 对应的 SelectorQuery
+				3.添加节点的滚动位置查询请求。以像素为单位。节点必须是 scroll-view 或者 viewport，返回 NodesRef 对应的 SelectorQuery
+				4.添加节点的 Context 对象查询请求
+
