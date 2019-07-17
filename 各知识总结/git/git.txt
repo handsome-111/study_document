@@ -44,3 +44,19 @@
 			git commit . -m "此次修改的信息" (将所有文件提交到本地仓库)
 			git clone 仓库地址
 			git push    "仓库地址别名" master (推送到远程仓库)
+
+
+
+		命令行步骤:
+			1.配置基本信息:
+				设置用户名:git config --global user.name 'handsome-111'
+				设置邮箱：git config --global user.email '1040978586@qq.com'
+				查看设置：git config --list
+
+			2.初始化git：
+				1.git init
+				2.git add 文件夹/*
+				3.git commmit -m '备注信息'
+
+			3.从远程仓库同步到本地
+				1.git clone 地址
