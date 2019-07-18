@@ -85,6 +85,17 @@ CSS:
 			clip:直接裁剪，没有省略号
 			ellipsis:溢出改成省略号
 
+			单行溢出:
+				white-space:nowrap;
+				text-overflow: ellipsis;
+  				overflow: hidden;
+
+			多行溢出：
+				text-overflow: ellipsis;
+    			overflow: hidden;
+   			 	-webkit-box-orient: vertical;
+    			-webkit-line-clamp: 2;
+
 		text-decoration:文本的修饰,去除默认效果等
 
 		word-break:自动换行，只用于英文
