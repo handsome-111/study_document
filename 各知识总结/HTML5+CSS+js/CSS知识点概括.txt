@@ -96,6 +96,14 @@ CSS:
    			 	-webkit-box-orient: vertical;
     			-webkit-line-clamp: 2;
 
+    			小程序里：
+	    			display: -webkit-box;
+					overflow:hidden;
+					text-overflow: ellipsis;
+					word-break: break-all;
+					-webkit-box-orient:vertical;
+					-webkit-line-clamp:2;
+
 		text-decoration:文本的修饰,去除默认效果等
 
 		word-break:自动换行，只用于英文
@@ -214,16 +222,16 @@ CSS:
 
 				方法3：使用before和after双伪元素清除浮动，
 					使用方法 ：在浮动元素的父元素上使用 如下class即可
-						.clearfix:before,.clearfix:after {
-							content : "";
-							display : table;		/* 这句话可以触发BFC */
-						}
-						.clearfix:after {
-							clear:both;
-						}
-						.clearfix{
-							*zoom: 1;
-						}
+							.clearfix:before,.clearfix:after {
+								content : "";
+								display : table;		/* 这句话可以触发BFC */
+							}
+							.clearfix:after {
+								clear:both;
+							}
+							.clearfix{
+								*zoom: 1;
+							}
 
 				clear : left;	
 				clear : both;		/* 同时清除两侧浮动的影响 */

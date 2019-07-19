@@ -1,4 +1,6 @@
-java×ÔÑ§ÍøÎÄµµ:http://how2j.cn/?p=80907
-Mysql¹Ù·½ÎÄµµ£ºhttps://dev.mysql.com/doc/refman/8.0/en/
-MysqlÖĞÎÄÎÄµµ:http://www.mysqlab.net/docs/view/refman-5.1-zh/chapter/apis.html#libmysqld-restrictions
-Î¢ĞÅĞ¡³ÌĞò¹Ù·½ÎÄµµ:https://developers.weixin.qq.com/miniprogram/dev/framework/
+javaè‡ªå­¦ç½‘æ–‡æ¡£:http://how2j.cn/?p=80907
+Mysqlå®˜æ–¹æ–‡æ¡£ï¼šhttps://dev.mysql.com/doc/refman/8.0/en/
+Mysqlä¸­æ–‡æ–‡æ¡£:http://www.mysqlab.net/docs/view/refman-5.1-zh/chapter/apis.html#libmysqld-restrictions
+
+å¾®ä¿¡å°ç¨‹åºå®˜æ–¹æ–‡æ¡£:https://developers.weixin.qq.com/miniprogram/dev/framework/ 
+å¾®ä¿¡å°ç¨‹åºUI(Touch WX):http://www.wetouch.net/touchwx_doc/
