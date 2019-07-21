@@ -4,4 +4,4 @@ Mysql中文文档:http://www.mysqlab.net/docs/view/refman-5.1-zh/chapter/apis.ht
 
 微信小程序官方文档:https://developers.weixin.qq.com/miniprogram/dev/framework/ 
 微信小程序UI(Touch WX):http://www.wetouch.net/touchwx_doc/
-微信小程序UI组件(iview weapp):https://weapp.iviewui.com/docs/guide/start
+微信小程序UI组件(iview weapp):http://www.wetouch.net

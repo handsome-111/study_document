@@ -139,22 +139,67 @@ UI框架介绍：
 			1.wx.createSelectorQuery()：返回一个 SelectorQuery 对象实例，在自定义组件或包含自定义组件的页面中，应使用 this.createSelectorQuery() 来代替。 
 			2.具体方法见文档
 			3.对象的方法简单介绍：
-				1.将选择器的选取范围更改为自定义组件 component 内。
-				2.在当前页面下选择第一个匹配选择器 selector 的节点。
-				3.在当前页面下选择匹配选择器 selector 的所有节点
-				4.选择显示区域。可用于获取显示区域的尺寸、滚动位置等信息。
-				5.执行所有的请求。请求结果按请求次序构成数组，在callback的第一个参数中返回。
+				1.SelectorQuery.exec(function callback)
+					执行所有的请求。请求结果按请求次序构成数组，在callback的第一个参数中返回。
+				2.SelectorQuery.select(string selector）
+					在当前页面下选择第一个匹配选择器 selector 的节点。返回一个 NodesRef 对象实例，可以用于获取节点信息
+
+						selector类似于 CSS 的选择器，但仅支持下列语法。
+							ID选择器：#the-id
+							class选择器（可以连续指定多个）：.a-class.another-class
+							子元素选择器：.the-parent > .the-child
+							后代选择器：.the-ancestor .the-descendant
+							跨自定义组件的后代选择器：.the-ancestor >>> .the-descendant
+							多选择器的并集：#a-node, .some-other-nodes
+				3.SelectorQuery。selectAll(string selector)
+					在当前页面下选择匹配选择器 selector 的所有节点。
+
+				4.SelectorQuery.selectViewport()
+					选择显示区域。可用于获取显示区域的尺寸、滚动位置等信息
+				5.SelectorQuery.in(Component component)
+					将选择器的选取范围更改为自定义组件 component 内。（初始时，选择器仅选取页面范围的节点，不会选取任何自定义组件中的节点）。
+
 
 		2.NodesRef：用于获取 WXML 节点信息的对象
 			1.NodesRef SelectorQuery.select(string selector)：在当前页面下选择第一个匹配选择器 selector 的节点。返回一个 NodesRef 对象实例，可以用于获取节点信息
 			2.获取方式主要见SelectorQuery对象的方法
 			3.对象的方法简单介绍：
-				1.获取节点的相关信息
-				2.添加节点的布局位置的查询请求。相对于显示区域，以像素为单位。其功能类似于 DOM 的 getBoundingClientRect。返回 NodesRef 对应的 SelectorQuery
-				3.添加节点的滚动位置查询请求。以像素为单位。节点必须是 scroll-view 或者 viewport，返回 NodesRef 对应的 SelectorQuery
-				4.添加节点的 Context 对象查询请求
+				1.fields(Object fields)
+					获取节点的相关信息。需要获取的字段在fields中指定
+				2.boundingClientRect(callback)
+					添加节点的布局位置的查询请求。相对于显示区域，以像素为单位。其功能类似于 DOM 的 getBoundingClientRect。返回 NodesRef 对应的 SelectorQuery
+				3.scrollOffset(function callback)
+					添加节点的滚动位置查询请求。以像素为单位。节点必须是 scroll-view 或者 viewport，
+				4.context(function callback)
+					添加节点的 Context 对象查询请求
+
+
+		3.例子模板:
+				该方法的里的一个参数是回调函数，在执行 SelectorQuery.exec 方法后，节点信息会在 callback 中返回，所以获取之后要设置属性还是啥只需要在回调函数里操作即可。
+				boundingClientRect(function(rect){
+					...
+				})
+
+				例子：
+					var that = this;		//this是page对象
+					wx.createSelectorQuery().selectAll('.swiper_image').boundingClientRect(function(rects){
+				        rects.forEach(function (rect) {
+				          that.setData({
+				            swiperHeight:rect.height
+				          });
+				        });
+				      }).exec();
 
 
 
 注意：
 	1.图片的自适应，image标签，随着宽度的自适应高度，使用该属性即可“mode="widthFix" ”
+	2.设置data：
+		this.setData(object);
+		如：this.setData({
+			aa:'哈哈',
+			bb:11
+		})
+	2.获取data：
+		this.data.属性
+		如：this.data.aa
