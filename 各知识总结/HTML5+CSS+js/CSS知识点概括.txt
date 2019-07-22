@@ -123,7 +123,7 @@ CSS:
 	CSS3盒模型：
 		box-sizing: content-box | border-box
 			content-box:传统的盒子模型，默认的盒子模型，添加边距的时候会撑开，宽高=宽高+边距
-			border-box:宽高设置了之后不会变，尽管添加了边距,总的宽高不会变，不会被撑开
+			border-box:宽高设置了之后不会变，尽管添加了padding 和 border,总的宽高不会变，不会被撑开
 
 
 	单位大小:

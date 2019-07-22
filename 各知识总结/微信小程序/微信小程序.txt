@@ -190,7 +190,42 @@ UI框架介绍：
 				        });
 				      }).exec();
 
+				例子2：
+					wx.createSelectorQuery().select('#the-id').boundingClientRect(function(rect){
+				      rect.id      // 节点的ID
+				      rect.dataset // 节点的dataset
+				      rect.left    // 节点的左边界坐标
+				      rect.right   // 节点的右边界坐标
+				      rect.top     // 节点的上边界坐标
+				      rect.bottom  // 节点的下边界坐标
+				      rect.width   // 节点的宽度
+				      rect.height  // 节点的高度
+				    }).exec()
 
+
+5.事件系统：
+	文档：https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/event.html
+	事件大全：
+		touchstart	手指触摸动作开始	
+		touchmove	手指触摸后移动	
+		touchcancel	手指触摸动作被打断，如来电提醒，弹窗	
+		touchend	手指触摸动作结束	
+		tap	手指触摸后马上离开	
+		longpress	手指触摸后，超过350ms再离开，如果指定了事件回调函数并触发了这个事件，tap事件将不被触发	1.5.0
+		longtap	手指触摸后，超过350ms再离开（推荐使用longpress事件代替）	
+		transitionend	会在 WXSS transition 或 wx.createAnimation 动画结束后触发	
+		animationstart	会在一个 WXSS animation 动画开始时触发	
+		animationiteration	会在一个 WXSS animation 一次迭代结束时触发	
+		animationend	会在一个 WXSS animation 动画完成时触发	
+		touchforcechange	在支持 3D Touch 的 iPhone 设备，重按时会触发
+
+	事件对象：
+		type	String	事件类型	
+		timeStamp	Integer	事件生成时的时间戳	
+		target	Object	触发事件的组件的一些属性值集合	
+		currentTarget	Object	当前组件的一些属性值集合	
+		mark	Object	事件标记数据
+		
 
 注意：
 	1.图片的自适应，image标签，随着宽度的自适应高度，使用该属性即可“mode="widthFix" ”
@@ -200,6 +235,11 @@ UI框架介绍：
 			aa:'哈哈',
 			bb:11
 		})
-	2.获取data：
+	3.获取data：
 		this.data.属性
 		如：this.data.aa
+
+	4.条件渲染，经常切换的最好使用hidden(是hidden而不是wx:hidden),而不是使用wx:if
+	5.数据绑定：
+		格式：data-属性名="值"
+		如；<view id="tapTest" data-hi="WeChat" bindtap="tapName"> Click me! </view>
