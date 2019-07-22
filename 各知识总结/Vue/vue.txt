@@ -206,4 +206,22 @@ Vue:
 
 			6.作用和场景:
 				
+	5.路由:
+		后端路由：对于普通的网站，所有的超链接都是URL地址，对应服务器上不同的资源
+		前端路由：在单页面应用程序中，通过hash(就是#号)改变来切换页面的方式，叫做前端路由
+
+		Vue-router文档：https://router.vuejs.org/guide/#html
+
+		vue-router： 前端路由
+			1.导入vue-router文件:<script src="./vue-router.js"></script>
+				一旦导入了以上文件之后，就会在URL末尾添加#，
+				如：file:///C:/Users/Administrator/Desktop/%E9%A1%B9%E7%9B%AE/%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE/vue/index.html#/
+
+			2.创建路由对象
+				const router = new VueRouter({...});
+
+
+
+
+
 
