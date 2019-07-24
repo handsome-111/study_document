@@ -243,3 +243,27 @@ UI框架介绍：
 	5.数据绑定：
 		格式：data-属性名="值"
 		如；<view id="tapTest" data-hi="WeChat" bindtap="tapName"> Click me! </view>
+
+
+
+
+WXSS:
+	1.修改复选框默认样式：
+		/* 未选中的 背景样式 */
+		checkbox .wx-checkbox-input{
+		  border-radius: 100% !important;
+		}
+
+		/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+		checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+		  border: 1rpx solid rgb(231, 24, 102);
+		  background: rgb(231, 24, 102);
+		}
+
+		/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+		checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+		  text-align: center;
+		  font-size:30rpx; /* 对勾大小 30rpx */
+		  color:#fff; /* 对勾颜色 白色 */
+		  background: transparent;
+		}
