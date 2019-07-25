@@ -117,6 +117,14 @@ CSS:
 
    	阴影效果(可实现立体效果)：
    		值：rgba(0,0,0,0.3);  有内阴影和外阴影，详见文档
+   		语法：box-shadow: h-shadow v-shadow blur spread color inset;
+   		参数：
+			h-shadow	必需的。水平阴影的位置。允许负值
+			v-shadow	必需的。垂直阴影的位置。允许负值
+			blur	可选。模糊距离
+			spread	可选。阴影的大小
+			color	可选。阴影的颜色。在CSS颜色值寻找颜色值的完整列表
+
    		text-shadow:文本阴影
 		box-shadow:盒子阴影
 

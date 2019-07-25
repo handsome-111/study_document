@@ -11,3 +11,60 @@ jvm:https://www.oracle.com/technetwork/java/javase/tech/index-jsp-136373.html
 
 CSS:
 	font-family中文字体对照表:https://www.jb51.net/css/67658.html
+
+颜色采样：
+	http://www.htmleaf.com/Demo/201711174834.html
+
+
+函数库：
+	lodash： https://github.com/lodash/lodash
+	前端业务代码工具库outils：https://github.com/proYang/outils
+
+动画库:
+	Animate.css：CSS3 动画库，普通的动画库,使用方法直接添加DIV即可
+   		https://daneden.github.io/animate.css/
+   	Anime.js：一个强大的、轻量级的用来制作动画的javascript库
+	   	https://www.animejs.cn/
+	Hover.css：CSS hover 悬停效果，可以应用于链接、按钮、图片等等。
+		http://ianlunn.github.io/Hover/
+	Magic.css：css3 animation动画库
+  		https://github.com/miniMAC/magic
+  		功能展示：http://www.jq22.com/yanshi2754
+  		使用方法：导入class即可
+  	Waves：点击波纹效果
+  		http://fian.my.id/Waves/#start
+
+  	move.js：一个小型的JavaScript库，通过JS来控制一系列的CSS动画顺序执行，使CSS3动画变得非常简单和优雅。
+		 https://github.com/visionmedia/move.js
+
+滚动库：
+	BetterScroll：使移动端滑动体验更加流畅的滚动
+   		https://github.com/ustbhuangyi/better-scroll
+   	mescroll：移动端上拉刷新下拉加载
+   		http://www.mescroll.com/demo.html
+
+轮播图：
+	Swiper，移动端触摸滑动插件：https://www.swiper.com.cn/
+
+滚屏：
+	fullpage：https://alvarotrigo.com/fullPage/
+
+弹出框:
+	Bootbox.js：http://bootboxjs.com/examples.html
+
+ajax插件:
+	https://github.com/axios/axios
+
+级联选择器：
+	ustbhuangyi/picker：移动端最好用的的筛选器组件、联动筛选
+		https://github.com/ustbhuangyi/picker
+
+颜色选择器插件：
+	bootstrap-colorpicker：https://github.com/farbelous/bootstrap-colorpicker
+
+日期时间处理：
+	Moment.js：是一个解析，验证，操作和显示日期和时间的 JavaScript 类库。
+		http://momentjs.cn/
+表单验证:
+	validator.js:轻量级的JavaScript表单验证，字符串验证。没有依赖，支持UMD，~3kb。
+		https://wangchujiang.com/validator.js/#example
