@@ -132,6 +132,26 @@ UI框架介绍：
 	4.模板：WXML提供模板（template），可以在模板中定义代码片段，然后在不同的地方调用。
 		https://developers.weixin.qq.com/miniprogram/dev/reference/wxml/template.html
 
+		1.外部导入模板和模板样式：
+			模板文件:goodsSpec.wxml
+				<template name="goodsSpec">
+				  <view class="goodsSpec">啊啊啊</view>
+				</template>  
+
+			模板样式:goodsSpec.wxss
+
+			page页面:
+				1.外部引入wxml和wxss，2.使用模板
+
+				BB.wxml：
+					<import src="/templates/alerts/goodsSpec.wxml"/>
+					<template is="goodsSpec" data="goods"></template>
+
+				BB.wxss:
+					@import "/templates/alerts/goodsSpec.wxss";
+
+				关于模板里的data要在BB页面中定义,然后传递到模板里
+
 	5.API：
 		文档：https://developers.weixin.qq.com/miniprogram/dev/api/wxml/wx.createSelectorQuery.html
 		
@@ -174,7 +194,7 @@ UI框架介绍：
 					添加节点的 Context 对象查询请求
 
 
-		3.例子模板:
+		3.例子:
 				该方法的里的一个参数是回调函数，在执行 SelectorQuery.exec 方法后，节点信息会在 callback 中返回，所以获取之后要设置属性还是啥只需要在回调函数里操作即可。
 				boundingClientRect(function(rect){
 					...
