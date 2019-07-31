@@ -29,17 +29,167 @@ Mongodb简介:
 		一般数据库和集合都不需要手动创建，只要在插入文档的时候会自动创建。
 
 	CRUD操作：
-		api文档：https://docs.mongodb.com/manual/crud/
+		CRUD文档：https://docs.mongodb.com/manual/crud/
+
+		Mongodb的所有函数方法:https://docs.mongodb.com/manual/reference/method/js-collection/
+
+		集合（collection）方法:
+			db.collection.insert()		在集合中创建新文档。
+			db.collection.insertOne()	在集合中插入新文档。
+			db.collection.insertMany()	在集合中插入几个新文档。
+
+			db.collection.find()				对集合或视图执行查询并返回游标对象。
+			db.collection.findAndModify()		以原子方式修改并返回单个文档。
+			db.collection.findOne()				执行查询并返回单个文档。
+			db.collection.findOneAndDelete()	查找单个文档并将其删除。
+			db.collection.findOneAndReplace()	查找单个文档并替换它。
+			db.collection.findOneAndUpdate()	查找单个文档并进行更新。
+
+			db.collection.update()			修改集合中的文档。
+			db.collection.updateOne()		修改集合中的单个文档。
+			db.collection.updateMany()		修改集合中的多个文档。
+			db.collection.remove()			从集合中删除文档。
+
+			db.collection.remove()		从集合中删除文档。
+			db.collection.deleteOne()	删除集合中的单个文档。
+			db.collection.deleteMany()	删除集合中的多个文档。
+
+			db.collection.aggregate()	提供对聚合管道的访问。
+			db.collection.bulkWrite()	提供批量写入操作功能。
+
+			db.collection.count()			返回文档的计数。
+
+			db.collection.dataSize()		返回集合的大小。
+			db.collection.createIndex()		在集合上构建索引。
+			db.collection.createIndexes()	在集合上构建一个或多个索引。
+
+			db.collection.explain()			返回有关各种方法的查询执行的信息。
+
+			db.collection.getIndexes()				返回描述集合上现有索引的文档数组。
+			db.collection.getShardDistribution()	对于分片群集中的集合，db.collection.getShardDistribution()报告块分布的数据。
+			db.collection.getShardVersion()			分片群集的内部诊断方法。
+
+			db.collection.aggregate()		更复杂的数据集合。
 
 		1.插入文档：
-			db.<collection>.insert(doc)
+			Api:
+				db.<collection>.insert(doc)		:将单个文档或多个文档插入集合中。
+				db.<collection>.insertOne()		:将单个文档插入到集合中。
+				db.<collection>.insertMany() 	:将多个 文档插入集合中。
 
-			如：db.students.insert( {'name':"德莱文"} )
+				如：db.students.insert( {'name':"德莱文"} )
 
 			注：
 				1.在插入时，会默认添加"_id"属性，是为了保证唯一性，也可以自己给“_id”赋值，建议使用自带的
 
 		2.查询文档:
-			db.<collection>.find();
+			Api:
+				db.<collection>.find();		:返回符合条件的所有文档
+				db.<collection>.findOne()	:返回符合条件的第一个文档
 
+			查询过滤：
+				1.{<Field>:<value>}
 			如:db.students.find();
+
+			查询运算符：
+				语法:{ <field1>: { <operator1>: <value1> }, ... }
+				运算符(operator):
+					$in:相当于'='
+					$lt:相当于'and'
+					$or:相当于'or'
+
+
+		3.修改更新:
+			Api:
+				update():只会更新一行，更新或替换与指定过滤器匹配的单个文档，或更新与指定过滤器匹配的所有文档。
+				db.collection.updateMany()	：更新与指定过滤器匹配的所有文档。
+					注：更新多个必须还有原子操作符,如($set)
+				db.collection.replaceOne()	：即使多个文档可能与指定的过滤器匹配，也最多替换与指定过滤器匹配的单个文档
+				db.collection.updateOne()	：即使多个文档可能与指定的过滤器匹配，也最多更新与指定过滤器匹配的单个文档。
+
+				原子操作符：
+					$set:用来修改和添加指定的属性
+					$unset:删除某个属性
+
+				例：
+				update(查询条件,新对象);
+					注：新对象会替换旧对象，是替换，而不是修改部分	
+					如:db.person.update({'name':'德莱文'},{'name':'德莱文','pos':'adc'})
+
+				update(查询条件,{$set:{}})
+					update({'name':'李四'},{$set:{'name':'张三'}})
+
+
+文档之间的关系：
+	一对一：
+		使用内嵌文档的方式，
+		
+		例子:一个丈夫对一个妻子:
+			db.wifeAndHusband.insert([
+				{
+					wifeName:老婆,
+					age:14,
+					husband:{
+						name:'老公',
+						age:13
+					}
+				}
+			])
+
+	一对多 / 多对一：
+		在"多"的一端添加"一"的一端的唯一字段即可
+
+		例子：用户和订单
+		db.users.insert([
+			{
+				username:'张三',
+			},
+			{
+				username:'李四'
+			}
+		])
+
+		db.order.insert([
+			{
+				list:['苹果','香蕉'],
+				user_id:'张三'
+			}
+
+		])
+
+	多对多：
+		例如:分类和商品
+			db.teachers.insert([
+				{
+					name:'王老师',
+					age:13,
+					stus_id:[
+						ObjectId('179878974354879898'),
+						ObjectId('654897456465456454')
+					]
+				},
+				{
+					name:'张老师',
+					age:21,
+					stus_id:[
+						ObjectId('179878974354879898'),
+						ObjectId('654897456465456454')
+					]
+				}
+			])
+
+			db.stus.insert([
+				{
+					name:'张三',
+					age:12
+				},
+				{
+					name:'李四',
+					age:13
+				}
+			])
+
+脚本：
+	MongoDb可以使用JS语法，比如var来声明变量，如例：
+		var user_id = db.users.find({username:'张三'})._id;		//查询获取user_id
+		db.order.find({user_id:user_id})						//根据user_id来查询订单

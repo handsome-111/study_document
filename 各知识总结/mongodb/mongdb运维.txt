@@ -16,3 +16,20 @@ window：
 				2.然后再services.msc里就可以看到MongoDB服务了，点击启动运行即可
 	5.测试链接mongodb服务器：
 		cmd:mongo
+
+
+
+
+1.配置文件选项：
+	即mongod.cfg
+	文档：https://docs.mongodb.com/manual/reference/configuration-options/
+
+2.服务器参数:
+	文档：https://docs.mongodb.com/manual/reference/parameters/
+
+3.数据库命令:
+	文档：https://docs.mongodb.com/manual/reference/command/
+	对当前数据库命令：
+		db.runCommand( { <command> } )
+
+
