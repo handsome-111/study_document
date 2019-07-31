@@ -1,0 +1,45 @@
+Mongodb简介:
+	1.快速开发Web应用
+	2.Mongodb的数据模型是面相文档的，类似于JSON结构，即BSON
+
+
+
+概念：
+	1.数据库：一个仓库，仓库可以存放集合
+	2.集合：类似于数组，在集合中可以存放文档
+	3.文档：文档数据库中的最小单位，我们存储和操作的内容都是文档
+
+指令：
+	show dbs
+	show databases
+		-显示当前所有的数据库
+	show collections
+		-显示数据库中所有的集合
+
+	user 数据库名
+		-进入数据库
+
+	use 数据库名
+		-创建数据库，进入数据库
+
+	db
+		-代表当前数据库
+
+	注意：
+		一般数据库和集合都不需要手动创建，只要在插入文档的时候会自动创建。
+
+	CRUD操作：
+		api文档：https://docs.mongodb.com/manual/crud/
+
+		1.插入文档：
+			db.<collection>.insert(doc)
+
+			如：db.students.insert( {'name':"德莱文"} )
+
+			注：
+				1.在插入时，会默认添加"_id"属性，是为了保证唯一性，也可以自己给“_id”赋值，建议使用自带的
+
+		2.查询文档:
+			db.<collection>.find();
+
+			如:db.students.find();

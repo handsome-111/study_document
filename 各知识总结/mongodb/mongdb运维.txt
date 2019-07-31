@@ -1,0 +1,18 @@
+window：
+	1.安装时，选择custom，自定义，然后下一步即可
+	2.配置环境变量，将mongodb的bin目录添加到path即可
+	3.创建文件夹：	C:\data\db	，必须是这样的格式，因为这是默认配置
+	4.启动mongodb服务器:
+		cmd:	mongod
+		1.指定存储路径和端口：
+			mongod --dbpath F:\mongodb\data\db	--port 10086
+
+		2.后台运行mongodb服务：
+			1.新建mongod.cfg,配置路径和日志:
+				dbpath=F:\mongodb\data\db
+				logpath=F:\mongodb\data\log\mongodb.log
+			2.配置服务：
+				1.mongod.exe  --config  "C:\handsome\MongoDB\mongod.cfg" --install --serviceName "MongoDB"
+				2.然后再services.msc里就可以看到MongoDB服务了，点击启动运行即可
+	5.测试链接mongodb服务器：
+		cmd:mongo
