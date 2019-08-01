@@ -20,9 +20,29 @@ window：
 
 
 
+
 1.配置文件选项：
 	即mongod.cfg
 	文档：https://docs.mongodb.com/manual/reference/configuration-options/
+
+	1.security:配置安全，客户端采用用户密码登录
+		文档：https://docs.mongodb.com/manual/tutorial/enable-authentication/
+
+		1.1:创建用户：
+			（1）进入admin数据库，
+			（2）创建超级管理员:db.createUser(user:'admin',pwd:'123456',roles:[{role:'root',db:'admin'}])
+			（3）创建普通管理员:db.createUser(user:'test',pwd:'123456',roles:[{role:readWrite,db:'test'}])
+
+			role角色选项:
+				1.root:只在admin数据库中使用，超级账号，超级权限
+				2.read:允许用户读取指定数据库
+				3.readWrite:允许用户读写指定数据库
+
+		1.2配置文件配置:
+			security:
+				authorization: enabled
+
+		1.3登录:mongo -u admin -p
 
 2.服务器参数:
 	文档：https://docs.mongodb.com/manual/reference/parameters/
@@ -32,4 +52,6 @@ window：
 	对当前数据库命令：
 		db.runCommand( { <command> } )
 
+4.主从复制
+	
 

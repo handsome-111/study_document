@@ -71,6 +71,10 @@ Mongodb简介:
 
 			db.collection.aggregate()		更复杂的数据集合。
 
+		cursor（也是文档方法，）方法
+			db.collection.find().*;
+
+
 		1.插入文档：
 			Api:
 				db.<collection>.insert(doc)		:将单个文档或多个文档插入集合中。
@@ -97,6 +101,12 @@ Mongodb简介:
 					$in:相当于'='
 					$lt:相当于'and'
 					$or:相当于'or'
+					$lt:小于
+					$gt:大于
+
+					例子：
+						//查询年龄=11或年龄小于10的用户
+						dp.user.find({$or:[{'age':11},{age:{$lt:10}}]});	
 
 
 		3.修改更新:
@@ -118,6 +128,10 @@ Mongodb简介:
 
 				update(查询条件,{$set:{}})
 					update({'name':'李四'},{$set:{'name':'张三'}})
+
+
+创建集合：
+	1.自增长的集合
 
 
 文档之间的关系：
@@ -193,3 +207,17 @@ Mongodb简介:
 	MongoDb可以使用JS语法，比如var来声明变量，如例：
 		var user_id = db.users.find({username:'张三'})._id;		//查询获取user_id
 		db.order.find({user_id:user_id})						//根据user_id来查询订单
+
+索引/和查询优化：
+	创建索引：https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/#db.collection.createIndex
+
+		db.collection.createIndex({background},{unique},{name})
+		如：db.collection.createIndex({name:1})		给name字段添加索引
+
+	查询优化：
+		https://docs.mongodb.com/manual/reference/method/cursor.explain/#cursor.explain
+
+
+事务：
+	https://docs.mongodb.com/manual/core/transactions/
+	
