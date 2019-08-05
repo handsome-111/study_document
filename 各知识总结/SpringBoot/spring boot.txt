@@ -1,0 +1,39 @@
+Spring MVC:
+	
+
+2.配置文件的存储和读取：
+	1.默认将读取application.yml文件
+	2.读取配置文件：	
+		@Value("${weidian.appkey}")
+		private String appkey;
+
+3.配置Bean(即单例的类):
+	@Configuration
+	public class ServerConfiguration {
+		
+		@Bean
+		public AbstractWeidianClient getWeidianClient(){
+			return new VdianItemGetRequest(token, appkey);
+		}
+	}
+
+4.调用外部http接口：
+	1.在配置类里配置好bean
+		@Bean	
+	    public RestTemplate restTemplate() {
+			return new RestTemplate();
+	    }
+
+	2.使用
+		@Autowired 
+    	private RestTemplate restTemplate;
+
+    	发起post请求：
+    		 String response = restTemplate.postForObject("http://localhost:81/taotask/startGoodsListingTask", paramMap, String.class);
+
+        发起get请求:
+        	restTemplate.getForObject("https://oauth.open.weidian.com/token?grant_type=client_credential&appkey=xxx&secret=xxx", String.class);
+
+    3.最后一个参数为responseType,即响应类型,统一为String,json串。
+
+

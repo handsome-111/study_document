@@ -1,0 +1,18 @@
+1.pom中引入本地jar:
+	${basedir}：项目的根目录，同src级
+
+	<dependency>
+        <groupId>com.taobao</groupId>
+        <artifactId>topsdk</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${basedir}/lib/taobao-sdk-java-auto_1537508364370-20180921.jar</systemPath>
+    </dependency>
+
+2.将jar上传到本地仓库
+	mvn install:install-file -Dfile=./taoshelfService.jar -DgroupId=com.youmeng -DartifactId=taoshelf -Dversion=1.0 -Dpackaging=jar
+
+	mvn install:install-file -Dfile=./open-sdk-java-1.0.1.jar -DgroupId=open.weidian -DartifactId=open_sdk_java -Dversion=1.0.1 -Dpackaging=jar
+
+3.maven打包命令,进入项目当前路径:
+	mvn clean package -DskipTests
