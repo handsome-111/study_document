@@ -37,3 +37,23 @@ Spring MVC:
     3.最后一个参数为responseType,即响应类型,统一为String,json串。
 
 
+5.URIBuilder,URI拼装和解析工具
+		依赖：
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.5</version>
+				<optional>true</optional>
+			</dependency>
+
+
+		URIBuilder uri = new URIBuilder(); 
+		uri.addParameter("grant_type", "client_credential");
+		uri.addParameter("appkey",appkey);
+		uri.addParameter("secret",secret);
+		
+		如：https://oauth.open.weidian.com/token
+		uri.setHost("oauth.open.weidian.com");	//设置主机
+		uri.setPath("/token");					//设置path
+		uri.setScheme("https");					//设置协议
+		String url = uri.toString();
