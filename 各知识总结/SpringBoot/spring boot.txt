@@ -57,3 +57,49 @@ Spring MVC:
 		uri.setPath("/token");					//设置path
 		uri.setScheme("https");					//设置协议
 		String url = uri.toString();
+
+
+6.Spring MVC:
+	SpringMVC官方文档：https://docs.spring.io/spring/docs/5.1.9.RELEASE/spring-framework-reference/web.html#mvc
+	
+	1.处理方法(method)：
+
+	请求参数：https://docs.spring.io/spring/docs/5.1.9.RELEASE/spring-framework-reference/web.html#mvc-ann-arguments
+		例子：
+		@RequestMapping(value = "/aa/{user}")
+		public User getUser(@PathVariable Long user,@RequestParam("userName") String userName, @RequestHeader("Accept-Encoding") String encoding ,@RequestBody requestBody，@CookieValue("JSESSIONID") String cookie,@SessionAttribute User user, @RequestParam("file") MultipartFile file，@ResponseBody Goods goods){
+			 ...
+		}
+
+		1.@RequestParam:Servlet请求参数（即查询参数或表单数据）绑定到控制器中的方法参数。
+		2.@RequestHeader:将请求标头绑定到控制器中的方法参数。
+		3.@PathVariable:路径变量
+		4.@CookieValue：将HTTP cookie的值绑定到控制器中的方法参数。
+		5.@SessionAttribute:访问全局管理的预先存在的会话属性
+		6.@RequestAttribute:访问先前创建的预先存在的请求属性（例如，通过Servlet Filter 或HandlerInterceptor）
+		7.重定向属性：
+			return "redirect:files/{path}";
+		8.Multipart:
+			POST的内容与要求multipart/form-data进行解析
+			将参数类型声明为List<MultipartFile>允许解析相同参数名称的多个文件。
+		9.@ResponseBody:
+			将请求传递来的参数赋值到对象里，等于是自动赋值,对象里不存在的属性就不赋值
+			也可以用List<Map<String,Object>>来对照赋值
+			例子：
+				@ResponseBody Goods goods
+				@ResponseBody List<Map<String,Object>> Goods
+		10.@ResponseBody:返回字符串
+		11.ResponseEntity<T>:将对象自动返回JSON串格式到客户端
+			如：
+				public ResponseEntity<WxEntity> test1(){
+					WxEntity w = new WxEntity();
+					w.setId("asdasd");
+					w.setName("哈哈");
+					return new ResponseEntity<WxEntity>(w,HttpStatus.OK);
+				}
+
+
+	2.控制器建议（Controller）:
+		1.@Controller:标识为一个控制器
+		2.@RequestMapping:请求映射路径
+		3.@RestController: 等于 @ResponseBody + @Controller

@@ -1,0 +1,41 @@
+安装redis:
+	1.window:
+		1.将压缩文件解压，Redis-x64-3.2.100.zip，直接打开redis-server.exe就可以启动服务，打开redis-cli就可以打开客户端
+		2.进入redis目录，安装redis服务：
+			CMD命令：redis-server.exe --service-install redis.windows.conf 
+
+
+	2.linux:
+		直接输入命令：下载，解压，编译。
+		1.wget http://download.redis.io/releases/redis-2.8.17.tar.gz
+
+		2.tar xzf redis-2.8.17.tar.gz 
+
+		3.cd redis-2.8.17
+
+		4.make编译	（如果这一步出错,可以输入命令安装gcc来结局:    yum install gcc） 或者改成 make MALLOC=libc
+			4.1然后进入redis2.8目录下将redis安装到指定目录：make PREFIX=/usr/local/redis install
+			4.2此时的redis文件夹和redis2.8文件夹不一样，redis文件夹只有5个启动文件：
+				1.redis-benchmark:基准测试，性能测试的工具
+				2.redis-check-aof：检查aof日志的工具
+				3.redis-check-dump：检查rbd日志的工具
+				4.redis-cli：连接用的客户端
+				5.redis-server：redis服务进程
+			4.3：从源代码目录复制一份配置文件到redis文件夹中:cp /usr/local/redis2.8/redis.conf /usr/local/redis/redis.conf
+
+		5.进入到redis/src目录下，启动redis-server,指令:  ./redis-server   
+
+		6.还有一种启动方法,指定配置文件：./redis-server /etc/redic/redis.conf
+
+		7.停止redis：进入到redis的目录： ./redis-cli shutdown
+
+		8.让redis能够让外网访问：需要修改redis.conf   
+			将bind 127.0.0.0.1  修改为  bind 0.0.0.0
+
+		9.如果外网还无法访问，则关闭防火墙：service iptables stop
+		
+		9.将redis加入到开机启动
+		　　vi /etc/rc.local //在里面添加内容：/usr/local/redis/bin/redis-server /usr/local/redis/etc/redis.conf (意思就是开机调用这段开启redis的命令)
+		开启和安装复制功能：
+		安装gpm:yum install -y gpm*
+		开启gpm服务：systemctl start gpm
