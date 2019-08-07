@@ -139,8 +139,60 @@ Spring MVC:
 	当使用模板引擎和默认配置时，模板将自动从中获取src/main/resources/templates。
 
 9.spring security:
-	1.WebSecurityConfigurerAdapter:自定义security策略
-	2.AuthenicationManagerBuilder:自定义认证策略
-	@EnableWebSecurity:开启WebSecurity模式
+	目的：解决了认证授权和资源保护的方案，不需要用提供用户名和密码
+	1.oAuth标准:
+		oAuth是一种协议，主要是提供认证和授权的标准。与以往的授权方式不同之处是oAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此 oAuth 是安全的。
+	
+	2.Spring Security框架:实现了oAuth标准
 
+	3.注意：客户端不能直接访问资源服务器，需要先访问认证服务器
+
+	4.访问自己的资源：	
+		如资源: http://localhost/users/getUserinfo
+		带上令牌(token)才能查询：http://localhost/users/getUserinfo?access_token=123456
+		2.refresh_token(刷新令牌,为了防止用户获取了token无限制的访问资源)
+			1.Refresh Token 一定是保存在客户端的服务器上 ，而绝不能存放在狭义的客户端（例如 App、PC 端软件）上。调用 refresh 接口的时候，一定是从服务器到服务器的访问。
+
+			2.oAuth2.0 引入了 appid 机制。即每一个 appid 都对应一个 appSecret appSecret 会在客户端申请 appid 时，随 appid 一起分配给客户端。客户端必须把 appSecret 妥善保管在服务器上，决不能泄露。刷新 Access Token 时，需要验证这个 appSecret
+
+			刷新token接口会类似于：
+				http://localhost/refresh?refresh_toekn=111&appid=222&appSecret=333
+
+	5.客户端授权模式:
+		文档：https://www.funtl.com/zh/spring-security-oauth2/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8E%88%E6%9D%83%E6%A8%A1%E5%BC%8F.html#%E6%9C%AC%E8%8A%82%E8%A7%86%E9%A2%91
+		1.implict:简化模式，不推荐使用
+		2.authorization code:授权码模式，即使用令牌
+			1.授权码模式适用于有自己的服务器的应用，它是一个一次性的临时凭证，用来换取 access_token 和 refresh_token。
+			2.例子:自己的应用对接微信小程序
+				1.认证：获取微信用户唯一标识 OpenID 和 会话密钥 session_key。
+					1.通过微信小程序给予的appid和secret在服务器端（一定要在服务器端，在客户端发送请求不安全）向微信接口发送请求
+						如：https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+						请求响应返回会用的OpenId和session_key
+
+				2.授权（获取令牌）：访问微信接口服务
+					1.获取小程序全局唯一后台接口调用凭据（access_token,就是访问令牌，需要在服务器端调用接口读取令牌，而不是客户端）
+						如：https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+						则返回：access_toekn,即令牌
+
+					2.访问接口服务,拿取到的令牌调用微信接口服务
+						如：https://api.weixin.qq.com/datacube/getweanalysisappidmonthlyretaininfo?access_token=ACCESS_TOKEN
+
+		3.resource owner password credentials：密码模式,用户向客户端提供自己的用户名和密码。
+			流程：
+				1.用户用账号密码向认证服务器换取token
+				2.用户使用token向资源服务器访问资源
+			场景：同一个企业内部的不同产品要使用本企业的 oAuth2.0 体系，因为都是自己企业的用户，不需要给第三方，如QQ和QQ空间
+
+
+	6.代码实现：
+		1.认证,需要继承WebSecurityConfigurerAdapter类
+		2.授权,需要继承AuthorizationServerConfigureAdapter
+
+10.微服务架构：
+	1.目的解耦
+	2.分布式,多个服务（即服务器,多个后台）
+		1.客户端（第三方等）如何访问
+		2.
+		3.服务之间的通信:对内RPC,对外Rest
+	3.
 
