@@ -61,6 +61,9 @@ Spring MVC:
 
 6.Spring MVC:
 	SpringMVC官方文档：https://docs.spring.io/spring/docs/5.1.9.RELEASE/spring-framework-reference/web.html#mvc
+
+	Tomcat执行顺序：
+		Filter -> Servlet -> Interceptor -> controller
 	
 	1.处理方法(method)：
 
@@ -103,3 +106,41 @@ Spring MVC:
 		1.@Controller:标识为一个控制器
 		2.@RequestMapping:请求映射路径
 		3.@RestController: 等于 @ResponseBody + @Controller
+
+	3.拦截器：
+		文档：https://docs.spring.io/spring/docs/5.1.8.RELEASE/spring-framework-reference/web.html#mvc-config-interceptors
+		1.说明：对方法或请求进行拦截，方法调用前，方法调用后
+
+		使用：
+			@Configuration
+			@EnableWebMvc
+			public class WebConfig implements WebMvcConfigurer {
+
+			    @Override
+			    public void addInterceptors(InterceptorRegistry registry) {
+			        registry.addInterceptor(new LocaleChangeInterceptor());
+			        registry.addInterceptor(new ThemeChangeInterceptor()).addPathPatterns("/**").excludePathPatterns("/admin/**");
+			        registry.addInterceptor(new SecurityInterceptor()).addPathPatterns("/secure/*");
+			    }
+			}
+
+	4.过滤器：
+
+7.静态资源：
+	1.默认情况下，Spring Boot从类路径中的/static（ /public或/resources或/META-INF/resources）目录或者根目录中提供静态内容ServletContext
+
+	2.可以使用该spring.mvc.static-path-pattern属性对其进行调整
+
+	3.application.yml:
+		spring.mvc.static-path-pattern = / resources / **
+
+8.模板引擎：
+	Thymeleaf：
+	当使用模板引擎和默认配置时，模板将自动从中获取src/main/resources/templates。
+
+9.spring security:
+	1.WebSecurityConfigurerAdapter:自定义security策略
+	2.AuthenicationManagerBuilder:自定义认证策略
+	@EnableWebSecurity:开启WebSecurity模式
+
+

@@ -287,3 +287,11 @@ WXSS:
 		  color:#fff; /* 对勾颜色 白色 */
 		  background: transparent;
 		}
+
+
+开放接口：
+	1.获取用户信息，如用户昵称，所在省市等
+		文档：https://developers.weixin.qq.com/miniprogram/dev/component/open-data.html
+		直接使用标签即可：<open-data type="userNickName" lang="zh_CN"></open-data>
+
+	2.登录，获取oppenid和sessionkey
