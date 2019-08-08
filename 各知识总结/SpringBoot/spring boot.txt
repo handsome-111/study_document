@@ -186,7 +186,12 @@ Spring MVC:
 
 	6.代码实现：
 		1.认证,需要继承WebSecurityConfigurerAdapter类
-		2.授权,需要继承AuthorizationServerConfigureAdapter
+		2.授权,需要继承AuthorizationServerConfigurerAdapter
+
+	7.基于权限
+	8.令牌的管理方式：
+		1.使用数据库来存储令牌
+		2.数据库表：	https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/test/resources/schema.sql
 
 10.微服务架构：
 	1.目的解耦
