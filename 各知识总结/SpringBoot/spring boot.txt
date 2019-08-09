@@ -202,5 +202,57 @@ Spring MVC:
 	3.
 
 11.配置多个数据源
-	
+	1.数据源：
+		数据源建立多个数据库连接，这些数据库连接会保存在数据库连接池中，当需要访问数据库时，只需要从数据库连接池中获取空闲的数据库连接，当程序访问数据库结束时，数据库连接会放回数据库连接池中。
+
+	2.传统的JDBC访问数据库技术，每次访问数据库都需要通过数据库驱动器Driver和数据库名称以及密码等等资源建立数据库连接。
+		这样的连接存在两大问题：
+			1. 频繁的建立数据库连接与断开数据库，这样会消耗大量的资源和时间，降低性能。
+			2. 数据库的连接需要用户名和密码等等，这些需要一定的内存和CPU一定开销。
+
+
+
+	1.配置类：
+		// 声明bean
+		@Bean(name = "hdgjDataSource")
+		// 指明读取的配置
+		@ConfigurationProperties(prefix = "spring.datasource.hdgj")
+		// 设置为主数据源
+		@Primary
+		/*
+		 * 声明数据源配置
+		 */
+		public DataSource hdgjDataSource() {
+			return DataSourceBuilder.create().build();
+		}
+
+
+		@Bean(name = "hdgjSqlSessionFactory")
+		@Primary
+		/**
+		 * 使用声明的数据源，创建sqlSession工厂
+		 */
+		public SqlSessionFactory testSqlSessionFactory(@Qualifier("hdgjDataSource") DataSource dataSource)
+				throws Exception {
+			SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+			/*
+			 * 当mybatis采用映射配置文件的方式时，指明该数据源需要是扫描的xml文件路径
+			 */
+			bean.setDataSource(dataSource);
+			/*
+			 * bean.setMapperLocations( new
+			 * PathMatchingResourcePatternResolver().getResources(
+			 * "classpath:mybatis/mapper/test1/*.xml"));
+			 */
+			return bean.getObject();
+		}
+
+	2.application.yml:
+		spring.datasource.hdgj.username......
+		spring.datasource.test2.username.....	
 12.整合mybatus plus
+
+13.Spring schedule:
+	官方文档：https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/integration.html#scheduling
+
+	abstract TaskExecutor:任务执行器，是线程池的概念，一个执行器可能是单线程的也可能是同步的

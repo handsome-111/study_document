@@ -1,1 +1,11 @@
-Mongodb-java-driver文档.txt
+Mongodb-java-driver:MongoDB驱动程序
+	1.官方文档：http://mongodb.github.io/mongo-java-driver/3.10/
+
+	2.在spring boot里配置mongodb:
+		spring:
+		 	data:
+			    mongodb:
+			      uri: mongodb://localhost:27017/hdgj
+			      username: admin
+			      password:
+			        - 123456
