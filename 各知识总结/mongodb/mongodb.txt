@@ -1,7 +1,7 @@
 Mongodb简介:
 	1.快速开发Web应用
 	2.Mongodb的数据模型是面相文档的，类似于JSON结构，即BSON
-
+	3.官网文档：https://docs.mongodb.com/manual/tutorial/getting-started/
 
 
 概念：
@@ -129,6 +129,13 @@ Mongodb简介:
 				update(查询条件,{$set:{}})
 					update({'name':'李四'},{$set:{'name':'张三'}})
 
+		4.删除文档：
+			1.删除集合中的所有文档:
+				db.collection.deleteMany({})
+
+			2.删除指定条件的文档：
+				{ <field1>: <value1>, ... }
+
 
 创建集合：
 	1.自增长的集合
@@ -186,10 +193,12 @@ Mongodb简介:
 		db.order.find({user_id:user_id})						//根据user_id来查询订单
 
 索引/和查询优化：
-	创建索引：https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/#db.collection.createIndex
+	1.默认的_id索引：MongoDB 在创建集合期间在_id字段上 创建唯一索引。该索引可防止客户端插入具有相同字段值的两个文档。
 
-		db.collection.createIndex({background},{unique},{name})
-		如：db.collection.createIndex({name:1})		给name字段添加索引
+	2.创建索引：https://docs.mongodb.com/manual/reference/method/db.collection.createIndex/#db.collection.createIndex
+
+		（1）语法：db.collection.createIndex({background},{unique},{name})
+		（2）例子，如：db.collection.createIndex({name:1})		给name字段添加索引
 
 	查询优化：
 		https://docs.mongodb.com/manual/reference/method/cursor.explain/#cursor.explain

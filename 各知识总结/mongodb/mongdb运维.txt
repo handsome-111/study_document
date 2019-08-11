@@ -30,8 +30,13 @@ window：
 
 		1.1:创建用户：
 			（1）进入admin数据库，
-			（2）创建超级管理员:db.createUser(user:'admin',pwd:'123456',roles:[{role:'root',db:'admin'}])
-			（3）创建普通管理员:db.createUser(user:'test',pwd:'123456',roles:[{role:readWrite,db:'test'}])
+			（2）创建超级管理员
+					db.createUser({user:"admin",pwd:"123456",roles:["root"]})
+			（3）创建普通管理员（admin管理员在hdgj数据库下创建用户，而不是在admin数据库下）
+					db.createUser({user:"hdgj",pwd:"123456",roles:[{role:'readWrite',db:'hdgj'}]})
+			（4）查看所有的用户:show users
+			（5）删除用户：db.dropUser("admin")
+			（6）授权用户：db.auth("admin","123456")
 
 			role角色选项:
 				1.root:只在admin数据库中使用，超级账号，超级权限
