@@ -48,6 +48,7 @@ Mongodb-java-driver:MongoDB驱动程序
 			2.
 
 		3.使用MongoTemplate:
+			api文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/api/
 			1.MongoOperations,MongoOperations 是实现MongoTemplate的接口
 
 			批量插入：MongoTemplate.insertAll(Collection<? extends Object> objectsToSave)
