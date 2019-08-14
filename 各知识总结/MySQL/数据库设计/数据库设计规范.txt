@@ -199,7 +199,7 @@ Mysql分区表：
 		3.具有主键或唯一所以的表，主键或唯一索引必须是分区键的一部分
 
 
-执行计划分析(Explain)：
+执行计划分析(Explain),查询优化：
 	Explain可以对SELECT UPDATE INSERT DELETE REPLACE进行分析
 	使用Explain会获得以下信息:
 		1.SQL如何使用索引

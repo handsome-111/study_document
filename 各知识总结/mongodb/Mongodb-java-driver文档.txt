@@ -41,11 +41,22 @@ Mongodb-java-driver:MongoDB驱动程序
 
 				@Version - 用于字段锁定，保存操作时检查修改。初始值是0，每次更新时自动触发。
 		2.定义Repository接口：
-			模板:
-				interface PersonRepository extends Repository<类名, Id或主键类型> { … }
-			例子：
-				interface PersonRepository extends Repository<Person, Long> { … }
-			2.
+			1.继承MongoRepository接口
+				interface PersonRepository extends MongoRepository<类名, Id或主键类型> { … }
+			
+			2.继承PagingAndSortingRepository接口（最好使用）：
+				interface PersonRepository extends PagingAndSortingRepository<类名, Id或主键类型> { … }
+
+				1.查询分页：
+					Page<User> users = repository.findAll(PageRequest.of(1, 20));
+
+			3.通过继承以上的接口直接写方法，直接CURD数据库，不用实现方法，如：
+				方法命名模板:
+					查找:findBy字段名称
+					删除:removeBy字段名称
+					统计:countBy字段名称
+				如：User findByUserName(String userName);	//直接
+
 
 		3.使用MongoTemplate:
 			api文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/api/

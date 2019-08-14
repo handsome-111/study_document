@@ -1,0 +1,3 @@
+JVM：
+	1.JVM虚拟机参数配置
+		1.文档：https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html
