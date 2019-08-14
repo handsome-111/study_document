@@ -16,6 +16,13 @@ Mongodb-java-driver:MongoDB驱动程序
 		1.定义实体：
 			1.定义实体的注解:
 				@Id - 用于字段级别，标记这个字段是一个主键，默认生成的名称是“_id”
+					用@Id（org.springframework.data.annotation.Id）注释的属性或字段映射到该_id字段。
+					没有注释但命名id映射到该_id字段的属性或字段。
+					
+					关于插入：
+						插入或保存时，如果Id未设置属性，则假设其值将由数据库自动生成。
+						因此，ObjectId要成功自动生成，您的类中的Id属性或字段的类型必须是a String，an ObjectId或a BigInteger。
+
 
 				@Document - 用于类，以表示这个类需要映射到数据库，您也可以指定映射到数据库的集合名称
 
@@ -41,6 +48,7 @@ Mongodb-java-driver:MongoDB驱动程序
 
 				@Version - 用于字段锁定，保存操作时检查修改。初始值是0，每次更新时自动触发。
 		2.定义Repository接口：
+			文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/
 			1.继承MongoRepository接口
 				interface PersonRepository extends MongoRepository<类名, Id或主键类型> { … }
 			
@@ -52,21 +60,199 @@ Mongodb-java-driver:MongoDB驱动程序
 
 			3.通过继承以上的接口直接写方法，直接CURD数据库，不用实现方法，如：
 				方法命名模板:
-					查找:findBy字段名称
-					删除:removeBy字段名称
-					统计:countBy字段名称
-				如：User findByUserName(String userName);	//直接
+					1.查找:findBy字段名称
+					2.删除:removeBy字段名称
+					3.统计:countBy字段名称
+					4.还可以通过运算符or,and来命名，如果命名错误会有提示
+					5.distinct:findDistinctPeople
+					6.携带分页的参数：
+						Page<User> findByUserName(String userName, Pageable pageable);
+
+					7.携带排序的参数:
+						List<User> findByUserName(String userName, Sort sort);	
+
+					8.限制结果的数量的方法名称：
+						findFirstByOrderByLastnameAsc：查询第一个数据，并且是升序的排序
+						findFirst10ByLastname：查询从最大值开始返回的10行数据
+				如：User findByUserName(String userName);	//直接通过userName查找，只需要定义这个方法就行
 
 
 		3.使用MongoTemplate:
 			api文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/api/
 			1.MongoOperations,MongoOperations 是实现MongoTemplate的接口
+				插入：
+					插入或保存时，如果Id未设置属性，则假设其值将由数据库自动生成。
+					因此，ObjectId要成功自动生成，您的类中的Id属性或字段的类型必须是a String，an ObjectId或a BigInteger。
 
-			批量插入：MongoTemplate.insertAll(Collection<? extends Object> objectsToSave)
+			2.批量插入：MongoTemplate.insertAll(Collection<? extends Object> objectsToSave)
    
-			批量更新：MongoTemplate.updateMulti(Query query, Update update, Class<?> entityClass)
+			3.更新：
+				MongoTemplate.updateMulti(Query query, Update update, Class<?> entityClass)
+				例子：WriteResult wr = mongoTemplate.updateMulti(new Query(where("accounts.accountType").is(Account.Type.SAVINGS)),
+									new Update().inc("accounts.$.balance", 50.00), Account.class);
+
+				update对象的方法：
+					官方文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/
+
+					Update addToSet (String key, Object value) 使用$addToSetupdate修饰符添加addToSet Update
+
+					Update currentDate (String key) 使用$currentDateupdate修饰符更新
+
+					Update currentTimestamp (String key) 使用$currentDate更新修饰符更新$type timestamp
+
+					Update inc (String key, Number inc) 使用$inc更新修饰符更新
+
+					Update max (String key, Object max) update使用$max更新修饰符
+
+					Update min (String key, Object min) 使用$minupdate修饰符更新
+
+					Update multiply (String key, Number multiplier)使用$mul更新修饰符乘以更新
+
+					Update pop (String key, Update.Position pos) 使用$popupdate修饰符更新
+
+					Update pull (String key, Object value) 使用$pull更新修饰符拉取更新
+
+					Update pullAll (String key, Object[] values) 使用$pullAllupdate修饰符进行pullAll 更新
+
+					Update push (String key, Object value) 使用$push更新修饰符推送更新
+
+					Update pushAll (String key, Object[] values) 使用$pushAllupdate修饰符更新
+
+					Update rename (String oldName, String newName) 使用$rename更新修饰符重命名更新
+
+					Update set (String key, Object value)使用$set更新修饰符设置更新
+
+					Update setOnInsert (String key, Object value) 使用$setOnInsertupdate修饰符更新
+
+					Update unset (String key) 使用$unset更新修饰符更新
+
+					例子：
+					// { $push : { "category" : { "$each" : [ "spring" , "data" ] } } }
+					new Update().push("category").each("spring", "data")
+
+					// { $push : { "key" : { "$slice" : 5 , "$each" : [ "Arya" , "Arry" , "Weasel" ] } } }
+					new Update().push("key").slice(5).each(Arrays.asList("Arya", "Arry", "Weasel"));
+
+
+				更新插入，如果找不到就插入，找到就跟新：
+					template.upsert(query(where("ssn").is(1111).and("firstName").is("Joe").and("Fraizer").is("Update")), update("address", addr), Person.class);
 
 			
+			4.查找和更新方法，即更新文档并返回旧文档或新更新的文档
+				<T> T findAndModify(Query query, Update update, FindAndModifyOptions options, Class<T> entityClass);
+					设置参数，返回更新的文档：FindAndModifyOptions.options().returnNew(true);
+				
+				<T> T findAndModify(Query query, Update update, Class<T> entityClass);		//返回没有更新前的文档
+
+			5.查找和替换文档，替换整体的最直接的方法Document是通过它id使用该save方法。然而，这可能并不总是可行的。findAndReplace提供了一种替代方案，允许通过简单查询识别要替换的文档。
+
+				Optional<User> result = template.update(Person.class)      		//指定要更新的类
+				    .matching(query(where("firstame").is("Tom")))          		//给定域类型映射的实际匹配查询。提供sort，fields并collation通过查询设置。
+				    .replaceWith(new Person("Dick"))
+				    .withOptions(FindAndReplaceOptions.options().upsert()) 
+				    .as(User.class)                                        
+				    .findAndReplace();       
+			6.乐观锁，
+				官方文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/
+				1.乐观锁定需要设置WriteConcern为ACKNOWLEDGED。否则OptimisticLockingFailureException可以默默吞噬。
+
+				2.直接在实体里添加version属性即可 
+					@Version Long version;           
+					直接用API保存，两次同时保存会直接报错，如：
+						template.save(daenerys);                                                              
+						template.save(tmp); // throws OptimisticLockingFailureException    
+
+
+			7.查询：
+				mongodbTemplate的find...方法都需要query对象，而query又需要Criteria（判断）对象， 
+				如：
+					Criteria c = new Criteria();
+					c.where("username").is("1040978586").and("password").is("13379959770");
+					
+					mongoTemplate.find(Query.query(c),ModelAttr.class);   
+
+				
+				Criteria对象API：
+					文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/
+					详见文档的10.6
+
+					Criteria all (Object o) 使用$all运算符创建标准
+
+					Criteria and (String key) 链接添加到当前并返回新创建的链接CriteriakeyCriteria
+
+					Criteria andOperator (Criteria…​ criteria)使用$and运算符为所有提供的条件创建和查询（需要MongoDB 2.0或更高版本）
+
+					Criteria elemMatch (Criteria c) 使用$elemMatch运算符创建标准
+
+					Criteria exists (boolean b) 使用$exists运算符创建标准
+
+					Criteria gt (Object o) 使用$gt运算符创建标准
+
+					Criteria gte (Object o) 使用$gte运算符创建标准
+
+					Criteria in (Object…​ o) 使用$in运算符为varargs参数创建标准。
+
+					Criteria in (Collection<?> collection)使用$in运算符使用集合创建标准
+
+					Criteria is (Object o) 使用字段匹配（{ key:value }）创建标准。如果指定的值是文档，则文档的顺序和文档中的完全相等很重要。
+
+					Criteria lt (Object o) 使用$lt运算符创建标准
+
+					Criteria lte (Object o) 使用$lte运算符创建标准
+
+					Criteria mod (Number value, Number remainder) 使用$mod运算符创建标准
+
+					Criteria ne (Object o) 使用$ne运算符创建标准
+
+					Criteria nin (Object…​ o) 使用$nin运算符创建标准
+
+					Criteria norOperator (Criteria…​ criteria) 使用$nor运算符为所有提供的条件创建或查询
+
+					Criteria not () 使用$not影响直接跟随子句的元运算符创建标准
+
+					Criteria orOperator (Criteria…​ criteria) 使用$or运算符为所有提供的条件创建或查询
+
+					Criteria regex (String re) 使用a创建标准$regex
+
+					Criteria size (int s) 使用$size运算符创建标准
+
+					Criteria type (int t) 使用$type运算符创建标准
+
+					Criteria matchingDocumentStructure (MongoJsonSchema schema) 使用$jsonSchema运算符为JSON模式条件创建条件。$jsonSchema只能应用于查询的顶级而不是特定于属性。使用properties模式的属性来匹配嵌套字段。
+
+					Criteria bits() 是通往MongoDB的按位的查询运算符等$bitsAllClear。
+
+					Criteria within (Circle circle) 使用$geoWithin $center运算符创建地理空间标准。
+
+					Criteria within (Box box)使用$geoWithin $box操作创建地理空间标准。
+
+					Criteria withinSphere (Circle circle) 使用$geoWithin $center运算符创建地理空间标准。
+
+					Criteria near (Point point) 使用$near操作创建地理空间标准
+
+					Criteria nearSphere (Point point) 使用$nearSphere$center操作创建地理空间标准。这仅适用于MongoDB 1.7及更高版本。
+
+					Criteria minDistance (double minDistance)使用该$minDistance操作创建地理空间标准，以便与$ near一起使用。
+
+					Criteria maxDistance (double maxDistance) 使用该$maxDistance操作创建地理空间标准，以便与$ near一起使用。
+
+				Query对象：
+					Query addCriteria (Criteria criteria) 用于向查询添加其他条件
+
+					Field fields () 用来定义字段被包括在查询结果中
+
+					Query limit (int limit) 用于限制返回的结果所提供的限制的大小（用于寻呼）
+
+					Query skip (int skip)用于跳过结果中提供的文档数（用于分页）
+
+					Query with (Sort sort) 用于为结果提供定义排序
+
+
+			8.根据实例(example)来查询，更骚的，
+				文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/
+					详见文档的10.7
+				1.需要接口继承QueryByExampleExecutor接口
+					如：public interface ModelAttrRepository extends QueryByExampleExecutor<ModelAttr>
 
 
 1.通过java-mongodb-driver来操作Mongodb：
