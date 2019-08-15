@@ -10,55 +10,59 @@ Mongodb-java-driver:MongoDB驱动程序
 			    mongodb:
 			      uri: mongodb://hdgj:123456@127.0.0.1:27017/hdgj
 
+	操作Mongodb的方式有两种，一种是Repository，另一种是MongoTempalte,还有其他的见官网
 
 	3.使用Spring data Repository来操作Mongodb
-		官方文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/#repositories
-		1.定义实体：
-			1.定义实体的注解:
-				@Id - 用于字段级别，标记这个字段是一个主键，默认生成的名称是“_id”
-					用@Id（org.springframework.data.annotation.Id）注释的属性或字段映射到该_id字段。
-					没有注释但命名id映射到该_id字段的属性或字段。
+		1.官方文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/#repositories
+		
+		2.定义Repository接口来操作MongoDB：
+			1.定义实体：
+				1.定义实体的注解:
+					@Id - 用于字段级别，标记这个字段是一个主键，默认生成的名称是“_id”
+						用@Id（org.springframework.data.annotation.Id）注释的属性或字段映射到该_id字段。
+						没有注释但命名id映射到该_id字段的属性或字段。
+						
+						关于插入：
+							插入或保存时，如果Id未设置属性，则假设其值将由数据库自动生成。
+							因此，ObjectId要成功自动生成，您的类中的Id属性或字段的类型必须是a String，an ObjectId或a BigInteger。
+
+
+					@Document - 用于类，以表示这个类需要映射到数据库，您也可以指定映射到数据库的集合名称
+
+					@DBRef - 用于字段，以表示它将使用com.mongodb.DBRef进行存储。
+
+					@Indexed - 用于字段，表示该字段需要如何创建索引
+
+					@CompoundIndex - 用于类，以声明复合索引
+
+					@GeoSpatialIndexed - 用于字段，进行地理位置索引
+
+					@TextIndexed - 用于字段，标记该字段要包含在文本索引中
+
+					@Language - 用于字段，以设置文本索引的语言覆盖属性。
+
+					@Transient - 默认情况下，所有私有字段都映射到文档，此注解将会去除此字段的映射
+
+					@PersistenceConstructor - 标记一个给定的构造函数，即使是一个protected修饰的，在从数据库实例化对象时使用。构造函数参数通过名称映射到检索的DBObject中的键值。
 					
-					关于插入：
-						插入或保存时，如果Id未设置属性，则假设其值将由数据库自动生成。
-						因此，ObjectId要成功自动生成，您的类中的Id属性或字段的类型必须是a String，an ObjectId或a BigInteger。
+					@Value - 这个注解是Spring框架的一部分。在映射框架内，它可以应用于构造函数参数。这允许您使用Spring表达式语言语句来转换在数据库中检索的键值，然后再用它来构造一个域对象。为了引用给定文档的属性，必须使用以下表达式：@Value("#root.myProperty")，root要指向给定文档的根。
+
+					@Field - 用于字段，并描述字段的名称，因为它将在MongoDB BSON文档中表示，允许名称与该类的字段名不同。
+
+					@Version - 用于字段锁定，保存操作时检查修改。初始值是0，每次更新时自动触发。
 
 
-				@Document - 用于类，以表示这个类需要映射到数据库，您也可以指定映射到数据库的集合名称
-
-				@DBRef - 用于字段，以表示它将使用com.mongodb.DBRef进行存储。
-
-				@Indexed - 用于字段，表示该字段需要如何创建索引
-
-				@CompoundIndex - 用于类，以声明复合索引
-
-				@GeoSpatialIndexed - 用于字段，进行地理位置索引
-
-				@TextIndexed - 用于字段，标记该字段要包含在文本索引中
-
-				@Language - 用于字段，以设置文本索引的语言覆盖属性。
-
-				@Transient - 默认情况下，所有私有字段都映射到文档，此注解将会去除此字段的映射
-
-				@PersistenceConstructor - 标记一个给定的构造函数，即使是一个protected修饰的，在从数据库实例化对象时使用。构造函数参数通过名称映射到检索的DBObject中的键值。
-				
-				@Value - 这个注解是Spring框架的一部分。在映射框架内，它可以应用于构造函数参数。这允许您使用Spring表达式语言语句来转换在数据库中检索的键值，然后再用它来构造一个域对象。为了引用给定文档的属性，必须使用以下表达式：@Value("#root.myProperty")，root要指向给定文档的根。
-
-				@Field - 用于字段，并描述字段的名称，因为它将在MongoDB BSON文档中表示，允许名称与该类的字段名不同。
-
-				@Version - 用于字段锁定，保存操作时检查修改。初始值是0，每次更新时自动触发。
-		2.定义Repository接口：
 			文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/
-			1.继承MongoRepository接口
+			2.继承MongoRepository接口
 				interface PersonRepository extends MongoRepository<类名, Id或主键类型> { … }
 			
-			2.继承PagingAndSortingRepository接口（最好使用）：
+			3.继承PagingAndSortingRepository接口（最好使用）：
 				interface PersonRepository extends PagingAndSortingRepository<类名, Id或主键类型> { … }
 
 				1.查询分页：
 					Page<User> users = repository.findAll(PageRequest.of(1, 20));
 
-			3.通过继承以上的接口直接写方法，直接CURD数据库，不用实现方法，如：
+			4.通过继承以上的接口直接写方法，直接CURD数据库，不用实现方法，如：
 				方法命名模板:
 					1.查找:findBy字段名称
 					2.删除:removeBy字段名称
@@ -75,9 +79,125 @@ Mongodb-java-driver:MongoDB驱动程序
 						findFirstByOrderByLastnameAsc：查询第一个数据，并且是升序的排序
 						findFirst10ByLastname：查询从最大值开始返回的10行数据
 				如：User findByUserName(String userName);	//直接通过userName查找，只需要定义这个方法就行
+				
+				1.查询方法的关键字：
+					After
+						如：findByBirthdateAfter(Date date)					
+						逻辑结果{"birthdate" : {"$gt" : date}}
+
+					GreaterThan
+						如：findByAgeGreaterThan(int age)
+						逻辑结果{"age" : {"$gt" : age}}
+
+					GreaterThanEqual
+						如：findByAgeGreaterThanEqual(int age)
+						逻辑结果：{"age" : {"$gte" : age}}
+
+					Before
+						如：findByBirthdateBefore(Date date)
+						逻辑结果{"birthdate" : {"$lt" : date}}
+
+					LessThan
+						如：findByAgeLessThan(int age)
+						逻辑结果{"age" : {"$lt" : age}}
+
+					LessThanEqual
+						如：findByAgeLessThanEqual(int age)
+						逻辑结果{"age" : {"$lte" : age}}
+
+					Between
+						如：findByAgeBetween(int from, int to)
+						逻辑结果{"age" : {"$gt" : from, "$lt" : to}}
+
+					In
+						findByAgeIn(Collection ages)
+						逻辑结果{"age" : {"$in" : [ages…​]}}
+
+					NotIn
+						findByAgeNotIn(Collection ages)
+						逻辑结果{"age" : {"$nin" : [ages…​]}}
+
+					IsNotNull, NotNull
+						findByFirstnameNotNull()
+						逻辑结果{"firstname" : {"$ne" : null}}
+
+					IsNull, Null
+						findByFirstnameNull()
+						逻辑结果{"firstname" : null}
+
+					Like, StartingWith, EndingWith
+						findByFirstnameLike(String name)
+						逻辑结果{"firstname" : name} (name as regex)
+
+					NotLike, IsNotLike
+						findByFirstnameNotLike(String name)
+						逻辑结果{"firstname" : { "$not" : name }} (name as regex)
+
+					Containing on String
+						findByFirstnameContaining(String name)
+						逻辑结果{"firstname" : name} (name as regex)
+
+					NotContaining on String
+						findByFirstnameNotContaining(String name)
+						逻辑结果{"firstname" : { "$not" : name}} (name as regex)
+
+					Containing on Collection
+						findByAddressesContaining(Address address)
+						逻辑结果{"addresses" : { "$in" : address}}
+
+					NotContaining on Collection
+						findByAddressesNotContaining(Address address)
+						逻辑结果{"addresses" : { "$not" : { "$in" : address}}}
+
+					Regex
+						findByFirstnameRegex(String firstname)
+						逻辑结果{"firstname" : {"$regex" : firstname }}
+
+					(No keyword)
+						findByFirstname(String name)
+						逻辑结果{"firstname" : name}
+
+					Not
+						findByFirstnameNot(String name)
+						逻辑结果{"firstname" : {"$ne" : name}}
+
+					Near
+						findByLocationNear(Point point)
+						逻辑结果{"location" : {"$near" : [x,y]}}
+
+					Near
+						findByLocationNear(Point point, Distance max)
+						逻辑结果{"location" : {"$near" : [x,y], "$maxDistance" : max}}
+
+					Near
+						findByLocationNear(Point point, Distance min, Distance max)
+						逻辑结果{"location" : {"$near" : [x,y], "$minDistance" : min, "$maxDistance" : max}}
+
+					Within
+						findByLocationWithin(Circle circle)
+						逻辑结果{"location" : {"$geoWithin" : {"$center" : [ [x, y], distance]}}}
+
+					Within
+						findByLocationWithin(Box box)
+						逻辑结果{"location" : {"$geoWithin" : {"$box" : [ [x1, y1], x2, y2]}}}
+
+					IsTrue, True
+						findByActiveIsTrue()
+						逻辑结果{"active" : true}
+
+					IsFalse, False
+						findByActiveIsFalse()
+						逻辑结果{"active" : false}
+
+					Exists
+						findByLocationExists(boolean exists)
+						逻辑结果{"location" : {"$exists" : exists }}
+
+				2.删除方法关键字：
+					上表中的关键字关键字可以与delete…By或一起使用remove…By来创建删除匹配文档的查询。
 
 
-		3.使用MongoTemplate:
+		3.使用MongoTemplate来操作Mongodb:
 			api文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/api/
 			1.MongoOperations,MongoOperations 是实现MongoTemplate的接口
 				插入：
