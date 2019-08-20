@@ -196,6 +196,27 @@ Mongodb-java-driver:MongoDB驱动程序
 				2.删除方法关键字：
 					上表中的关键字关键字可以与delete…By或一起使用remove…By来创建删除匹配文档的查询。
 
+				3.Repository 支持的返回类型，见文档：
+					https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/#repository-query-return-types
+				4.查询返回指定字段：
+					使用field来指定
+					例子：
+					@Query(fields="{'status':1,'sold':1}")
+					Product findByItemId(String id);
+				5.自定义查询，查询所有数据命名的方法：
+
+					//将两个属性的值赋到Product里
+					@Query(fields="{'status':1,'sold':1}")		
+					List<Product> findAllBy(Pageable page,Sort sort)	
+
+					//返回单个属性，估计返回的是JSON格式
+					@Query(fields="{'itemId':}1")		
+					List<String> findAllBy(Pageable page,Sort sort)	
+
+					具体的返回值类型可以见 3.
+
+
+
 
 		3.使用MongoTemplate来操作Mongodb:
 			api文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/api/
