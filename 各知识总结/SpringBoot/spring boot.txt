@@ -256,3 +256,55 @@ Spring MVC:
 	官方文档：https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/integration.html#scheduling
 
 	abstract TaskExecutor:任务执行器，是线程池的概念，一个执行器可能是单线程的也可能是同步的
+
+14.spring actuator(执行器监控)
+	官方文档：https://docs.spring.io/spring-boot/docs/2.1.7.RELEASE/reference/html/production-ready-endpoints.html
+
+	1.依赖：
+		<dependency>  
+		    <groupId>org.springframework.boot</groupId>  
+		    <artifactId>spring-boot-starter-actuator</artifactId>  
+		</dependency>  
+
+	2.路径解析
+
+	HTTP方法		路径				描述								web (鉴权,需要授权）
+	GET			/autoconfig		查看自动配置的使用情况			true
+	GET			/configprops	查看配置属性，包括默认配置			true
+	GET			/beans			查看bean及其关系列表				true
+	GET			/dump			打印线程栈						true
+	GET			/env			查看所有环境变量					true
+	GET			/env/{name}			查看具体变量值				true
+	GET			/health			查看应用健康指标					false
+	GET			/info	查看应用信息（需要自己在application.properties里头添加信息，比如info.contact.email=easonjim@163.com）	false
+	GET			/mappings		查看所有url映射					true
+	GET			/metrics		查看应用基本指标					true
+	GET			/metrics/{name}	查看具体指标						true
+	POST		/shutdown		关闭应用（要真正生效，得配置文件开启endpoints.shutdown.enabled: true）	true
+	GET			/trace			查看基本追踪信息					true
+
+
+	3.更改端点暴露，如上只有health和info是不需要鉴权，更改配置文件
+		属性															默认
+		management.endpoints.jmx.exposure.exclude
+ 
+		management.endpoints.jmx.exposure.include					*
+
+		management.endpoints.web.exposure.exclude
+		 
+		management.endpoints.web.exposure.include					info, health
+
+
+	4.保护HTTP端点，可以通过spring security来设置，如：
+		@Configuration
+		public class ActuatorSecurity extends WebSecurityConfigurerAdapter {
+
+			@Override
+			protected void configure(HttpSecurity http) throws Exception {
+				http.requestMatcher(EndpointRequest.toAnyEndpoint()).authorizeRequests()
+						.anyRequest().hasRole("ENDPOINT_ADMIN")
+						.and()
+					.httpBasic();
+			}
+
+		}

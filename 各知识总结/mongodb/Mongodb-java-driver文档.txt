@@ -10,6 +10,13 @@ Mongodb-java-driver:MongoDB驱动程序
 			    mongodb:
 			      uri: mongodb://hdgj:123456@127.0.0.1:27017/hdgj
 
+		2.1.获取MongoClient客户端，通过以上的配置之后，可以直接自动注入MongoClient客户端，
+			如：
+				import com.mongodb.MongoClient;
+				
+				@Autowired
+				private MongoClient mongoClient;
+
 	操作Mongodb的方式有两种，一种是Repository，另一种是MongoTempalte,还有其他的见官网
 
 	3.使用Spring data Repository来操作Mongodb

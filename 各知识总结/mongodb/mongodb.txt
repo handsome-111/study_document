@@ -233,6 +233,8 @@ Mongodb简介:
 
 
 文档之间的关系：
+	详见文档：https://docs.mongodb.com/manual/tutorial/model-embedded-one-to-many-relationships-between-documents/#data-modeling-example-one-to-many
+
 	一对一：
 		使用内嵌文档的方式，
 		
@@ -297,4 +299,10 @@ Mongodb简介:
 
 事务：
 	https://docs.mongodb.com/manual/core/transactions/
+
+	1.MongoDB对单个文档的操作是原子操作，因为您可以使用嵌入式文档和数组来捕获单个文档结构中的数据之间的关系，而不是跨多个文档和集合进行规范化，因此这种单文档原子性消除了许多实际用例对多文档事务的需求。
 	
+	2.对于多文档读写的原子性情况，MongoDB支持多文档事务，使用分布式事务，可以跨多个操作，集合，数据库，文档和分片使用事务。
+
+	3.多文档事务和分布式事务
+		分布式事务是指分片群集和副本集上的多文档事务。多文档事务（无论是在分片集群还是副本集上）也称为从MongoDB 4.2开始的分布式事务。
