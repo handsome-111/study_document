@@ -58,5 +58,24 @@ window：
 		db.runCommand( { <command> } )
 
 4.主从复制
-	
 
+5.创建多个mongodb服务，
+	1.额外创建文件夹Mongodb-2:
+	
+	2.有如下文件夹和文件:data,log和mongod.cfg
+	
+	3.编辑mongod.cfg,设置data和log文件夹路径即可
+		storage:
+  			dbPath: C:\handsome\MongoDB4.0\mongodb-2\data	
+
+  		net:
+		  port: 27018
+		  bindIp: 127.0.0.1
+
+		 systemLog:
+		  destination: file
+		  logAppend: true
+		  path:  C:\handsome\MongoDB4.0\mongodb-2\log\mongod.log
+
+	4.启动第二个mongo服务器：
+		mongod --config "C:\handsome\MongoDB4.0\mongodb-2\mongod.cfg"
