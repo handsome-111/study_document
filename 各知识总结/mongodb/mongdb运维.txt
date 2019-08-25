@@ -79,3 +79,4 @@ window：
 
 	4.启动第二个mongo服务器：
 		mongod --config "C:\handsome\MongoDB4.0\mongodb-2\mongod.cfg"
+		mongod --config "C:\handsome-whj\MongoDB4.0\mongodb-2\mongod.cfg"

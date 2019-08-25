@@ -126,6 +126,17 @@ Spring MVC:
 
 	4.过滤器：
 
+	5.模板引擎(thymeleaf)：
+		1.直接引入pom.xml
+			<!--thymeleaf模板引擎，无需再引入web模块-->
+			<dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+			</dependency>
+
+		2.直接控制器使用即可，返回ModelAndView,后缀默认是.html
+
+
 7.静态资源：
 	1.默认情况下，Spring Boot从类路径中的/static（ /public或/resources或/META-INF/resources）目录或者根目录中提供静态内容ServletContext
 

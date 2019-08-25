@@ -296,6 +296,52 @@ Mongodb简介:
 	查询优化：
 		https://docs.mongodb.com/manual/reference/method/cursor.explain/#cursor.explain
 
+MongoDB复制（副本集）：
+	官方文档：https://docs.mongodb.com/manual/tutorial/deploy-replica-set/#overview
+
+	1.MongoDB复制至少两个节点，一个是主节点，负责处理客户端请求，其余的是从节点，负责复制主节点上的数据
+
+	2.主节点会将操作记录存储在oplog日志中（只记录写操作而不记录读操作），从节点定期轮询主节点获取这些操作，然后对自己的数据副本执行这些操作，从而保证从节点的数据与主节点一致。
+
+	3.MongoDB复制集（复制的集合，有多个成员）
+		特点:
+			N 个节点的集群
+			任何节点可作为主节点
+			所有写入操作都在主节点上
+			自动故障转移
+			自动恢复
+
+		MongoDB复制集的角色类型：
+			1.primary（标准节点）:参与主节点的选举，当自身宕机或者服务停止的时候会自动让出primary
+			2.secondary(被动节点，次级节点)：只能成为second不参与选举，被设置为被动节点则不能参与选举
+			3.arbiter(仲裁节点):负责投票选举，不存放数据，确保标准节点投票不会相同
+
+	4.配置复制集，mongod.cfg:
+		##复制集的名字，即一个复制的集合，所有成员的配置都一样
+		replication:
+   			replSetName: "rs0"
+
+   		当在以上配置完成后，进入数据库可能会出错，提示：
+   			意思是：因为SECONDARY是不允许读写的，如果非要解决，
+	   			Server returned not master error.
+				Message: not master and slaveOk=false
+				Code: 13435
+
+			解决：rs.slaveOk();
+
+	5.在mongodb客户端执行以下命令	
+		1.rs.initiate()在副本集成员0（_id:0）上运行。
+			rs.initiate( {
+			   _id : "rs0",
+			   members: [
+			      { _id: 0, host: "127.0.0.1:27017" },
+			      { _id: 1, host: "127.0.0.1:27018" },
+			   ]
+			})
+
+		2.使用rs.conf()以显示副本集配置对象	
+		3.使用rs.status()来识别副本集的主。
+
 
 事务：
 	https://docs.mongodb.com/manual/core/transactions/
