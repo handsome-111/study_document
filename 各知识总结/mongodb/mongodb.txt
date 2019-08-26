@@ -319,7 +319,7 @@ MongoDB复制（副本集）：
 	4.配置复制集，mongod.cfg:
 		##复制集的名字，即一个复制的集合，所有成员的配置都一样
 		replication:
-   			replSetName: "rs0"
+   			replSetName: rs0
 
    		当在以上配置完成后，进入数据库可能会出错，提示：
    			意思是：因为SECONDARY是不允许读写的，如果非要解决，
@@ -339,8 +339,12 @@ MongoDB复制（副本集）：
 			   ]
 			})
 
-		2.使用rs.conf()以显示副本集配置对象	
-		3.使用rs.status()来识别副本集的主。
+		2.rs.conf()：以显示副本集配置对象	
+		3.rs.status()：来识别副本集的主，查看副本集的信息
+		4.rs.isMaster()：查看Replica Sets状态
+
+	6.将成员添加到副本集：
+
 
 
 事务：

@@ -9,6 +9,9 @@ Mongodb-java-driver:MongoDB驱动程序
 		 	data:
 			    mongodb:
 			      uri: mongodb://hdgj:123456@127.0.0.1:27017/hdgj
+			      
+			      连接复制集的uri:
+			      mongodb://127.0.0.1:27017/hdgj?replSet=rs0,mongodb://127.0.0.1:27018/hdgj
 
 		2.1.获取MongoClient客户端，通过以上的配置之后，可以直接自动注入MongoClient客户端，
 			如：
@@ -460,3 +463,14 @@ Mongodb-java-driver:MongoDB驱动程序
 
 		5.以文件的方式读写MongoDB
 			文档：http://mongodb.github.io/mongo-java-driver/3.10/bson/readers-and-writers/
+
+
+2.事务,需要配置Mongodb复制集
+	1.使用注解的方式来配置事务：
+		1.注册事务管理器bean：
+			@Bean
+		    MongoTransactionManager transactionManager(MongoDbFactory dbFactory) {  
+		        return new MongoTransactionManager(dbFactory);
+		    }
+
+		2.直接将@Transaction注解在方法上即可
