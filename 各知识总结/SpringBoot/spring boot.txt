@@ -149,7 +149,12 @@ Spring MVC:
 	Thymeleaf：
 	当使用模板引擎和默认配置时，模板将自动从中获取src/main/resources/templates。
 
-9.spring security:
+
+9.spring ouath2:
+	1.认证：
+		1.继承WebSecurityConfigurerAdapter：
+			
+
 	目的：解决了认证授权和资源保护的方案，不需要用提供用户名和密码
 	1.oAuth标准:
 		oAuth是一种协议，主要是提供认证和授权的标准。与以往的授权方式不同之处是oAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此 oAuth 是安全的。
