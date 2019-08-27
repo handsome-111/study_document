@@ -20,6 +20,24 @@ Mongodb-java-driver:MongoDB驱动程序
 				@Autowired
 				private MongoClient mongoClient;
 
+		3.导入依赖：
+			<!-- spring boot mongodb -->
+		    <dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+		    </dependency>
+		    
+		    <dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+		    </dependency>
+		    <!-- mongodb plugin -->
+		    <dependency>
+				<groupId>com.cybermkd</groupId>
+				<artifactId>MongodbPlugin</artifactId>
+				<version>1.0.8.2</version>
+			</dependency>
+
 	操作Mongodb的方式有两种，一种是Repository，另一种是MongoTempalte,还有其他的见官网
 
 	3.使用Spring data Repository来操作Mongodb

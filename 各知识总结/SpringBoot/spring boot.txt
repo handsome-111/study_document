@@ -136,6 +136,8 @@ Spring MVC:
 
 		2.直接控制器使用即可，返回ModelAndView,后缀默认是.html
 
+		3.在resources下创建文件夹templates，放模板引擎页面，也可以放静态页面
+
 
 7.静态资源：
 	1.默认情况下，Spring Boot从类路径中的/static（ /public或/resources或/META-INF/resources）目录或者根目录中提供静态内容ServletContext
@@ -150,10 +152,25 @@ Spring MVC:
 	当使用模板引擎和默认配置时，模板将自动从中获取src/main/resources/templates。
 
 
-9.spring ouath2:
+9.spring security:
+	1.配置
+		关闭默认配置：security.basic.enable=false
 	1.认证：
 		1.继承WebSecurityConfigurerAdapter：
+			1.configure(HttpSecurity http)
+			2.configure(WebSecurity web)
+			3.configure(AuthenticationManagerBuilder auth)
+
+		2.原理，spring security在处理请求的时候，都会经过spring security的内部过滤器链。
+			如：
+				请求 -> UsernamePasswordAuthenticationFilter -> BasicAuthenticationFilter -> 其他过滤器（非必需的，和前面的过滤器都是非必需的）
+				-> ExceptionTrasnactionFilter(捕获异常，比如登录失败) -> FilterSecurityInterceptor（必须的，内置的过滤器） -> API(控制器)
 			
+
+		1.基于表单的认证：
+			1.实现接口UserDetailsService
+			2.实现接口UserDetails
+
 
 	目的：解决了认证授权和资源保护的方案，不需要用提供用户名和密码
 	1.oAuth标准:
