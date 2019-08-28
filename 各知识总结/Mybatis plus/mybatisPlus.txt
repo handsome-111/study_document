@@ -1,0 +1,59 @@
+mybatisplus:
+	1.官方文档:https://mp.baomidou.com/
+
+	2.在spring boot里的配置:
+		1.分页插件
+			@EnableTransactionManagement
+			@Configuration
+			@MapperScan("com.youmeng.taotask.mapper.mapper*")
+			public class MybatisPlusConfig {
+
+			    /**
+			     * 分页插件
+			     */
+			    @Bean
+			    public PaginationInterceptor paginationInterceptor() {
+			        return new PaginationInterceptor();
+			    }
+			}
+
+		2.配置文件：
+			配置数据源：
+				spring: 
+					datasource: 
+					    type: com.zaxxer.hikari.HikariDataSource
+					    driver-class-name: com.mysql.cj.jdbc.Driver
+					    url: jdbc:mysql://localhost:3308/hdgj?useUnicode=true&characterEncoding=utf-8&useSSL=false
+					    username: root
+					    password: root
+					    hikari:
+					      minimum-idle: 5
+					      idle-timeout: 600000
+					      maximum-pool-size: 10
+					      auto-commit: true
+					      pool-name: MyHikariCP
+					      max-lifetime: 1800000
+					      connection-timeout: 30000 
+					      connection-test-query: SELECT 1
+
+			mybatis-plus: 
+  				mapper-locations: classpath*:com/youmeng/taotask/xml/**Mapper.xml
+
+  		3.在pom.xml里扫描文件：
+  			<build>
+	  			<!-- 扫描到mybatis的配置文件和yml文件-->
+			  	<resources>
+			  		<resource>
+					  	<directory>src/main/java</directory>
+						<includes>
+							<include>**/*.xml</include>
+						</includes>
+					</resource>
+					<resource>
+					  	<directory>src/main/resources</directory>
+						<includes>
+							<include>**/**</include>
+						</includes>
+					</resource>
+			  	</resources> 
+			</build>

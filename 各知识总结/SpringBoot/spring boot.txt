@@ -170,7 +170,9 @@ Spring MVC:
 		1.基于表单的认证：
 			1.实现接口UserDetailsService
 			2.实现接口UserDetails
-
+			3.自定义登录(认证)成功处理：
+				1.实现接口AuthenticationSuccessHandler
+				2.然后将该实现类配置在http.formLogin().successHandler(实现类)中
 
 	目的：解决了认证授权和资源保护的方案，不需要用提供用户名和密码
 	1.oAuth标准:
