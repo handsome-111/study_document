@@ -5,7 +5,7 @@ mybatisplus:
 		1.分页插件
 			@EnableTransactionManagement
 			@Configuration
-			@MapperScan("com.youmeng.taotask.mapper.mapper*")
+			@MapperScan("com.youmeng.taotask.mapper*")		//包名为:com.youmeng.taotask.mapper
 			public class MybatisPlusConfig {
 
 			    /**
@@ -23,7 +23,7 @@ mybatisplus:
 					datasource: 
 					    type: com.zaxxer.hikari.HikariDataSource
 					    driver-class-name: com.mysql.cj.jdbc.Driver
-					    url: jdbc:mysql://localhost:3308/hdgj?useUnicode=true&characterEncoding=utf-8&useSSL=false
+					    url:jdbc:mysql://localhost:3308/hdgj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
 					    username: root
 					    password: root
 					    hikari:
@@ -37,9 +37,32 @@ mybatisplus:
 					      connection-test-query: SELECT 1
 
 			mybatis-plus: 
-  				mapper-locations: classpath*:com/youmeng/taotask/xml/**Mapper.xml
+  				mapper-locations: classpath:mapper/*Mapper.xml
+  				##mapper文件路径存放于resources/mapper 文件夹下
+  				configuration:
+    				log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   ##显示SQL语句日志
 
-  		3.在pom.xml里扫描文件：
+
+  		3.在pom.xml里扫描文件和依赖：
+  			<!-- mybatais plus-->
+		    <dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus</artifactId>
+				<version>3.0.3</version>
+			</dependency> 
+		    <dependency>
+		        <groupId>com.h2database</groupId>
+		        <artifactId>h2</artifactId>
+		        <scope>runtime</scope>
+		    </dependency>
+		    <!-- mybatis plus 启动依赖 -->
+			<dependency>
+		       	<groupId>com.baomidou</groupId>
+		       	<artifactId>mybatis-plus-boot-starter</artifactId>
+		       	<version>3.0.1</version>
+		  	</dependency>
+
+
   			<build>
 	  			<!-- 扫描到mybatis的配置文件和yml文件-->
 			  	<resources>
@@ -57,3 +80,24 @@ mybatisplus:
 					</resource>
 			  	</resources> 
 			</build>
+
+		4.其他事项：
+			1.Mapper接口需要用@Mapper注解来定义
+			2.mapper.xml文件的namespace对应的是Mapper类
+			3.数据源一定要配置好
+
+
+
+	3.使用,CURD接口：
+		1.Mapper的CURD接口：
+			1.文档：https://mp.baomidou.com/guide/crud-interface.html#mapper-crud-%E6%8E%A5%E5%8F%A3
+
+		2.Service的CURD接口
+
+		3.条件构造器：
+			官方文档：https://mp.baomidou.com/guide/wrapper.html#abstractwrapper
+			AbstractWrapper抽象类，
+			AbstractWrapper实现类：
+				QueryWrapper(LambdaQueryWrapper)
+				UpdateWrapper(LambdaUpdateWrapper) 
+				用于生成 sql 的 where 条件, entity 属性也用于生成 sql 的 where 条件
