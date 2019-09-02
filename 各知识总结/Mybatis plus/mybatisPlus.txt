@@ -43,6 +43,147 @@ mybatisplus:
     				log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   ##显示SQL语句日志
 
 
+
+
+    		Mybatis Plus配置多个数据源
+    			@Configuration
+				@MapperScan("com.seawaterbt.ssm.mapper*")
+				public class MyBatiesPlusConfiguration {
+
+				    /*
+				     * 分页插件，自动识别数据库类型
+				     * 多租户，请参考官网【插件扩展】
+				     */
+					/**
+				     * 分页插件
+				     */
+				    @Bean
+				    public PaginationInterceptor paginationInterceptor() {
+				        return new PaginationInterceptor();
+				    }
+
+				    /**
+				     * SQL执行效率插件
+				     */
+				    @Bean
+				    @Profile({"dev","qa"})// 设置 dev test 环境开启
+				    public PerformanceInterceptor performanceInterceptor() {
+				        PerformanceInterceptor performanceInterceptor = new PerformanceInterceptor();
+				        performanceInterceptor.setMaxTime(1000);
+				        performanceInterceptor.setFormat(true);
+				        return performanceInterceptor;
+				    }
+
+				    
+				    /**
+				     * 配置多个数据源
+				     * @return
+				     */
+				    
+				    @Bean(name = "db1")
+				    @ConfigurationProperties(prefix = "spring.datasource.druid.db1" )
+				    public DataSource db1() {
+				        return DataSourceBuilder.create().build();
+				    }
+
+				    @Bean(name = "db2")
+				    @ConfigurationProperties(prefix = "spring.datasource.druid.db2" )
+				    public DataSource db2() {
+				        return DataSourceBuilder.create().build();
+				    }
+				    
+				    
+				    /**
+				     * 动态数据源配置
+				     * @return
+				     */
+				    @Bean
+				    @Primary
+				    public DataSource multipleDataSource(@Qualifier("db1") DataSource db1, @Qualifier("db2") DataSource db2) {
+				        MultipleDataSource multipleDataSource = new MultipleDataSource();
+				        Map< Object, Object > targetDataSources = new HashMap<>();
+				        targetDataSources.put(DataSourceEnum.DB1.getValue(), db1);
+				        targetDataSources.put(DataSourceEnum.DB2.getValue(), db2);
+				        //添加数据源
+				        multipleDataSource.setTargetDataSources(targetDataSources);
+				        //设置默认数据源
+				        multipleDataSource.setDefaultTargetDataSource(db1);
+				        return multipleDataSource;
+				    }
+
+				    @Bean("sqlSessionFactory")
+				    public SqlSessionFactory sqlSessionFactory() throws Exception {
+				        MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
+				        sqlSessionFactory.setDataSource(multipleDataSource(db1(),db2()));
+				        //sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/*/*Mapper.xml"));
+
+				        MybatisConfiguration configuration = new MybatisConfiguration();
+				        //configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
+				        configuration.setJdbcTypeForNull(JdbcType.NULL);
+				        configuration.setMapUnderscoreToCamelCase(true);
+				        configuration.setCacheEnabled(false);
+				        sqlSessionFactory.setConfiguration(configuration);
+				        sqlSessionFactory.setPlugins(new Interceptor[]{ //PerformanceInterceptor(),OptimisticLockerInterceptor()
+				                paginationInterceptor() //添加分页功能
+				        });
+				        //sqlSessionFactory.setGlobalConfig(globalConfiguration());
+				        return sqlSessionFactory.getObject();
+				    }
+				 }
+
+
+			 	public class MultipleDataSource extends AbstractRoutingDataSource {
+
+				    @Override
+				    protected Object determineCurrentLookupKey() {
+				        return DataSourceContextHolder.getDataSource();
+				    }
+				}
+
+
+				public enum DataSourceEnum {
+
+				    DB1("db1"),DB2("db2");
+
+				    private String value;
+
+				    DataSourceEnum(String value){this.value=value;}
+
+				    public String getValue() {
+				        return value;
+				    }
+				}
+
+
+				public class DataSourceContextHolder {
+
+				    private static final ThreadLocal<String> contextHolder = new InheritableThreadLocal<>();
+
+				    /**
+				     *  设置数据源
+				     * @param db
+				     */
+				    public static void setDataSource(String db){
+				        contextHolder.set(db);
+				    }
+
+				    /**
+				     * 取得当前数据源
+				     * @return
+				     */
+				    public static String getDataSource(){
+				        return contextHolder.get();
+				    }
+
+				    /**
+				     * 清除上下文数据
+				     */
+				    public static void clear(){
+				        contextHolder.remove();
+				    }
+				}
+
+
   		3.在pom.xml里扫描文件和依赖：
   			<!-- mybatais plus-->
 		    <dependency>

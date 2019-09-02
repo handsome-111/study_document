@@ -154,7 +154,15 @@ Spring MVC:
 
 9.spring security:
 	1.配置
-		关闭默认配置：security.basic.enable=false
+		1.关闭默认配置：security.basic.enable=false
+		2.配置用户名和密码,
+			spring
+				security:
+				    user:
+				      # 账号
+				      name: root
+				      # 密码
+				      password: 123456
 	1.认证：
 		1.继承WebSecurityConfigurerAdapter：
 			1.configure(HttpSecurity http)
@@ -175,6 +183,120 @@ Spring MVC:
 				2.然后将该实现类配置在http.formLogin().successHandler(实现类)中
 
 	目的：解决了认证授权和资源保护的方案，不需要用提供用户名和密码
+
+
+Spring OAuth2：
+	1.介绍：
+		1.客户端的授权模式：
+			implicit：简化模式，不推荐使用
+
+			authorization code：授权码模式
+				授权码模式适用于有自己的服务器的应用，它是一个一次性的临时凭证，用来换取 access_token 和 refresh_token
+				1.客户端请求认证服务器获取授权码(请求：http://localhost:8080/oauth/authorize?client_id=client&response_type=code),spring cloud默认配置接口是oauth/authorize
+
+				2.在认证服务器下认证通过之后(即Security的WebSecurityConfigurerAdapter的configure(AuthenticationManagerBuilder auth)方法),返回授权码到回调地址里。
+
+				3.通过授权码发送POST请求获取access_token:
+					1.需要传入 code、client_id 以及 client_secret参数。
+					2.验证通过后，返回 access_token 和 refresh_token
+					3.授权码只能使用一次，如以下请求再次发送会报错
+					如curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "grant_type=authorization_code&code=dRQI0r" "http://client:secret@localhost:8080/oauth/token"
+
+
+			resource owner password credentials：密码模式
+
+			client credentials：客户端模式
+			
+	
+	2.例子：
+		客户端信息和用户信息都存储在内存中。
+		使用的是授权码模式（即获取到授权码之后才能去能获取令牌,获取了令牌才能访问资源）,
+
+		1.配置认证服务器(使用内存的方式配置):
+			@Configuration
+			@EnableAuthorizationServer
+			public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+				
+				@Autowired
+				private BCryptPasswordEncoder passwordEncoder;
+				
+				/**
+				 * 授权,即获取授权码等
+				 * 配置客户端,配置哪些客户端可以访问我这个认证服务器,把客户端信息保存到内存中演示
+				 */
+			    @Override
+			    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+			        // 配置客户端
+			        clients
+			                // 使用内存设置
+			                .inMemory()
+			                // client_id
+			                .withClient("client")
+			                // client_secret
+			                .secret(passwordEncoder.encode("secret"))
+			                /**
+			                 * 授权类型,有4种
+			                 * 1.implicit：简化模式
+			                 * 2.authorization_code：授权码模式
+			                 * 3.resource_owner_password_credentials：密码模式
+			                 * 4.client_credentials：客户端模式
+			                 */
+			                .authorizedGrantTypes("authorization_code")
+			                // 授权范围,即能够获取的权限
+			                .scopes("app111")
+			                // 注册回调地址,获取授权码之后回调的地址,当回调到这个地址之后就会获取了授权码，即授权码模式
+			                .redirectUris("http://www.funtl.com");
+			    }
+			}
+
+
+		2.搭配Spring Security来使用：
+			@Configuration
+			@EnableWebSecurity
+			@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+			/**
+			 * 认证
+			 * @author Administrator
+			 *
+			 */
+			public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+				
+				@Bean
+				public BCryptPasswordEncoder passwordEncoder(){
+					/*
+					 * 可以自定义加密方式
+					 * 具体可参考:PasswordEncoderFactories.createDelegatingPasswordEncoder()
+					  	encoders.put("ldap", new org.springframework.security.crypto.password.LdapShaPasswordEncoder());
+						encoders.put("MD4", new org.springframework.security.crypto.password.Md4PasswordEncoder());
+						encoders.put("MD5", new org.springframework.security.crypto.password.MessageDigestPasswordEncoder("MD5"));
+						encoders.put("noop", org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance());
+						encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+						encoders.put("scrypt", new SCryptPasswordEncoder());
+						encoders.put("SHA-1", new org.springframework.security.crypto.password.MessageDigestPasswordEncoder("SHA-1"));
+						encoders.put("SHA-256", new org.springframework.security.crypto.password.MessageDigestPasswordEncoder("SHA-256"));
+						encoders.put("sha256", new org.springframework.security.crypto.password.StandardPasswordEncoder());
+					*/
+					return new BCryptPasswordEncoder();
+				}
+				
+				/**
+				 * 将认证信息存储在内存中,简单的DEMO方便展示
+				 */
+				@Override
+				protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+					// TODO Auto-generated method stub
+					auth.inMemoryAuthentication()
+						.withUser("user").password(passwordEncoder().encode("123456")).roles("USER")
+						.and()
+						.withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN");
+				}
+			}
+
+
+	3.例子：
+		1.将客户端信息和用户信息存放在JDBC中
+
+
 	1.oAuth标准:
 		oAuth是一种协议，主要是提供认证和授权的标准。与以往的授权方式不同之处是oAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此 oAuth 是安全的。
 	
@@ -246,6 +368,8 @@ Spring MVC:
 			2. 数据库的连接需要用户名和密码等等，这些需要一定的内存和CPU一定开销。
 
 
+
+	单个数据源也可以用以下方式
 
 	1.配置类：
 		// 声明bean
