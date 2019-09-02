@@ -101,3 +101,28 @@ mybatisplus:
 				QueryWrapper(LambdaQueryWrapper)
 				UpdateWrapper(LambdaUpdateWrapper) 
 				用于生成 sql 的 where 条件, entity 属性也用于生成 sql 的 where 条件
+
+				如：
+					QueryWrapper query = new QueryWrapper();
+					query.eq("username", "aaa");
+					Customer customer = customerMapper.selectOne(query);
+
+
+
+
+
+Spring mybatis：
+	1.官方文档：http://www.mybatis.org/spring/getting-started.html
+	2.spring boot myabtis文档：http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/
+
+	2.配置事务管理器：
+		@Bean
+		public DataSourceTransactionManager transactionManager() {
+		  return new DataSourceTransactionManager(dataSource());
+		}
+
+
+	3.Mapper注解配置：
+		例子1:
+			@Select("select id, name, state, country from city where state = #{state}")
+  			City findByState(@Param("state") String state);
