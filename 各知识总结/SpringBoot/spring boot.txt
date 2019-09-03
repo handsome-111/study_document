@@ -250,7 +250,7 @@ Spring OAuth2：
 			}
 
 
-		2.搭配Spring Security来使用：
+		2.服务器安全配置，搭配Spring Security来使用：
 			@Configuration
 			@EnableWebSecurity
 			@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
@@ -295,7 +295,164 @@ Spring OAuth2：
 
 	3.例子：
 		1.将客户端信息和用户信息存放在JDBC中
+		2.配置认证服务器：基于JDBC的方式存储,即JDBC,将客户端信息存储到数据库中
+			@Configuration
+			@EnableAuthorizationServer
+			public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+				
+				@Autowired
+				private DataSource dataSource;
+				
+				/**
+				 * 基于 JDBC 实现，需要事先在数据库配置客户端信息
+				 * @return
+				 */
+				@Bean
+				public ClientDetailsService jdbcClientDetails(){
+					return new JdbcClientDetailsService(dataSource);
+				}
+				
+				/**
+				 * 基于 JDBC 实现，令牌保存到数据
+				 * @return
+				 */
+				@Bean
+			    public TokenStore tokenStore() {
+			        return new JdbcTokenStore(dataSource);
+			    }
 
+				
+				
+				/**
+				 * 授权,即获取授权码等
+				 * 配置客户端,配置哪些客户端可以访问我这个认证服务器,把客户端信息保存到内存中演示
+				 */
+			    @Override
+			    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+			    	// 读取客户端配置
+			    	clients.withClientDetails(jdbcClientDetails());
+			    }
+			    
+			    /**
+			     * 设置令牌
+			     */
+			    @Override
+			    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+			    	endpoints.tokenStore(tokenStore());
+			    }
+			}
+
+		3.服务器安全配置，搭配Spring security认证来使用：
+			@Configuration
+			@EnableWebSecurity
+			@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+			/**
+			 * 认证
+			 * @author Administrator
+			 *
+			 */
+			public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+				
+				@Bean
+				public BCryptPasswordEncoder passwordEncoder(){
+					/*
+					 * 可以自定义加密方式
+					 * 具体可参考:PasswordEncoderFactories.createDelegatingPasswordEncoder()
+					  	encoders.put("ldap", new org.springframework.security.crypto.password.LdapShaPasswordEncoder());
+						encoders.put("MD4", new org.springframework.security.crypto.password.Md4PasswordEncoder());
+						encoders.put("MD5", new org.springframework.security.crypto.password.MessageDigestPasswordEncoder("MD5"));
+						encoders.put("noop", org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance());
+						encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+						encoders.put("scrypt", new SCryptPasswordEncoder());
+						encoders.put("SHA-1", new org.springframework.security.crypto.password.MessageDigestPasswordEncoder("SHA-1"));
+						encoders.put("SHA-256", new org.springframework.security.crypto.password.MessageDigestPasswordEncoder("SHA-256"));
+						encoders.put("sha256", new org.springframework.security.crypto.password.StandardPasswordEncoder());
+					*/
+					return new BCryptPasswordEncoder();
+				}
+				
+				
+				
+				@Override
+				protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+					// TODO Auto-generated method stub
+					auth.inMemoryAuthentication()
+						.withUser("user").password(passwordEncoder().encode("123456")).roles("USER")
+						.and()
+						.withUser("admin").password(passwordEncoder().encode("123456")).roles("ADMIN");
+				}
+			}
+
+		4.数据库表：
+			CREATE TABLE `clientdetails` (
+			  `appId` varchar(128) NOT NULL,
+			  `resourceIds` varchar(256) DEFAULT NULL,
+			  `appSecret` varchar(256) DEFAULT NULL,
+			  `scope` varchar(256) DEFAULT NULL,
+			  `grantTypes` varchar(256) DEFAULT NULL,
+			  `redirectUrl` varchar(256) DEFAULT NULL,
+			  `authorities` varchar(256) DEFAULT NULL,
+			  `access_token_validity` int(11) DEFAULT NULL,
+			  `refresh_token_validity` int(11) DEFAULT NULL,
+			  `additionalInformation` varchar(4096) DEFAULT NULL,
+			  `autoApproveScopes` varchar(256) DEFAULT NULL,
+			  PRIMARY KEY (`appId`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+			CREATE TABLE `oauth_access_token` (
+			  `token_id` varchar(256) DEFAULT NULL,
+			  `token` blob,
+			  `authentication_id` varchar(128) NOT NULL,
+			  `user_name` varchar(256) DEFAULT NULL,
+			  `client_id` varchar(256) DEFAULT NULL,
+			  `authentication` blob,
+			  `refresh_token` varchar(256) DEFAULT NULL,
+			  PRIMARY KEY (`authentication_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+			CREATE TABLE `oauth_approvals` (
+			  `userId` varchar(256) DEFAULT NULL,
+			  `clientId` varchar(256) DEFAULT NULL,
+			  `scope` varchar(256) DEFAULT NULL,
+			  `status` varchar(10) DEFAULT NULL,
+			  `expiresAt` timestamp NULL DEFAULT NULL,
+			  `lastModifiedAt` timestamp NULL DEFAULT NULL
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+			CREATE TABLE `oauth_client_details` (
+			  `client_id` varchar(128) NOT NULL,
+			  `resource_ids` varchar(256) DEFAULT NULL,
+			  `client_secret` varchar(256) DEFAULT NULL,
+			  `scope` varchar(256) DEFAULT NULL,
+			  `authorized_grant_types` varchar(256) DEFAULT NULL,
+			  `web_server_redirect_uri` varchar(256) DEFAULT NULL,
+			  `authorities` varchar(256) DEFAULT NULL,
+			  `access_token_validity` int(11) DEFAULT NULL,
+			  `refresh_token_validity` int(11) DEFAULT NULL,
+			  `additional_information` varchar(4096) DEFAULT NULL,
+			  `autoapprove` varchar(256) DEFAULT NULL,
+			  PRIMARY KEY (`client_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+			CREATE TABLE `oauth_client_token` (
+			  `token_id` varchar(256) DEFAULT NULL,
+			  `token` blob,
+			  `authentication_id` varchar(128) NOT NULL,
+			  `user_name` varchar(256) DEFAULT NULL,
+			  `client_id` varchar(256) DEFAULT NULL,
+			  PRIMARY KEY (`authentication_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+			CREATE TABLE `oauth_code` (
+			  `code` varchar(256) DEFAULT NULL,
+			  `authentication` blob
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+			CREATE TABLE `oauth_refresh_token` (
+			  `token_id` varchar(256) DEFAULT NULL,
+			  `token` blob,
+			  `authentication` blob
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 	1.oAuth标准:
 		oAuth是一种协议，主要是提供认证和授权的标准。与以往的授权方式不同之处是oAuth的授权不会使第三方触及到用户的帐号信息（如用户名与密码），即第三方无需使用用户的用户名与密码就可以申请获得该用户资源的授权，因此 oAuth 是安全的。
