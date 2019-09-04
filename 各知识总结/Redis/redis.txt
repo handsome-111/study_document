@@ -39,3 +39,23 @@
 		开启和安装复制功能：
 		安装gpm:yum install -y gpm*
 		开启gpm服务：systemctl start gpm
+
+		10.设置密码，打开配置文件redis.windows.conf 或 redis.conf：	
+			添加配置:requirepass 密码
+				如： requirepass 123456
+
+
+	3.命令大全：
+		可见菜鸟教程文档：https://www.runoob.com/redis/redis-commands.html
+
+		KEYS pattern 
+			查找所有符合给定模式( pattern)的 key 。
+			1.查询所有的key:keys *
+
+
+
+
+	4.Redis Pipeline(redis 管道)：
+		概念：Redis本身是基于Request/Response协议（停等机制）的，正常情况下，客户端发送一个命令，等待Redis返回结果，Redis接收到命令，处理后响应。在这种情况下，如果同时需要执行大量的命令，那就是等待上一条命令应答后再执行，这中间不仅仅多了RTT（Round Time Trip），而且还频繁调用系统IO，发送网络请求。为了提升效率，这时候pipeline出现了，它允许客户端可以一次发送多条命令，而不等待上一条命令执行的结果，这和网络的Nagel算法有点像（TCP_NODELAY选项）。pipeline不仅减少了RTT，同时也减少了IO调用次数（IO调用涉及到用户态到内核态之间的切换）。
+
+		和事务的不同：redis命令是原子性的，所以中间有一条不会失败不会中止命令，一样会继续执行

@@ -655,3 +655,149 @@ Spring OAuth2：
 			</dependency>
 
 		jar路径：同src目录下，创建一个libs文件夹。放进去即可
+
+16.spring Redis:
+		1.依赖：
+			<dependency>
+	            <groupId>org.springframework.boot</groupId>
+	            <artifactId>spring-boot-starter-data-redis</artifactId>
+	        </dependency>
+
+	    2.spring data redis 文档：https://docs.spring.io/spring-data/redis/docs/2.1.10.RELEASE/reference/html/
+
+
+	    3.使用:
+	    	1.RedisTemplate和StringRedisTemplate:前者可以存储对象,后者仅仅存储字符串
+	    	2.如果使用了spring boot,直接注入即可。
+	    	3.两者的使用方法都是一样的
+
+	    	@Autowired
+			private StringRedisTemplate redis;
+			
+			@Autowired
+			private RedisTemplate redisTemplate;
+
+	    3.事务：
+	   		1.程序化开启事务。（建议使用）
+	    	List<Object> list = redis.execute(new SessionCallback<List<Object>>(){
+
+				@Override
+				public List<Object> execute(RedisOperations operations) throws DataAccessException {
+					/**
+					 * Redis的提供支持的事务通过multi，exec和discard命令
+					 */
+					
+					operations.multi();
+					
+					operations.opsForSet().add("aa", "bbbb");
+					operations.opsForSet().add("啊阿", "撒大大是");
+					
+					//这将包含事务中所有操作的结果
+					return operations.exec();
+				}
+				
+			});
+
+			2.使用注解开启事务：
+				1.默认情况下，事务支持已禁用，必须RedisTemplate通过设置为每个使用中显式启用setEnableTransactionSupport(true)
+				2.配置
+					@Configuration
+					public class RedisConfiguration {
+					 
+					    @Bean
+					    public StringRedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+					        StringRedisTemplate template = new StringRedisTemplate();
+					        template.setConnectionFactory(redisConnectionFactory);
+					        template.setEnableTransactionSupport(true); //打开事务支持
+					        return template;
+					    }
+					    
+					    /**
+					     * 	交易管理需要一个PlatformTransactionManager。Spring Data Redis不附带PlatformTransactionManager实现。假设您的应用程序使用JDBC，Spring Data Redis可以使用现有的事务管理器参与事务。
+					     * @param dataSource
+					     * @return
+					     * @throws SQLException
+					     */
+					    //配置事务管理器
+					    @Bean
+					    public PlatformTransactionManager transactionManager(DataSource dataSource) throws SQLException {
+					        return new DataSourceTransactionManager(dataSource);
+					    }
+					}
+
+				3.使用:直接在方法上添加@Transactional即可
+
+
+		4.spring redis 操作Redis接口：
+			官方文档：https://docs.spring.io/spring-data/redis/docs/2.1.10.RELEASE/reference/html/#redis:template
+
+			接口							描述
+			密钥类型操作
+
+			GeoOperations 				Redis的地理空间操作的，比如GEOADD，GEORADIUS...
+
+			HashOperations 				Redis哈希操作
+
+			HyperLogLogOperations 		Redis的HyperLogLog操作，例如PFADD，PFCOUNT，...
+
+			ListOperations 				Redis列表操作
+
+			SetOperations 				Redis设置了操作
+
+
+
+			ValueOperations 			Redis字符串（或值）操作
+
+
+
+			ZSetOperations 				Redis zset（或排序集）操作
+
+
+
+			键绑定操作
+
+			BoundGeoOperations 			Redis键绑定地理空间操作
+
+
+
+			BoundHashOperations 		Redis散列键绑定操作
+
+
+
+			BoundKeyOperations 			Redis键绑定操作
+
+
+
+			BoundListOperations 		Redis列出键绑定操作
+
+
+
+			BoundSetOperations 			Redis设置键绑定操作
+ 
+
+
+			BoundValueOperations 		Redis字符串（或值）键绑定操作
+
+
+
+			BoundZSetOperations 		Redis zset（或有序集）键绑定操作
+
+
+		5.使用Redis管道：管道技术最显著的优势是提高了 redis 服务的性能。
+		
+			List<Object> results = redis.executePipelined(
+			  new RedisCallback<Object>() {
+			    public Object doInRedis(RedisConnection connection) throws DataAccessException {
+			      StringRedisConnection stringRedisConn = (StringRedisConnection)connection;
+			      for(int i=0; i< 10; i++) {
+			        stringRedisConn.rPop("myqueue");
+			      }
+			    return null;	//从中返回的值RedisCallback必须为null，因为此值将被丢弃，以支持返回流水线命令的结果
+			  } 
+			});
+
+
+
+
+
+
