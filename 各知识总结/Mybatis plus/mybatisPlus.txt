@@ -233,20 +233,22 @@ mybatisplus:
 		1.Mapper的CURD接口：
 			1.文档：https://mp.baomidou.com/guide/crud-interface.html#mapper-crud-%E6%8E%A5%E5%8F%A3
 
-		2.Service的CURD接口
+			2.Mapper条件构造器：
+				官方文档：https://mp.baomidou.com/guide/wrapper.html#abstractwrapper
+				AbstractWrapper抽象类，
+				AbstractWrapper实现类：
+					QueryWrapper(LambdaQueryWrapper)
+					UpdateWrapper(LambdaUpdateWrapper) 
+					用于生成 sql 的 where 条件, entity 属性也用于生成 sql 的 where 条件
 
-		3.条件构造器：
-			官方文档：https://mp.baomidou.com/guide/wrapper.html#abstractwrapper
-			AbstractWrapper抽象类，
-			AbstractWrapper实现类：
-				QueryWrapper(LambdaQueryWrapper)
-				UpdateWrapper(LambdaUpdateWrapper) 
-				用于生成 sql 的 where 条件, entity 属性也用于生成 sql 的 where 条件
+					如：
+						QueryWrapper query = new QueryWrapper();
+						query.eq("username", "aaa");
+						Customer customer = customerMapper.selectOne(query);
 
-				如：
-					QueryWrapper query = new QueryWrapper();
-					query.eq("username", "aaa");
-					Customer customer = customerMapper.selectOne(query);
+		2.Service的CURD接口:
+			1.文档：https://mp.baomidou.com/guide/crud-interface.html#service-crud-%E6%8E%A5%E5%8F%A3
+			2.Service条件构造器,和Mapper的条件构造器一样，统一的文档
 
 
 

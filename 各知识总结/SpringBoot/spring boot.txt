@@ -25,6 +25,7 @@ Spring MVC:
 	    }
 
 	2.使用
+		官网：https://docs.spring.io/spring/docs/5.1.9.RELEASE/spring-framework-reference/integration.html#rest-client-access
 		@Autowired 
     	private RestTemplate restTemplate;
 
@@ -80,6 +81,7 @@ Spring MVC:
 		4.@CookieValue：将HTTP cookie的值绑定到控制器中的方法参数。
 		5.@SessionAttribute:访问全局管理的预先存在的会话属性
 		6.@RequestAttribute:访问先前创建的预先存在的请求属性（例如，通过Servlet Filter 或HandlerInterceptor）
+		7.@RequestBody:将接收的参数转换为对象,属性一定要相同
 		7.重定向属性：
 			return "redirect:files/{path}";
 		8.Multipart:
@@ -138,6 +140,8 @@ Spring MVC:
 
 		3.在resources下创建文件夹templates，放模板引擎页面，也可以放静态页面
 
+	6.获取项目的classes路径:
+		String path = ResourceUtils.getURL("classpath:").getPath();	//直接使用即可
 
 7.静态资源：
 	1.默认情况下，Spring Boot从类路径中的/static（ /public或/resources或/META-INF/resources）目录或者根目录中提供静态内容ServletContext
