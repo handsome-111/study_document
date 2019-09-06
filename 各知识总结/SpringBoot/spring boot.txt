@@ -29,13 +29,24 @@ Spring MVC:
 		@Autowired 
     	private RestTemplate restTemplate;
 
-    	发起post请求：
+    	1.发起post请求：
     		 String response = restTemplate.postForObject("http://localhost:81/taotask/startGoodsListingTask", paramMap, String.class);
 
-        发起get请求:
+       	2.发起get请求:
         	restTemplate.getForObject("https://oauth.open.weidian.com/token?grant_type=client_credential&appkey=xxx&secret=xxx", String.class);
 
     3.最后一个参数为responseType,即响应类型,统一为String,json串。
+
+    4.发送请求下载文件：	
+    	File file = restTemplate.execute(jsonUser.getString("avatarUrl"), HttpMethod.GET, null, clientHttpResponse -> {	
+				
+			    File ret = new File(filePath);
+			    //文件流复复制
+			    StreamUtils.copy(clientHttpResponse.getBody(), new FileOutputStream(ret));	
+			    return ret;	
+			});	
+
+
 
 
 5.URIBuilder,URI拼装和解析工具
