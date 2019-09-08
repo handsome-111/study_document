@@ -288,6 +288,10 @@ WXSS:
 		  background: transparent;
 		}
 
+	2.去除按钮原样式：
+		button::after { border: none; }
+
+
 
 开放接口：
 	1.获取用户信息，如用户昵称，所在省市等
@@ -375,3 +379,5 @@ WXSS:
 		        }
 		      }
 		    })
+
+
