@@ -249,7 +249,7 @@ UI框架介绍：
 
 注意：
 	1.图片的自适应，image标签，随着宽度的自适应高度，使用该属性即可“mode="widthFix" ”
-	2.设置data：
+	2.设置data（一定要用这种方式）：
 		this.setData(object);
 		如：this.setData({
 			aa:'哈哈',
@@ -380,4 +380,30 @@ WXSS:
 		      }
 		    })
 
+	4.数据缓存：https://developers.weixin.qq.com/miniprogram/dev/api/storage/wx.setStorageSync.html
+
+	5.小程序的生命周期：
+
+		1.小程序的生命周期(APP.js):
+			文档：https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/app.html
+
+			// app.js
+			App({
+			  onLaunch (options) {
+			    // Do something initial when launch.
+			  },
+			  onShow (options) {
+			    // Do something when show.
+			  },
+			  onHide () {
+			    // Do something when hide.
+			  },
+			  onError (msg) {
+			    console.log(msg)
+			  },
+			  globalData: 'I am global data'
+			})
+
+		2.页面的生命周期：
+			详见文档：https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/page.html
 

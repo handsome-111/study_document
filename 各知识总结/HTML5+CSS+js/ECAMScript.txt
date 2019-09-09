@@ -103,6 +103,9 @@ ECAMScript：
 
 		9.Promise 对象:
 			Promise 是异步编程的一种解决方案，比传统的解决方案——回调函数和事件——更合理和更强大。
+
+			创建Promise对象：resolve等于是成功,reject等于是失败，promise只需要传入两个对象即可，一个是成功后的回调，一个是失败后的回调
+
 			//定义Promise对象
 			let promise = new Promise((resolve,reject) => {
 				var ajaxResult = true;
