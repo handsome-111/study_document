@@ -106,26 +106,30 @@ ECAMScript：
 
 			创建Promise对象：resolve等于是成功,reject等于是失败，promise只需要传入两个对象即可，一个是成功后的回调，一个是失败后的回调
 
+			1.例子：
+				当promise对象调用then时，会先执行promise里的方法,然后当调用到resolve()时，表示调用完成，结束，可以直接调用resolve的回调函数
 			//定义Promise对象
-			let promise = new Promise((resolve,reject) => {
-				var ajaxResult = true;
-				if(ajaxResult){
-					resolve();
-				}else{
-					reject();
-				}
-			});
+				let promise = new Promise((resolve,reject) => {
+					var ajaxResult = true;
+					if(ajaxResult){
+						resolve();		//解决成功
+					}else{
+						reject();		//解决失败
+					}
+				});
 			//then方法分别指定resolved状态和rejected状态的回调函数。
-			promise.then(
-				//resolve函数,可以传参
-				() => {
-					console.log("成功的回调函数");
-				},
-				//reject函数,可以传参
-				() => {
-					console.log("失败的回调函数");
-				}
-			)
+				promise.then(
+					//resolve函数,可以传参
+					() => {
+						console.log("成功的回调函数");
+					},
+					//reject函数,可以传参
+					() => {
+						console.log("失败的回调函数");
+					}
+				)
+
+			2.同时也可以实现同步，例如多个定时器，因为定时器是异步的，多个的话无法同步，所以可以用promise来实现
 
 		10.回调函数：
 			A调用B的的方法，然后B的方法里又调用（回调，）A的方法，在B的方法里传入A对象即可。
@@ -160,3 +164,6 @@ ECAMScript：
 				console.log(mg.next());		//返回的对象：{value: "完成第一阶段", done: false}
 				console.log(mg.next());		//返回的对象：{value: "完成第二阶段", done: false}
 				console.log(mg.next());		//返回的对象：{value: undefined, done: true}	如果done属性为true，说明generator函数已经执行完
+
+
+		12.async函数
