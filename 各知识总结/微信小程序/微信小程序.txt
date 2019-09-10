@@ -192,7 +192,28 @@ UI框架介绍：
 			    </view>
 			</template>
 
-	5.API：
+	5.模块化,引入外部js或者第三方js文件：
+		1.引入第三方js文件：
+			1.将moment.min.js放在小程序工程的utils目录下
+				util.js:
+					const moment = require('moment.min.js');
+						function timestampToString(timestamp,str) {
+						  moment.locale('en', {
+						    longDateFormat: {
+						      l: "YYYY-MM-DD",
+						      L: "YYYY-MM-DD HH:mm:ss"
+						    }
+						  });
+						  return moment(timestamp).format(str);
+						}
+
+			2.使用：
+				var util = require("../../../util/util.js”);
+				let timestamp = '1546841820000';//时间戳或者别的格式的时间皆可
+				let time = util.timestampToString(timestamp, 'L');
+
+
+	6.API：
 		文档：https://developers.weixin.qq.com/miniprogram/dev/api/wxml/wx.createSelectorQuery.html
 		
 		1.SelectorQuery：查询节点信息的对象
