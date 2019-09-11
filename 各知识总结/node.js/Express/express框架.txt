@@ -1,0 +1,105 @@
+Express官网：http://www.expressjs.com.cn/
+	安装express：
+		1.npm init -y
+		2 npm install express
+
+	进入app.js文件目录，打开命令行，node app.js  即可运行
+
+	Hellow world实例:
+		const express = require('express');     //引入框架
+		const app = new express();              //实例化
+
+		app.get('/',(req,res) => {
+		    res.send('you fucking son of bitch');
+		})
+
+		//绑定端口
+		app.listen(80,()=>{
+		   console.log('the fucking son of bitch server is starting');
+		})
+
+		/*或app.listen(80,'127.0.0.1');*/
+
+
+	设置静态资源：
+		//即当前目录下的public文件夹为静态资源
+		//如public下有文件index.html，则url为：127.0.0.1/index
+		
+		app.use(express.static('./public'));
+		app.use('前缀',express.static('./public'))；
+
+	2.安装ejs，express中使用模板引擎:
+		安装：npm install ejs --save
+	
+
+	3.安装art-template
+		在express中使用art-templatem模板：	
+		文档：https://aui.github.io/art-template/express/
+
+		1.安装
+			npm install art-template
+			npm install express-art-template
+
+		2.配置
+			const express = require('express');     //引入框架
+			const app = new express();              //实例化
+
+
+			app.use(express.static('./public'));	
+			
+			//这时候就不需要加载'art-tempalte'模板，但是也必须要安装
+			//原因在于express-art-template已经依赖了art-template
+			app.engine('html',require('express-art-template'));    		//使用模板
+
+			//res.render('hmlt模板名',{模板数据})
+			//第一个参数不能写路径，默认会去项目中的views目录查找改模板文件
+			//Express中有一个约定，开发人员会把所有的视图文件都放在views目录中
+			//修改views的默认目录
+			//app.set('views',render函数的默认路径);
+			app.get('/',(req,res) => {
+			    res.render('user.html');
+			})
+
+			app.get('/test2',(req,res) => {
+			    res.render('user.html',{
+			        name : '德莱文'
+			    });
+			})
+
+				//绑定端口
+			app.listen(80,'127.0.0.1');
+
+		普通跳转：如上例子
+			
+		重定向：	res.redirect('/xx/xx');
+
+	4.在Express中解析POST请求体：
+		1.需要在Express中使用中间件：官方文档：http://www.expressjs.com.cn/resources/middleware.html
+		
+		2.安装：npm install body-parser
+		
+		3.配置:
+			var bodyParser = require('body-parser')
+			// parse application/x-www-form-urlencoded
+			app.use(bodyParser.urlencoded({ extended: false }))
+			// parse application/json
+			app.use(bodyParser.json())
+		
+		4.例子：
+			var express = require('express')
+			var bodyParser = require('body-parser')
+
+			var app = express()
+
+			// parse application/x-www-form-urlencoded
+			app.use(bodyParser.urlencoded({ extended: false }))
+
+			// parse application/json
+			app.use(bodyParser.json())
+
+			app.use(function (req, res) {
+			  res.setHeader('Content-Type', 'text/plain')
+			  res.write('you posted:\n')
+			  //可以通过req.body来获取表单数据
+			  res.end(JSON.stringify(req.body, null, 2))		
+			})

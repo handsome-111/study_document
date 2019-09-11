@@ -1,0 +1,3 @@
+node:
+	JSON.JSONStringify("");		//字符串化,数据转换为String
+	JSON.stringfy

@@ -1,0 +1,95 @@
+Node.js：
+
+简单介绍
+	1.Node.js可以解析和执行javascript代码
+
+	2.让现在的javascriptk可以完全脱离浏览器运行
+
+	3.没有BOM，DOM，因为服务端没有操作页面
+
+安装：
+	1.安装node.js
+		1.1	下载.msi文件，直接next 即可
+		1.2	打开命令行，输入node --version  查看版本检测是否安装成功
+
+	2.安装art-template:
+		1.1	安装node.js
+		1.2	命令行输入：npm install art-template --save
+
+解析和执行node.js文件
+	1.进入文件的目录
+
+	2.执行命令：node node.js文件   如:（node testA.js）
+
+官方文档：http://nodejs.cn/api/assert.html
+
+IO:
+
+
+作用域：
+	在node中是没有全局作用域的，只有模块作用域	
+
+	外部访问不到内部
+
+	内部也访问不到外部
+
+模块化编程：
+	即require()方法，用来加载模块，加载js文件。
+	
+	主要目的是为了：加载模块里的成员
+		如果一个文件多次加载js文件，则不会重复加载，只会获得接口的对象
+
+		加载模块：
+			1.加载系统自带的模块
+				如'fs'模块 
+				var fs = require('fs');
+
+			2.加载js文件
+				如加载当前目录下的aa.js文件	
+				var aa = require('./aa.js'); 
+				或var aa = require('./aa');    //可以省略后缀
+
+		导出成员：
+			文件aa.js 导出模块:将对象导出倒exports对象里
+				var aa = "i am aa";
+				var bb = function(x,y){return x + y};
+				exports.a = aa;
+				exports.b = bb;
+
+				//导出单个成员
+				//module.exports = a;			则在加载方可以直接使用，var a = require('/aa.js');  就不在用.
+
+			文件bb.js导入aa.js模块并获取成员:
+				var aaModule = require('./aa.js');		//获取导出对象
+				var a = aaModule.a;
+				var b = aaModule.b(10,100);
+
+Http:
+	编码:
+		响应头编码:
+
+			响应头对应资源查询网址：
+				http://tool.oschina.net/commons
+
+			res.setHeader('Content-Type','text/plain;charset=utf-8');
+			
+
+在node中使用模板引擎：
+
+	art-template模板引擎：
+		1.该模板引擎只关心内容，只关心{{ }}其他的不关心，其他的一律识别为字符串
+		2.安装art-template模板引擎，才能引入模块
+	
+	在node中使用art-template:
+		1.var template = require('art-template');
+
+
+服务端渲染和客户端渲染：
+	
+	客户端渲染，一般都是ajax，而服务端渲染一般都是页面跳转获取的数据。
+	
+	客户端渲染和服务端渲染的区别：
+		1.客户端渲染不利于SEO搜索引擎优化（就是让你的网站排名更加的靠前和为你的网站提供更多的流量与转化）
+		2.服务端渲染可以爬虫抓到，而客户端渲染是很难被抓到的
+		3.网站一般都是服务端渲染加客户端渲染一起的
+		4.

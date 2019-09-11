@@ -1,0 +1,56 @@
+路由：http://www.expressjs.com.cn/guide/routing.html
+	基本路由：配置多个路径	
+		app
+		    .get('路径a',函数)
+		    .get('路径b',函数)
+		    .get('路径c',函数)
+		    .post('路径d',函数)
+		    .get('路径e',函数)
+
+
+    静态资源：
+    	//即当前目录下的public文件夹为静态资源
+		//如public下有文件index.html，则url为：127.0.0.1/index
+		
+		app.use(express.static('./public'));
+		app.use('前缀',express.static('./public'))；
+
+	动态路由：
+
+	如：/home/aaa    根据path的值来
+	app.get('/home/:path',(req,res) => {
+	    var params = req.params;        //获取请求参数
+	    res.send('welcome to you home : ' + params.path);
+	})
+
+
+	路由模块：负责管理路由，使用导入/加载模块来完成
+		即创建一个router.js文件，负责路由管理：
+
+		例：
+		router.js:
+
+			var express = require('express')		//导入express模块
+			var router = express.Router()			
+
+			router.get( '/' , (req,res) => {
+			   res.render('index.html')
+			})
+
+			router.post('/submit', (req,res) => {
+			   res.render('user.html')
+			})
+
+			module.exports = router;
+
+
+		app.js:
+
+			const app = new express();              //实例化
+			var router = require('./router');
+			
+			app.use(router);
+			//app.use('/前缀',router);		则在那个router里得url可以去掉一些前缀，
+				如：app.use('/user',router);
+				则: req.get('/',(req,res) => {...});		//则路径还是"/user/"	
+

@@ -1,0 +1,54 @@
+中间件：	处理请求的，本质上是个函数，类似于过滤器
+	官方文档：http://www.expressjs.com.cn/guide/using-middleware.html
+
+	在Express中，对中间件有几类
+
+	使用中间件:app.use(function);
+
+	1.不关心请求路径和请求方法的中间件，也就是说任何请求都要进入的中间件
+		例子：
+
+		app.use((req,res,next) => {
+			//next调用下一个中间件
+			console.log('first filter');
+			next();		
+		})
+
+		app.use( (req,res,next) => {
+			console.log('second filter');
+		})
+
+
+	2.指定路径的中间件，即拦截指定请求
+		app.use('/index', (req,res,next) => {
+			console.log('first filter');
+			next();
+		})
+
+		app.use('/index', (req,res,next) => {
+			console.log('second filter');
+		})
+	
+
+	第三方中间件：
+		1.express-session：
+			官网：https://www.npmjs.com/package/express-session
+
+			安装：	$ npm install express-session
+
+			API：   var session = require('express-session')
+
+			使用中间件：
+				//secret，配置加密字符串，它会在原有的字符串加密基础上和这个字符串拼接在一起再加密
+				//目的是为了增加安全性
+				//cookie:session的生命周期
+				app.use(session({
+				  secret: 'keyboard cat',
+				  resave: false,
+				  saveUninitialized: true，
+				  cookie: { maxAge: 5000 }
+				}))
+
+			添加/读取数据：
+				req.session.foo = 'bar'
+				req.session.foo

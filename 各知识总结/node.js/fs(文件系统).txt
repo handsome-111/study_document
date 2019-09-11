@@ -1,0 +1,131 @@
+fs文件系统
+	所有文件系统操作都具有同步和异步的形式。
+	要使用以下模块：
+		const fs = require('fs');
+
+	异步形式：
+		异步的形式总是将完成回调作为其最后一个参数。 传给完成回调的参数取决于具体方法，但第一个参数始终预留用于异常。 如果操作成功完成，则第一个参数将为 null 或 undefined。	
+
+		fs.unlink('/aa/aa.txt',(err) => {
+			if(err){
+				throw err;
+			}
+			console.log('已成功删除文件');
+		});
+
+
+	同步形式：
+		try {
+		  fs.unlinkSync('/tmp/hello');
+		  console.log('已成功删除 /tmp/hello');
+		} catch (err) {
+		  // 处理错误
+		}
+
+
+
+	URL对象支持：
+		对于大多数 fs 模块的函数， path 或 filename 参数可以传入 WHATWG URL 对象。 仅支持使用 file: 协议的 URL 对象。
+		file: URL 始终是绝对路径。
+
+		const fileUrl = new URL('file:///tmp/hello');
+		fs.readFileSync(fileUrl);
+
+
+
+	fs.Dirent 类（判断文件类型）
+		详见文档：http://nodejs.cn/api/fs.html#fs_class_fs_dirent
+
+		获取方法：当使用 withFileTypes 选项设置为 true 调用 fs.readdir() 或 fs.readdirSync() 时，生成的数组将填充 fs.Dirent 对象，而不是字符串或 Buffer。
+
+		常见方法：
+			dirent.isBlockDevice()			是否为块设备
+			dirent.isCharacterDevice()		是否为字符设备
+			dirent.isDirectory()			是否为文件夹
+			dirent.isFIFO()					是否为先进先出（FIFO）管道
+			dirent.isFile()					是否是文件	
+			dirent.isSocket()				是否是套接字
+			dirent.isSymbolicLink()			是否是符号链接
+			dirent.name						文件名
+
+
+			例：	
+			fs.readdir()获取方法：
+				//读取当前目录
+				fs.readdir('./',{withFileTypes :true},(err,files) =>{
+				   files.forEach((file)=>{
+				        console.log(file.isDirectory());
+				   })
+				});
+
+
+
+	fs.FSWatcher类（文件变动监控）
+		详见文档：http://nodejs.cn/api/fs.html#fs_class_fs_fswatcher
+
+		成功调用 fs.watch() 方法将返回一个新的 fs.FSWatcher 对象。
+		所有 fs.FSWatcher 对象都是 EventEmitter 的实例，每当修改指定监视的文件，就会触发 'change' 事件。
+
+		文件监控事件：
+			'change' 事件：当监视的目录或文件中发生更改时触发。
+			'close' 事件：当监视器停止监视更改时触发。 
+			'error' 事件：当监视文件时发生错误时触发。
+
+		watcher.close()：给定的 fs.FSWatcher 停止监视更改。
+
+		例：当修改文件index.html时，就会回调以下方法
+
+		//监视 filename 的更改，其中 filename 是文件或目录。
+		fs.watch('./index.html',{},(eventType,filename ) => {
+		    console.log(eventType + "," + filename);
+		});
+
+
+
+	fs.Stats类（获取文件信息）
+		详见文档：http://nodejs.cn/api/fs.html#fs_class_fs_stats
+
+		从 fs.stat()、fs.lstat() 和 fs.fstat() 及其同步方法返回的对象都属于此类型。 如果传给这些方法的 options 中的 bigint 为 true，则数值将为 bigint 型而不是 number 型。
+
+		例：
+		fs.stat('./index.html',{bigint:'number'},(err,stats) => {
+		    console.log(stats);
+		})
+
+		常见方法：
+			stats.isBlockDevice()
+			stats.isCharacterDevice()
+			stats.isDirectory()
+			stats.isFIFO()
+			stats.isFile()
+			stats.isSocket()
+			stats.isSymbolicLink()
+
+
+
+	文件夹操作：
+		创建文件夹 			fs.mkdir(path[, options], callback)
+		删除目录 			fs.rmdir(path, callback)
+		创建临时文件夹 		fs.mkdtemp(prefix[, options], callback)
+		读取文件夹 			fs.readdir(path[, options], callback)
+
+
+
+	文件操作：
+		打开文件 			fs.open(path[, flags[, mode]], callback)
+		读取文件 			fs.read(fd, buffer, offset, length, position, callback)
+		读取文件 			fs.readFile(path[, options], callback)
+		重命名文件 			fs.rename(oldPath, newPath, callback)
+		读取文件信息 			fs.stat(path[, options], callback)
+		删除文件 			fs.unlink(path, callback)
+		停止监控文件 			fs.unwatchFile(filename[, listener])
+		修改时间 			fs.utimes(path, atime, mtime, callback)
+		监控文件变化 			fs.watch(filename, options)
+		关闭文件 			fs.close(fd, callback)
+		追加文件 			fs.appendFile(path, data[, options], callback)
+		改变文件模式 			fs.chmod(path, mode, callback)
+		改变文件所属 			fs.chown(path, uid, gid, callback)
+		复制文件 			fs.copyFile(fs.copyFile(src, dest[, flags], callback))
+		写文件 				fs.write(fd, buffer[, offset[, length[, position]]], callback)
+		写文件 				fs.write(fd, string[, position[, encoding]], callback)
+		写文件 				fs.writeFile(file, data[, options], callback)

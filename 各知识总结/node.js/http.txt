@@ -1,0 +1,44 @@
+Http:
+	要使用HTTP 服务器和客户端，必须 require('http')。
+
+	响应头对应资源查询网址：
+		http://tool.oschina.net/commons
+
+
+
+	例：
+		var http = require('http');
+		var fs = require('fs');
+		http.
+			createServer((req,res) => {				//返回server实例
+				var url = req.url;
+				if(url == '/'){
+					fs.readFile('./index.html',(err,data) => {
+						if( err ){
+							return res.end('404 not found');
+						}
+						res.end(data;
+					})
+				}else{
+					res.end('404 not found')
+				}
+			})
+			.listen(80);			//绑定端口
+
+	
+	http.Agent类：
+		Agent 负责管理 HTTP 客户端的连接持久性和重用。
+		它为给定的主机和端口维护一个待处理请求队列，为每个请求重用单独的套接字连接，直到队列为空，此时套接字被销毁或放入连接池，以便再次用于请求到同一个主机和端口。 销毁还是放入连接池取决于 keepAlive 选项。
+
+
+	http.server类：
+		此类继承自 net.Server 并具有以下额外的事件：
+
+			'checkContinue' 事件	：
+			'checkExpectation' 事件：
+			'clientError' 事件
+			'close' 事件
+			'connect' 事件
+			'connection' 事件
+			'request' 事件
+			'upgrade' 事件

@@ -1,0 +1,61 @@
+Express api:
+
+	application:Express应用程序
+		官方文档：http://www.expressjs.com.cn/4x/api.html#app
+
+		var app = express();		//实例化application
+
+		属性：
+			app.locals		//这些属性是应用程序中的局部变量。
+			app.mountpath	//含一个或多个安装了子应用程序的路径模式。
+
+		方法：
+			app.delete（path，callback [，callback ...]）:将HTTP DELETE请求路由到指定的路径.即delete请求
+
+			app.get（path，callback [，callback ...]）:将HTTP GET请求路由到指定的路径。
+
+			app.post（path，callback [，callback ...]）:使用指定的回调函数将HTTP POST请求路由到指定的路径
+
+			app.path（）:返回应用程序的规范路径，一个字符串。
+
+			app.disable（name）:将布尔值设置name为false，其中name是应用程序设置表中的一个属性。调用app.set('foo', false)Boolean属性与调用相同app.disable('foo')。
+
+			app.disabled（name）
+			true如果布尔设置name被禁用（false），name则返回，其中是应用程序设置表中的一个属性。
+
+			app.enable（name）
+			将布尔值设置name为true，其中name是应用程序设置表中的一个属性。调用app.set('foo', true)Boolean属性与调用相同app.enable('foo')
+
+			app.enabled（name）
+			true如果设置name已启用（true），则返回，其中name是应用程序设置表中的一个属性。
+
+			app.engine(ext, callback):将给定的模板引擎注册callback为ext。
+				例子：使用模板引擎
+
+				app.engine('html',require('express-art-template'));    //后缀为html的文件
+
+			app.listen（[port [，host [，backlog]]] [，callback]）：绑定并侦听指定主机和端口上的连接。
+
+			app.METHOD（path，callback [，callback ...]）
+			路由HTTP请求，其中METHOD是请求的HTTP方法，例如GET，PUT，POST等，以小写形式。因此，实际的方法是app.get()， app.post()，app.put()，等等。有关完整列表，请参阅下面的路由方法
+
+			app.render(view, [locals], callback)
+			通过callback函数返回视图的呈现HTML 。它接受一个可选参数，该参数是包含视图局部变量的对象。它就像res.render（），除了它不能自己将渲染的视图发送到客户端。
+
+	request:表示Http请求，并具有请求查询字符串，参数，正文，HTTP标头等的属性
+
+		详情见express文档
+
+		属性：
+			req.app：此属性包含对使用中间件的Express应用程序实例的引用。
+
+			req.baseUrl：安装路由器实例的URL路径。
+
+			req.body
+			包含请求正文中提交的键值对数据。默认情况下，undefined当您使用正文解析器和multer等正文解析中间件时，它会被填充。
+
+			req.cookies
+			使用cookie-parser中间件时，此属性是包含请求发送的cookie的对象。如果请求不包含cookie，则默认为{}。
+
+
+

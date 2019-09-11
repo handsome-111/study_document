@@ -1,0 +1,6 @@
+cookie-session:
+	1.http是无状态的,因为他是短链接，每一次请求“点到为止”不会造成不必要连接占用，一个请求一个响应就是一个会话。
+	2.cookie让http变得有状态
+1.安装：
+	npm install cookie-session
+
