@@ -601,10 +601,29 @@ Spring OAuth2：
 		spring.datasource.test2.username.....	
 12.整合mybatus plus
 
-13.Spring schedule:
+13.Spring schedule(调度器):
 	官方文档：https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/integration.html#scheduling
 
 	abstract TaskExecutor:任务执行器，是线程池的概念，一个执行器可能是单线程的也可能是同步的
+
+	使用例子:
+		1.在Application上使用注解@EnableScheduling，启动计划注释，如：
+			@EnableScheduling
+			@SpringBootApplication
+			public class HdgjApiApplication{。。。。}
+
+		2.在@Component上注解的类里添加计划方法即可，如：
+			/**
+			 * 同步微店商品
+			 * @throws OpenException 
+			 */
+			@Scheduled(initialDelayString = "${jobs.initialDelay}",fixedRateString="${jobs.fixedRate}")
+			public void synVdProducts() throws OpenException,Exception{。。。}
+
+			参数详解:
+				1. initialDelayString:表示任务延迟在多少毫秒之后执行
+				2. fixedRateString：每隔多少毫秒执行一次
+
 
 14.spring actuator(执行器监控)
 	官方文档：https://docs.spring.io/spring-boot/docs/2.1.7.RELEASE/reference/html/production-ready-endpoints.html
