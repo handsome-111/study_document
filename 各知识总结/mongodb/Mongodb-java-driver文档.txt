@@ -84,7 +84,7 @@ Mongodb-java-driver:MongoDB驱动程序
 			2.继承MongoRepository接口
 				interface PersonRepository extends MongoRepository<类名, Id或主键类型> { … }
 			
-			3.继承PagingAndSortingRepository接口（最好使用）：
+			3.继承PagingAndSortingRepository接口（最好使用）,该接口会自动注入bean：
 				interface PersonRepository extends PagingAndSortingRepository<类名, Id或主键类型> { … }
 
 				1.查询分页：
