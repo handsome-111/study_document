@@ -111,6 +111,22 @@ UI框架介绍：
 	4.reLaunch：关闭所有页面，打开到应用内的某个页面
 
 
+	5.页面跳转传递参数：在onLoad里传递参数，直接options.属性 获取即可
+		  /**
+		   * 生命周期函数--监听页面加载
+		   * 传递的参数:/pages/goodsDetails?itemid=1234679
+		   */
+		  onLoad: function (options) {
+		    console.log(options.itemId)
+		    wx.request({
+		      url: app.globalData.serverHost + '/product/' + itemId,
+		      success: function (res) {
+		        console.log(res)
+		      }
+		    })
+		  },
+
+
 
 3.页面：
 
