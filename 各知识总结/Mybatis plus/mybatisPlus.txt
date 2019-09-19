@@ -272,7 +272,7 @@ Spring mybatis：
 
 
 
-mybatis文档：
+mybatis文档：https://mybatis.org/mybatis-3/zh/index.html
 
 SELECT标签：
 	1.例子：
@@ -312,7 +312,7 @@ SELECT标签：
 
 
 结果映射：
-	1.级联查询：
+	1.级联查询（使用连接的方式）：
 		1.使用association标签
 		2.然后添加额外的resultMap,即级联的结果集
 
@@ -322,7 +322,7 @@ SELECT标签：
 		  <id property="id" column="id" />
 		  <result property="username" column="username"/>
 		  <result property="password" column="password"/>
-		  <association property="defaultAddress" column="userid" javaType="com.hdgj.entity.Address" select="selectAuthor"/>
+		  <association property="defaultAddress" column="id" javaType="com.hdgj.entity.Address"/>
 		</resultMap>
 
 		<!-- Address返回结果 -->
@@ -342,6 +342,26 @@ SELECT标签：
 				addr.name		as 	addr_name,
 				addr.company	as 	addr_company,
 			FROM user u LEFT JOIN address addr on addr.userid = u.id WHERE openid = 'oFyDr4m6n1FwFUZJBwNztItuERfE' #{openid}
+		</select>
+
+
+	2.级联查询（不使用连接的方式，多次查询）：
+		1.结果集合里包括的是级联要二次查询的值
+	    <resultMap id="userAndDefaultAddress" type="com.hdgj.entity.User">
+	        <id column="id" property="id" />
+	        <result column="nickname" property="nickname" />
+	        <result column="password" property="password" />
+	        <association property="defaultAddress" column="id" javaType="com.hdgj.entity.Address" select="selectDefaultAddress" />
+	    </resultMap>
+
+	    2.第一次查询
+		<select id ="selectByOpenid" parameterType="java.lang.String" resultMap="userAndDefaultAddress">
+			SELECT * FROM user WHERE openid = #{openid}
+		</select>
+
+		3.第二次查询的值，直接放入级联里
+		<select id="selectDefaultAddress" resultType="com.hdgj.entity.Address">
+			SELECT * FROM address WHERE userid = #{id} And is_default = 1
 		</select>
 
 
