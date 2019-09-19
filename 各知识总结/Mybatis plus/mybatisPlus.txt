@@ -269,3 +269,95 @@ Spring mybatis：
 		例子1:
 			@Select("select id, name, state, country from city where state = #{state}")
   			City findByState(@Param("state") String state);
+
+
+
+mybatis文档：
+
+SELECT标签：
+	1.例子：
+		<select id="selectPerson" parameterType="int" resultType="hashmap">
+		  SELECT * FROM PERSON WHERE ID = #{id}
+		</select>
+
+	参数：
+
+		id				在命名空间中唯一的标识符，可以被用来引用这条语句。
+
+		parameterType	将会传入这条语句的参数类的完全限定名或别名。这个属性是可选的，因为 MyBatis 可以通过类型处理器（TypeHandler） 推断出具体传入语句的参数，默认值为未设置（unset）。
+
+		parameterMap	这是引用外部 parameterMap 的已经被废弃的方法。请使用内联参数映射和 parameterType 属性。
+
+		resultType		从这条语句中返回的期望类型的类的完全限定名或别名。 注意如果返回的是集合，那应该设置为集合包含的类型，而不是集合本身。可以使用 resultType 或 resultMap，但不能同时使用。
+
+		resultMap		外部 resultMap 的命名引用。结果集的映射是 MyBatis 最强大的特性，如果你对其理解透彻，许多复杂映射的情形都能迎刃而解。可以使用 resultMap 或 resultType，但不能同时使用。
+
+		flushCache		将其设置为 true 后，只要语句被调用，都会导致本地缓存和二级缓存被清空，默认值：false。
+
+		useCache		将其设置为 true 后，将会导致本条语句的结果被二级缓存缓存起来，默认值：对 select 元素为 true。
+
+		timeout			这个设置是在抛出异常之前，驱动程序等待数据库返回请求结果的秒数。默认值为未设置（unset）（依赖驱动）。
+
+		fetchSize		这是一个给驱动的提示，尝试让驱动程序每次批量返回的结果行数和这个设置值相等。 默认值为未设置（unset）（依赖驱动）。
+
+		statementType	STATEMENT，PREPARED 或 CALLABLE 中的一个。这会让 MyBatis 分别使用 Statement，PreparedStatement 或 CallableStatement，默认值：PREPARED。
+		resultSetType	FORWARD_ONLY，SCROLL_SENSITIVE, SCROLL_INSENSITIVE 或 DEFAULT（等价于 unset） 中的一个，默认值为 unset （依赖驱动）。
+
+		databaseId		如果配置了数据库厂商标识（databaseIdProvider），MyBatis 会加载所有的不带 databaseId 或匹配当前 databaseId 的语句；如果带或者不带的语句都有，则不带的会被忽略。
+		
+		resultOrdered	这个设置仅针对嵌套结果 select 语句适用：如果为 true，就是假设包含了嵌套结果集或是分组，这样的话当返回一个主结果行的时候，就不会发生有对前面结果集的引用的情况。 这就使得在获取嵌套的结果集的时候不至于导致内存不够用。默认值：false。
+		
+		resultSets		这个设置仅对多结果集的情况适用。它将列出语句执行后返回的结果集并给每个结果集一个名称，名称是逗号分隔的。
+
+
+
+结果映射：
+	1.级联查询：
+		1.使用association标签
+		2.然后添加额外的resultMap,即级联的结果集
+
+		例子：
+
+		<resultMap id="userResultMap" type="com.hdgj.User">
+		  <id property="id" column="id" />
+		  <result property="username" column="username"/>
+		  <result property="password" column="password"/>
+		  <association property="defaultAddress" column="userid" javaType="com.hdgj.entity.Address" select="selectAuthor"/>
+		</resultMap>
+
+		<!-- Address返回结果 -->
+	    <resultMap id="addressResult" type="com.hdgj.entity.Address">
+	    	<id column="id" property="id" />
+	        <result column="addr_email" property="email" />
+	        <result column="addr_name" property="name" />
+	        <result column="addr_company" property="company" />
+	    </resultMap>
+			       
+		 3.查询：将全部字段都映射到放回结果集中
+		 <select id="selectUserByopenid" parameterType="java.lang.String" resultType="hashmap">
+			SELECT 
+				u.id,u.nickname,u.password,			
+				addr.id			as 	addr_id,
+				addr.email		as 	addr_email,
+				addr.name		as 	addr_name,
+				addr.company	as 	addr_company,
+			FROM user u LEFT JOIN address addr on addr.userid = u.id WHERE openid = 'oFyDr4m6n1FwFUZJBwNztItuERfE' #{openid}
+		</select>
+
+
+	2.返回指定的字段：
+		1.添加额外的resultMap
+			<resultMap id="userResultMap" type="com.hdgj.User">
+			  <id property="id" column="user_id" />
+			  <result property="username" column="user_name"/>
+			  <result property="password" column="hashed_password"/>
+			</resultMap>
+
+		2.使用：
+			<select id="selectUsers" resultMap="userResultMap">
+			  select user_id, user_name, hashed_password
+			  from some_table
+			  where id = #{id}
+			</select>
+
+
