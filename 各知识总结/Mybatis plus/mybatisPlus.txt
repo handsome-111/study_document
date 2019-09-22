@@ -318,6 +318,18 @@ SELECT标签：
 
 		例子：
 
+		1.查询
+		<select id="selectUserByopenid" parameterType="java.lang.String" resultType="userResultMap">
+			SELECT 
+				u.id,u.nickname,u.password,			
+				addr.id			as 	addr_id,
+				addr.email		as 	addr_email,
+				addr.name		as 	addr_name,
+				addr.company	as 	addr_company,
+			FROM user u LEFT JOIN address addr on addr.userid = u.id WHERE openid = #{openid}
+		</select>
+
+		2.<!-- 全部的结果集 -->
 		<resultMap id="userResultMap" type="com.hdgj.User">
 		  <id property="id" column="id" />
 		  <result property="username" column="username"/>
@@ -325,7 +337,7 @@ SELECT标签：
 		  <association property="defaultAddress" column="id" javaType="com.hdgj.entity.Address"/>
 		</resultMap>
 
-		<!-- Address返回结果 -->
+		3.<!-- Address返回结果 -->
 	    <resultMap id="addressResult" type="com.hdgj.entity.Address">
 	    	<id column="id" property="id" />
 	        <result column="addr_email" property="email" />
@@ -333,36 +345,30 @@ SELECT标签：
 	        <result column="addr_company" property="company" />
 	    </resultMap>
 			       
-		 3.查询：将全部字段都映射到放回结果集中
-		 <select id="selectUserByopenid" parameterType="java.lang.String" resultType="hashmap">
-			SELECT 
-				u.id,u.nickname,u.password,			
-				addr.id			as 	addr_id,
-				addr.email		as 	addr_email,
-				addr.name		as 	addr_name,
-				addr.company	as 	addr_company,
-			FROM user u LEFT JOIN address addr on addr.userid = u.id WHERE openid = 'oFyDr4m6n1FwFUZJBwNztItuERfE' #{openid}
-		</select>
+		 
 
 
 	2.级联查询（不使用连接的方式，多次查询）：
-		1.结果集合里包括的是级联要二次查询的值
+		1.第一次查询
+		<select id ="selectByOpenid" parameterType="java.lang.String" resultMap="userAndDefaultAddress">
+			SELECT * FROM user WHERE openid = #{openid}
+		</select>
+
+		2.第二次查询的值，直接放入级联里
+		<select id="selectDefaultAddress" resultType="com.hdgj.entity.Address">
+			SELECT * FROM address WHERE userid = #{id} And is_default = 1
+		</select>
+
+		3.结果集合里包括的是级联要二次查询的值
 	    <resultMap id="userAndDefaultAddress" type="com.hdgj.entity.User">
 	        <id column="id" property="id" />
 	        <result column="nickname" property="nickname" />
 	        <result column="password" property="password" />
 	        <association property="defaultAddress" column="id" javaType="com.hdgj.entity.Address" select="selectDefaultAddress" />
 	    </resultMap>
+		
 
-	    2.第一次查询
-		<select id ="selectByOpenid" parameterType="java.lang.String" resultMap="userAndDefaultAddress">
-			SELECT * FROM user WHERE openid = #{openid}
-		</select>
-
-		3.第二次查询的值，直接放入级联里
-		<select id="selectDefaultAddress" resultType="com.hdgj.entity.Address">
-			SELECT * FROM address WHERE userid = #{id} And is_default = 1
-		</select>
+		
 
 
 	2.返回指定的字段：

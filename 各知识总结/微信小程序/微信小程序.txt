@@ -484,3 +484,25 @@ WXSS:
 		2.页面的生命周期：
 			详见文档：https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/page.html
 
+组件：
+	1.滚动选择器（picker）：从底部弹起的滚动选择器。
+		文档：https://developers.weixin.qq.com/miniprogram/dev/component/picker.html
+		如：
+
+		原理:当选择器的值改变的时候，会触发事件，然后在事件里通过e.detail.value获取值
+		WXML：
+			<picker mode='region'  bindchange='bindRegionChange'>
+		      <input class='picker' placeholder="省份、城市、区县" value='{{region}}' disabled="false"></input>
+		    </picker>
+
+		JS:
+		bindRegionChange:function(e){
+		    var region = e.detail.value
+		    this.setData({
+		      region:region
+		    })
+		  }
+
+
+
+form表单提交:
