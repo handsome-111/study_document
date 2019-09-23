@@ -506,3 +506,15 @@ WXSS:
 
 
 form表单提交:
+
+实现双向绑定：
+	查看 API 文档就发现，状态可以发生改变的组件都会有一些以 “bind” 单词打头的属性，比如 “bindinput”、“bindblur” 等，这些属性绑定一个方法，方法的参数获取一个对象 event 。当组件的值发生改变时，方法被触发，方法内使用 event.detail.value 就可以获取组件的最新值
+
+	如：
+		<input placeholder="姓名" name='name' value='{{address.name}}' bindinput="aaa" data-name='name'></input>
+
+		aaa:function(e){
+			this.setData({
+				address.name:e.detail.value
+			})
+		}
