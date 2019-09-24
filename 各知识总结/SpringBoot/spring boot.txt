@@ -92,7 +92,15 @@ Spring MVC:
 		4.@CookieValue：将HTTP cookie的值绑定到控制器中的方法参数。
 		5.@SessionAttribute:访问全局管理的预先存在的会话属性
 		6.@RequestAttribute:访问先前创建的预先存在的请求属性（例如，通过Servlet Filter 或HandlerInterceptor）
-		7.@RequestBody:将接收的参数转换为对象,属性一定要相同
+		7.@RequestBody:将接收的参数转换为对象,属性一定要相同,最好使用JSON来接受所有参数，如
+			@PostMapping("/updateAddress")
+			public ResponseData updateAddress(@RequestBody JSONObject jsonObject){
+				Address address = jsonObject.getJSONObject("requestParam").getJSONObject("address").toJavaObject(Address.class);
+				System.out.println(address);
+				System.out.println(addressService.updateAddress(address));
+				return ResponseDataUtil.buildSuccess(address);
+			}
+
 		7.重定向属性：
 			return "redirect:files/{path}";
 		8.Multipart:

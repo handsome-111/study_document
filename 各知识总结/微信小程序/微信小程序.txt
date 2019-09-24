@@ -505,7 +505,53 @@ WXSS:
 
 
 
-form表单提交:
+form表单提交,post请求:
+
+	WXML:
+		<form bindsubmit="formSubmit">
+		  <view class='main'>
+		      <input placeholder="姓名" name='name' value='{{address.name}}' ></input>
+		  </view>
+
+		  <view class='fotter'> 
+		    <button formType="submit">保存</button>
+		    <button bindtap="deleteAddress">删除</button>
+		  </view>
+		</form>
+	
+
+	JS：发送POST请求,使用header为'application/json',参数使用统一的格式
+
+		wx.request({
+	      url: app.globalData.serverHost + '/address/updateAddress', 
+	      method:'post',
+	      data:{
+	        requestParam:{
+	          address:address,
+	          user:'其他的参数,让java后台方便解析'
+	        }
+	      },
+	      header: { 
+	        //"Content-Type": "application/x-www-form-urlencoded"
+	        "Content-Type": "application/json" 
+	      },
+	      success:function(res){
+	        console.log(res.data) 
+	      }  
+	    })
+
+
+	java后台：用@requestBody来接受所有参数
+		@PostMapping("/updateAddress")
+		public ResponseData updateAddress(@RequestBody JSONObject jsonObject){
+			Address address = jsonObject.getJSONObject("requestParam").getJSONObject("address").toJavaObject(Address.class);
+			System.out.println(address);
+			System.out.println(addressService.updateAddress(address));
+			return ResponseDataUtil.buildSuccess(address);
+		}
+
+
+
 
 实现双向绑定(通过bindXXX事件来实现)：
 	查看 API 文档就发现，状态可以发生改变的组件都会有一些以 “bind” 单词打头的属性，比如 “bindinput”、“bindblur” 等，这些属性绑定一个方法，方法的参数获取一个对象 event 。当组件的值发生改变时，方法被触发，方法内使用 event.detail.value 就可以获取组件的最新值
