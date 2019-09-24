@@ -178,7 +178,10 @@ Spring MVC:
 				      name: root
 				      # 密码
 				      password: 123456
-	1.认证：
+
+    2.CSRF防护:spring security会默认开启csrf防护，会拦截所有post请求
+
+	3.认证：
 		1.继承WebSecurityConfigurerAdapter：
 			1.configure(HttpSecurity http)
 			2.configure(WebSecurity web)
