@@ -4,3 +4,35 @@ mysql官方文档：https://dev.mysql.com/doc/、
 	文档：https://dev.mysql.com/doc/refman/5.6/en/optimization.html
 	1.explain查询优化
 		1.结果集文档：https://dev.mysql.com/doc/refman/5.6/en/explain-extended.html
+
+
+索引：
+	即使一个字段只有2个值，一个值多一个值少，都有必要添加索引。只要用到where 和 group by 等
+
+	语法：
+
+		创建索引：
+			ALTER TABLE table_name ADD INDEX index_name(index_columns);	
+			ALTER TABLE table_name ADD UNIQUE index_name(index_columns);
+			ALTER TABLE table_name ADD PRIMARY KEY(index_columns);
+			ALTER TABLE table_name ADD FULLTEXT index_name(index_columns);	
+			ALTER TABLE table_name ADD SPATIAL index_name(index_columns);	
+
+			CREATE INDEX index_name ON table_name(index_columns);
+			CREATE UNIQUE index_name ON table_name(index_columns);
+			CREATE FULLTEXT index_name ON table_name(index_columns);
+			CREATE SPATIAL index_name ON table_name(index_columns);
+
+		删除索引：
+			语法：DROP INDEX <索引名>;
+				例：DDROP INDEX Stusno;
+			DROP INDEX index_name ON table_name;
+			删除主键：DROP index 'PRIMARY' ON table_name;
+
+
+
+插入或更新:插入，如果存在则更新，
+	ON DUPLICATE KEY UPDATE 可以达到以下目的:
+		向数据库中插入一条记录：
+		若该数据的主键值/ UNIQUE KEY 已经在表中存在,则执行更新操作, 即UPDATE 后面的操作。
+		如：INSERT INTO mRowUpdate(id,`value`) VALUES(3, 'SuperMan') ON DUPLICATE KEY UPDATE `value`='SuperMan';
