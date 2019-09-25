@@ -338,8 +338,18 @@ UI框架介绍：
 
 	4.条件渲染，经常切换的最好使用hidden(是hidden而不是wx:hidden),而不是使用wx:if
 	5.数据绑定：
+		可以看文档：https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/event.html
 		格式：data-属性名="值"
 		如；<view id="tapTest" data-hi="WeChat" bindtap="tapName"> Click me! </view>
+		
+		JS:如event.target.dataset.hi
+			通过以下方式来访问
+			"target": {
+			    "id": "tapTest",
+			    "dataset":  {
+			      "hi":"WeChat"
+			    }
+
 
 
 
