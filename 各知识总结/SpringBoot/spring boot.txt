@@ -47,6 +47,12 @@ Spring MVC:
 			});	
 
 
+4.spring 事务：
+	1.因为在spring boot中是自动加入@EnableTransactionManagement注解的,所以无需在应用上添加这个注解
+	2.使用：直接在方法上使用@Transactional 即可
+		例：
+
+
 
 
 5.URIBuilder,URI拼装和解析工具
@@ -559,7 +565,9 @@ Spring OAuth2：
 		3.服务之间的通信:对内RPC,对外Rest
 	3.
 
-11.配置多个数据源
+11.配置多个数据源：
+	详见官网：https://docs.spring.io/spring-boot/docs/2.1.8.RELEASE/reference/html/howto-data-access.html#howto-configure-a-datasource
+
 	1.数据源：
 		数据源建立多个数据库连接，这些数据库连接会保存在数据库连接池中，当需要访问数据库时，只需要从数据库连接池中获取空闲的数据库连接，当程序访问数据库结束时，数据库连接会放回数据库连接池中。
 
@@ -587,6 +595,14 @@ Spring OAuth2：
 		}
 
 
+		配置事务管理器：
+		@Bean
+		public DataSourceTransactionManager transactionManager() {
+		  return new DataSourceTransactionManager(dataSource());
+		}
+
+		下面的也可以不使用：
+
 		@Bean(name = "hdgjSqlSessionFactory")
 		@Primary
 		/**
@@ -610,6 +626,10 @@ Spring OAuth2：
 	2.application.yml:
 		spring.datasource.hdgj.username......
 		spring.datasource.test2.username.....	
+
+	3.使用事务：
+		直接在业务类上添加@Transactional即可，但是不能在方法上添加@Transactional,试过会无效
+
 12.整合mybatus plus
 
 13.Spring schedule(调度器):

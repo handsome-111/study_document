@@ -23,6 +23,7 @@ mybatisplus:
 					datasource: 
 					    type: com.zaxxer.hikari.HikariDataSource
 					    driver-class-name: com.mysql.cj.jdbc.Driver
+					    ##如果使用mybatis plus,最好使用jdbcUrl,并且在配置数据源的时候
 					    url:jdbc:mysql://localhost:3308/hdgj?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
 					    username: root
 					    password: root
@@ -42,6 +43,30 @@ mybatisplus:
   				configuration:
     				log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   ##显示SQL语句日志
 
+
+    		事务：
+    			1.配置默认的数据源：
+		    		// 声明bean
+					@Bean
+					// 指明读取的配置
+					@ConfigurationProperties(prefix = "spring.datasource")
+					// 设置为主数据源
+					@Primary
+					/*
+					 * 声明数据源配置
+					 */
+					public DataSource hdgjDataSource() {
+						return DataSourceBuilder.create().build();
+					}
+
+				2.配置事务管理器
+				@Bean
+				public DataSourceTransactionManager transactionManager() {
+				  return new DataSourceTransactionManager(dataSource());
+				}
+
+				3.使用事务：
+					直接在业务类上添加@Transactional即可，但是不能在方法上添加@Transactional,试过会无效
 
 
 
@@ -230,6 +255,14 @@ mybatisplus:
 
 
 	3.使用,CURD接口：
+		具体可以看例子：https://gitee.com/joker-pper/mybatis-plus-cascade
+		
+		使用接口的时,级联操作需要添加以下属性,不然会报错：
+			如：
+			@TableField(value = "userid", el = "user.id")		//value:表示数据库表address里User的字段名称,el：表示引用的属性/字段
+    		private User user;
+
+
 		1.Mapper的CURD接口：
 			1.文档：https://mp.baomidou.com/guide/crud-interface.html#mapper-crud-%E6%8E%A5%E5%8F%A3
 
@@ -250,6 +283,9 @@ mybatisplus:
 			1.文档：https://mp.baomidou.com/guide/crud-interface.html#service-crud-%E6%8E%A5%E5%8F%A3
 			2.Service条件构造器,和Mapper的条件构造器一样，统一的文档
 
+
+		3.mapper层的配置：
+			https://mp.baomidou.com/guide/crud-interface.html#mapper-%E5%B1%82-%E9%80%89%E8%A3%85%E4%BB%B6
 
 
 
@@ -310,6 +346,9 @@ SELECT标签：
 		resultSets		这个设置仅对多结果集的情况适用。它将列出语句执行后返回的结果集并给每个结果集一个名称，名称是逗号分隔的。
 
 
+一对多,一对一等例子：
+	https://www.cnblogs.com/jimisun/p/9414148.html
+
 
 结果映射：
 	1.级联查询（使用连接的方式）：
@@ -366,7 +405,13 @@ SELECT标签：
 	        <result column="password" property="password" />
 	        <association property="defaultAddress" column="id" javaType="com.hdgj.entity.Address" select="selectDefaultAddress" />
 	    </resultMap>
-		
+
+
+
+	3.级联插入和更新:直接传入外键参数即可
+		1.当使用的是mybatis plus 的接口的时候,为了自动插入,需要在字段上添加：
+			@TableField(value = "userid", el = "user.id")
+    		private User user;
 
 		
 
