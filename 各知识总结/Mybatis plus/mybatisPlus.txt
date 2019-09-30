@@ -266,7 +266,7 @@ mybatisplus:
 		1.Mapper的CURD接口：
 			1.文档：https://mp.baomidou.com/guide/crud-interface.html#mapper-crud-%E6%8E%A5%E5%8F%A3
 
-			2.Mapper条件构造器：
+			2.Wrapper条件构造器：
 				官方文档：https://mp.baomidou.com/guide/wrapper.html#abstractwrapper
 				AbstractWrapper抽象类，
 				AbstractWrapper实现类：
