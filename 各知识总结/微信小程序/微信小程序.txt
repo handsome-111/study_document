@@ -180,7 +180,7 @@ UI框架介绍：
 
 				BB.wxml：
 					<import src="/templates/alerts/goodsSpec.wxml"/>
-					<template is="goodsSpec" data="goods"></template>
+					<template is="goodsSpec" data="{{goods}}"></template>
 
 				BB.wxss:
 					@import "/templates/alerts/goodsSpec.wxss";

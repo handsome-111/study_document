@@ -43,6 +43,8 @@ Mongodb-java-driver:MongoDB驱动程序
 	3.使用Spring data Repository来操作Mongodb
 		1.官方文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/#repositories
 		
+
+		---------------------------------------------------------------Repository接口操作Mongodb--------------------------------------------------------------------
 		2.定义Repository接口来操作MongoDB：
 			1.定义实体：
 				1.定义实体的注解:
@@ -80,15 +82,14 @@ Mongodb-java-driver:MongoDB驱动程序
 					@Version - 用于字段锁定，保存操作时检查修改。初始值是0，每次更新时自动触发。
 
 
-			文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/
 			2.继承MongoRepository接口
 				interface PersonRepository extends MongoRepository<类名, Id或主键类型> { … }
 			
 			3.继承PagingAndSortingRepository接口（最好使用）,该接口会自动注入bean：
 				interface PersonRepository extends PagingAndSortingRepository<类名, Id或主键类型> { … }
 
-				1.查询分页：
-					Page<User> users = repository.findAll(PageRequest.of(1, 20));
+				1.查询分页 + 排序：
+					cartRepository.findAllByUserid(userid,PageRequest.of(0, 10,Sort.by(Direction.DESC,"updateTime")));
 
 			4.通过继承以上的接口直接写方法，直接CURD数据库，不用实现方法，如：
 				方法命名模板:
@@ -106,6 +107,7 @@ Mongodb-java-driver:MongoDB驱动程序
 					8.限制结果的数量的方法名称：
 						findFirstByOrderByLastnameAsc：查询第一个数据，并且是升序的排序
 						findFirst10ByLastname：查询从最大值开始返回的10行数据
+				
 				如：User findByUserName(String userName);	//直接通过userName查找，只需要定义这个方法就行
 				
 				1.查询方法的关键字：
@@ -241,13 +243,15 @@ Mongodb-java-driver:MongoDB驱动程序
 					@Query(fields="{'itemId':}1")		
 					List<String> findAllBy(Pageable page,Sort sort)	
 
-					具体的返回值类型可以见 3.
+					例子：注意,以上
+						1.Page<User> users = repository.findAll(PageRequest.of(1, 20));
 
+						2.cartRepository.findAllBy(PageRequest.of(0, 10), Sort.by(Direction.DESC,"update_time"));
 				6.MongoDB会话
 
 
 
-
+------------------------------------------------------------------------MongoTemplate操作Mongodb-----------------------------------------------------------------------------
 		3.使用MongoTemplate来操作Mongodb:
 			api文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/api/
 			1.MongoOperations,MongoOperations 是实现MongoTemplate的接口

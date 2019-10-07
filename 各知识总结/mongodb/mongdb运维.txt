@@ -69,6 +69,64 @@ window：
 	对当前数据库命令：
 		db.runCommand( { <command> } )
 
+
+	常用命令：
+		1.插入文档：
+			语法：
+			db.COLLECTION_NAME.insert(document)
+
+			例子：
+			db.col.insert({title: 'MongoDB 教程', 
+			    description: 'MongoDB 是一个 Nosql 数据库',
+			    by: '菜鸟教程',
+			    url: 'http://www.runoob.com',
+			    tags: ['mongodb', 'database', 'NoSQL'],
+			    likes: 100
+			})
+
+
+		2.更新文档：
+			db.collection.update(
+			   <query>,
+			   <update>,
+			   {
+			     upsert: <boolean>,
+			     multi: <boolean>,
+			     writeConcern: <document>
+			   }
+			)
+
+			参数说明：
+
+			query : update的查询条件，类似sql update查询内where后面的。
+			update : update的对象和一些更新的操作符（如$,$inc...）等，也可以理解为sql update查询内set后面的
+			upsert : 可选，这个参数的意思是，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入。
+			multi : 可选，mongodb 默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新。
+			writeConcern :可选，抛出异常的级别。
+
+		3.删除文档：
+			db.collection.remove(
+			   <query>,
+			   {
+			     justOne: <boolean>,
+			     writeConcern: <document>
+			   }
+			)
+
+			参数说明：
+			query :（可选）删除的文档的条件。
+			justOne : （可选）如果设为 true 或 1，则只删除一个文档，如果不设置该参数，或使用默认值 false，则删除所有匹配条件的文档。
+			writeConcern :（可选）抛出异常的级别。
+						
+
+			例如：删除指定ObjectID的文档：db.cart.remove({_id : ObjectId("5d985f8622f4e33e7cc50818")})
+		
+		4.查询文档：
+			语法：
+			db.collection.find(query, projection)
+			参数说明：
+			query ：可选，使用查询操作符指定查询条件
+			projection ：可选，使用投影操作符指定返回的键。查询时返回文档中所有键值， 只需省略该参数即可（默认省略）。
 4.复制集：
 	1.配置复制集，mongod.cfg:
 		##复制集的名字，即一个复制的集合，所有成员的配置都一样

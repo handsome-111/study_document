@@ -1,5 +1,14 @@
 Spring MVC:
 	
+1.开启热部署：
+	添加一下依赖即可：
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <!-- optional=true, 依赖不会传递, 该项目依赖devtools;
+                之后依赖boot项目的项目如果想要使用devtools, 需要重新引入 -->
+            <optional>true</optional>
+        </dependency>
 
 2.配置文件的存储和读取：
 	1.默认将读取application.yml文件
@@ -92,6 +101,8 @@ Spring MVC:
 			 ...
 		}
 
+
+
 		1.@RequestParam:Servlet请求参数（即查询参数或表单数据）绑定到控制器中的方法参数。
 		2.@RequestHeader:将请求标头绑定到控制器中的方法参数。
 		3.@PathVariable:路径变量
@@ -99,6 +110,7 @@ Spring MVC:
 		5.@SessionAttribute:访问全局管理的预先存在的会话属性
 		6.@RequestAttribute:访问先前创建的预先存在的请求属性（例如，通过Servlet Filter 或HandlerInterceptor）
 		7.@RequestBody:将接收的参数转换为对象,属性一定要相同,最好使用JSON来接受所有参数，如
+			1.post请求
 			@PostMapping("/updateAddress")
 			public ResponseData updateAddress(@RequestBody JSONObject jsonObject){
 				Address address = jsonObject.getJSONObject("requestParam").getJSONObject("address").toJavaObject(Address.class);
@@ -106,6 +118,10 @@ Spring MVC:
 				System.out.println(addressService.updateAddress(address));
 				return ResponseDataUtil.buildSuccess(address);
 			}
+
+			2.get请求,前端传递JSON字符串过来即可
+			@GetMapping("/addCart")
+		public String addCart(@RequestParam("cart") String jsonStr){...}
 
 		7.重定向属性：
 			return "redirect:files/{path}";
