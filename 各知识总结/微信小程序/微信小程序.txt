@@ -332,6 +332,15 @@ UI框架介绍：
 			aa:'哈哈',
 			bb:11
 		})
+
+		动态设置数组：
+			var key = 'carts[' + index + ']'
+	        var resCart = res.data.data
+
+	        that.setData({
+	          [key]: resCart
+	        })
+
 	3.获取data：
 		this.data.属性
 		如：this.data.aa
