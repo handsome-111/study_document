@@ -523,6 +523,22 @@ WXSS:
 		  }
 
 
+	2.多项选择器（checkbox-group）：
+		checkbox-group：只要选择或者取消选择 都会触发bindchange里的函数
+		WXML:
+			<checkbox-group bindchange="checkboxChange" >
+				<checkbox value="{{item.id}}" checked=""/>
+			</checkbox-group>
+
+		JS:
+			函数：通过e.detail.value就可以获取数组,即<checkbox>里选中的的value的值
+			checkboxChange:function(e){
+		      this.setData({
+		        selectedCarts:e.detail.value
+		      })
+		    }
+
+
 
 form表单提交,post请求:
 
