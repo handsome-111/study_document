@@ -39,12 +39,13 @@ Mongodb-java-driver:MongoDB驱动程序
 			</dependency>
 
 	操作Mongodb的方式有两种，一种是Repository，另一种是MongoTempalte,还有其他的见官网
+	
+		---------------------------------------------------------------Repository接口操作Mongodb--------------------------------------------------------------------
 
 	3.使用Spring data Repository来操作Mongodb
 		1.官方文档：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/#repositories
 		
 
-		---------------------------------------------------------------Repository接口操作Mongodb--------------------------------------------------------------------
 		2.定义Repository接口来操作MongoDB：
 			1.定义实体：
 				1.定义实体的注解:
@@ -237,11 +238,11 @@ Mongodb-java-driver:MongoDB驱动程序
 
 					//将两个属性的值赋到Product里
 					@Query(fields="{'status':1,'sold':1}")		
-					List<Product> findAllBy(Pageable page,Sort sort)	
+					List<Product> findAllBy(Pageable page)	//Pageable里自带排序功能
 
-					//返回单个属性，估计返回的是JSON格式
+					//返回单个属性(是属性名称，而不是字段)，估计返回的是JSON格式
 					@Query(fields="{'itemId':}1")		
-					List<String> findAllBy(Pageable page,Sort sort)	
+					List<String> findAllBy(Pageable page)	//Pageable里自带排序功能
 
 					例子：注意,以上
 						1.Page<User> users = repository.findAll(PageRequest.of(1, 20));
