@@ -122,6 +122,7 @@ window：
 			例如：删除指定ObjectID的文档：db.cart.remove({_id : ObjectId("5d985f8622f4e33e7cc50818")})
 		
 		4.查询文档：
+			https://docs.mongodb.com/manual/tutorial/query-documents/
 			语法：
 			db.collection.find(query, projection)
 			参数说明：

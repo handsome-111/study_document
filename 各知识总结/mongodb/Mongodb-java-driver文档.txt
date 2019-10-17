@@ -490,10 +490,33 @@ Mongodb-java-driver:MongoDB驱动程序
 
 2.事务,需要配置Mongodb复制集
 	1.使用注解的方式来配置事务：
-		1.注册事务管理器bean：
-			@Bean
-		    MongoTransactionManager transactionManager(MongoDbFactory dbFactory) {  
-		        return new MongoTransactionManager(dbFactory);
-		    }
+		1.注册事务管理器bean(如果有多个数据源，则需要配置多个事务管理器,比如还有一个Mysql)：
+			@Configuration
+			class MongoConfig extends AbstractMongoConfiguration {
 
-		2.直接将@Transaction注解在方法上即可
+				@Value("${spring.data.mongodb.uri}")
+				private String mongoUri;
+				
+				@Bean(name="mongoTransactionManager")
+				MongoTransactionManager transactionManager(MongoDbFactory dbFactory) {
+				  return new MongoTransactionManager(dbFactory);
+				}
+
+				@Override
+				@Bean
+				public MongoClient mongoClient() {
+					MongoClientURI uri = new MongoClientURI(mongoUri);
+					return new MongoClient(uri);
+				}
+
+				@Override
+				protected String getDatabaseName() {
+					String dataBase = mongoUri.substring(mongoUri.lastIndexOf("/") + 1);
+					return dataBase;
+				}
+			}
+
+
+		2.直接将@Transaction注解在业务类上即可：
+			@Transactional(transactionManager="mongoTransactionManager")
+			public void delAndSaveAll(List<String> ids, List<ShopProduct> shopProducts) {。。。}

@@ -58,8 +58,8 @@ Spring MVC:
 
 4.spring 事务：
 	1.因为在spring boot中是自动加入@EnableTransactionManagement注解的,所以无需在应用上添加这个注解
-	2.使用：直接在方法上使用@Transactional 即可
-		例：
+	2.使用：直接在方法上使用@Transactional 即可,如果存在多个数据库，数据源，则需要配置
+		
 
 
 
@@ -612,7 +612,7 @@ Spring OAuth2：
 
 
 		配置事务管理器：
-		@Bean
+		@Bean//如果有多个事务管理器，则需要配置名称，使用@Transaction的时候也需要加上名称(name="XXXtransactionManager")
 		public DataSourceTransactionManager transactionManager() {
 		  return new DataSourceTransactionManager(dataSource());
 		}
@@ -800,7 +800,7 @@ Spring OAuth2：
 					     * @throws SQLException
 					     */
 					    //配置事务管理器
-					    @Bean
+					    @Bean//这里可以配置事务的名称，如果有多个事务管理器的话，比如还存在Mysql的事务管理器(name="redisTransactionManager")
 					    public PlatformTransactionManager transactionManager(DataSource dataSource) throws SQLException {
 					        return new DataSourceTransactionManager(dataSource);
 					    }
