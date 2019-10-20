@@ -431,6 +431,42 @@ Mongodb-java-driver:MongoDB驱动程序
 					如：public interface ModelAttrRepository extends QueryByExampleExecutor<ModelAttr>
 
 
+			9.聚合框架操作：
+				1.详见官网：https://docs.spring.io/spring-data/mongodb/docs/2.1.10.RELEASE/reference/html/#mongo.aggregation
+				2.Aggregation:Aggregation代表MongoDB aggregate操作
+					AggregationOperation：代表MongoDB聚合管道操作，尽管您可以手动创建一个AggregationOperation，但我们建议您使用Aggregate该类提供的静态工厂方法来构造一个AggregateOperation。
+
+				3.支持的聚合操作：
+					管道聚合运算符
+					组汇总运算符
+					布尔聚合运算符
+					比较聚合运算符
+					算术聚合运算符
+					字符串聚合运算符
+					日期汇总运算符
+					数组聚合运算符
+					条件聚合运算符
+					查找聚合运算符
+					转换聚合运算符
+					对象聚合运算符
+
+				4.Buckets操作聚合：
+					Bucket操作根据指定的表达式和Bucket边界将传入文档分组为称为Buckets组。Bucket操作需要分组字段或分组表达式。它们可以通过Aggregate类的bucket（）/ bucketAuto（）方法来定义。 BucketOperation和BucketAutoOperation可以根据输入文档的聚合表达式来显示累积。 bucket操作可以通过流利的API通过with ...（）方法，andOutput（String）方法以及通过as（String）方法进行别名的扩展。每个桶在输出中表示为一个文档。
+
+					1.例子：
+						// generates {$bucket: {groupBy: $price, boundaries: [0, 100, 400]}}
+						bucket("price").withBoundaries(0, 100, 400);
+
+						// generates {$bucket: {groupBy: $price, default: "Other" boundaries: [0, 100]}}
+						bucket("price").withBoundaries(0, 100).withDefault("Other");
+
+						// generates {$bucket: {groupBy: $price, boundaries: [0, 100], output: { count: { $sum: 1}}}}
+						bucket("price").withBoundaries(0, 100).andOutputCount().as("count");
+
+						// generates {$bucket: {groupBy: $price, boundaries: [0, 100], 5, output: { titles: { $push: "$title"}}}
+						bucket("price").withBoundaries(0, 100).andOutput("title").push().as("titles");
+
+
 1.通过java-mongodb-driver来操作Mongodb：
 		1.通过MongoTemplate获取Mongo集合，MongoCollection：
 				MongoCollection collection = mongoTemplate.getCollection("user");
