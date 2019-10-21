@@ -95,6 +95,108 @@ Mongodb简介:
 				1.{<Field>:<value>}
 			如:db.students.find();
 
+
+			查询数组：
+				1.普通数组查询：https://docs.mongodb.com/manual/tutorial/query-arrays/
+
+				例子：
+				db.inventory.insertMany([
+				   { item: "journal", qty: 25, tags: ["blank", "red"], dim_cm: [ 14, 21 ] },
+				   { item: "notebook", qty: 50, tags: ["red", "blank"], dim_cm: [ 14, 21 ] },
+				   { item: "paper", qty: 100, tags: ["red", "blank", "plain"], dim_cm: [ 14, 21 ] },
+				   { item: "planner", qty: 75, tags: ["blank", "red"], dim_cm: [ 22.85, 30 ] },
+				   { item: "postcard", qty: 45, tags: ["blue"], dim_cm: [ 10, 15.25 ] }
+				]);
+
+					1.查询2个值,并且指定顺序的数组
+						db.inventory.find( { tags: ["red", "blank"] } )
+
+					2.查询一个同时包含两个元素的数组，不考虑顺序和其他元素
+						db.inventory.find( { tags: { $all: ["red", "blank"] } } )
+
+					3.返回其中之一的数组：
+						db.inventory.find( { tags: "red" } )
+
+					4.要在array字段中的元素上指定条件，选择指定字段，选择操作符，选择值
+						{ <array field>: { <operator1>: <value1>, ... } }
+
+					5.查询数组dim_cm包含至少一个大于25的元素的文档
+						db.inventory.find( { dim_cm: { $gt: 25 } } )
+
+					6.使用数组元素上的复合过滤条件查询数组
+						大于15小于20的元素
+						db.inventory.find( { dim_cm: { $gt: 15, $lt: 20 } } )
+
+					7.查询满足多个条件的数组元素
+						dim_cm数组包含至少一个同时大于22和小于30的元素
+						db.inventory.find( { dim_cm: { $elemMatch: { $gt: 22, $lt: 30 } } } )
+
+					8.查询数组中第二个元素dim_cm大于25的文档
+						db.inventory.find( { "dim_cm.1": { $gt: 25 } } )
+
+					9.通过数组的长度查询数组
+						查询数组长度为3的数组
+						db.inventory.find( { "tags": { $size: 3 } } )
+
+
+
+				2.嵌入式数组查询:https://docs.mongodb.com/manual/tutorial/query-array-of-documents/
+
+				例子：
+					db.inventory.insertMany( [
+					   { item: "journal", instock: [ { warehouse: "A", qty: 5 }, { warehouse: "C", qty: 15 } ] },
+					   { item: "notebook", instock: [ { warehouse: "C", qty: 5 } ] },
+					   { item: "paper", instock: [ { warehouse: "A", qty: 60 }, { warehouse: "B", qty: 15 } ] },
+					   { item: "planner", instock: [ { warehouse: "A", qty: 40 }, { warehouse: "B", qty: 5 } ] },
+					   { item: "postcard", instock: [ { warehouse: "B", qty: 15 }, { warehouse: "C", qty: 35 } ] }
+					]);
+
+
+					1.查询数组中的元素相匹配的文档,《《字段顺序》》也必须相匹配,不然不行
+					正确例子：db.inventory.find( { "instock": { warehouse: "A", qty: 5 } } )
+					错误例子：db.inventory.find( { "instock": { qty: 5, warehouse: "A" } } )	(顺序不正确)
+
+					2.在嵌入文档数组中的字段上指定查询条件
+						查询instock数组包含qty其值小于或等于20的元素的所有文档
+						db.inventory.find( { 'instock.qty': { $lte: 20 } } )
+
+						查询instock数组中第一行包含qty其值小于或等于20的元素的所有文档
+						db.inventory.find( { 'instock.0.qty': { $lte: 20 } } )
+
+					3.$elemMatch运算符
+						使用$elemMatch运算符可以在“一组嵌入式文档上指定多个条件”，以使“至少一个嵌入式”文档满足所有指定条件。
+						
+						单个嵌套文档在嵌套字段上满足多个查询条件
+						
+						查询instock数组具有“至少一个有嵌入式文档”，该文档“同时包含 qty等于5的字段和warehouse等于的A”
+						db.inventory.find( { "instock": { $elemMatch: { qty: 5, warehouse: "A" } } } )
+
+						其中instock数组具有“至少一个嵌入式文档”，该嵌入式文档“包含qty大于10和小于或等于的字段20”
+						db.inventory.find( { "instock": { $elemMatch: { qty: { $gt: 10, $lte: 20 } } } } )
+
+					4.不使用elemeMatch的方法：
+						查询instock数组中,qty的值大于10小于20的数组的所有文档,至少一个嵌入文档
+						db.inventory.find( { "instock.qty": { $gt: 10,  $lte: 20 } } )
+
+						查询instock数组中,qty=5，warehouse=A的元素,至少一个嵌入文档
+						db.inventory.find( { "instock.qty": 5, "instock.warehouse": "A" } )
+
+
+				3.
+					1.引用式嵌套查询：需分多次查询
+ 					如：
+ 						{
+						   "_id":ObjectId("52ffc33cd85242f436000001"),
+						   "contact": "987654321",
+						   "dob": "01-01-1991",
+						   "name": "Tom Benzamin",
+						   "address_ids": [
+						      ObjectId("52ffc4a5d85242602e000000"),
+						      ObjectId("52ffc4a5d85242602e000001")
+						   ]
+						}
+ 				
+
 			查询运算符：
 				语法:{ <field1>: { <operator1>: <value1> }, ... }
 				运算符(operator):
