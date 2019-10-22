@@ -87,16 +87,47 @@ Mongodb简介:
 				1.在插入时，会默认添加"_id"属性，是为了保证唯一性，也可以自己给“_id”赋值，建议使用自带的
 
 		2.查询文档:
-			Api:
+			1.Api:
 				db.<collection>.find();		:返回符合条件的所有文档
 				db.<collection>.findOne()	:返回符合条件的第一个文档
 
-			查询过滤：
+			2.查询过滤：
 				1.{<Field>:<value>}
 			如:db.students.find();
 
+			3.查询返回指定字段：
+				例子：
+					db.inventory.insertMany( [
+					  { item: "journal", status: "A", size: { h: 14, w: 21, uom: "cm" }, instock: [ { warehouse: "A", qty: 5 } ] },
+					  { item: "notebook", status: "A",  size: { h: 8.5, w: 11, uom: "in" }, instock: [ { warehouse: "C", qty: 5 } ] },
+					  { item: "paper", status: "D", size: { h: 8.5, w: 11, uom: "in" }, instock: [ { warehouse: "A", qty: 60 } ] },
+					  { item: "planner", status: "D", size: { h: 22.85, w: 30, uom: "cm" }, instock: [ { warehouse: "A", qty: 40 } ] },
+					  { item: "postcard", status: "A", size: { h: 10, w: 15.25, uom: "cm" }, instock: [ { warehouse: "B", qty: 15 }, { warehouse: "C", qty: 35 } ] }
+					]);
 
-			查询数组：
+				1.返回指定字段,包括_id
+					db.inventory.find( { status: "A" }, { item: 1, status: 1 } )
+					等同于SQL
+					SELECT _id, item, status from inventory WHERE status = "A"
+
+				2.返回指定字段,不包括_id
+					通过将_id设置0为投影中的结果来从结果中删除该字段
+					db.inventory.find( { status: "A" }, { item: 1, status: 1, _id: 0 } )
+					等同于SQL
+					SELECT item, status from inventory WHERE status = "A"
+
+				3.返回全部字段，但是排除其中一些字段
+					排除status,instock字段
+					db.inventory.find( { status: "A" }, { status: 0, instock: 0 } )
+
+				4.返回指定字段,返回指定字段和内嵌文档的指定字段,返回size对象下的uom字段
+					db.inventory.find(
+					   { status: "A" },
+					   { item: 1, status: 1, "size.uom": 1 }
+					)
+
+
+			4.查询数组：
 				1.普通数组查询：https://docs.mongodb.com/manual/tutorial/query-arrays/
 
 				例子：
@@ -182,7 +213,7 @@ Mongodb简介:
 						db.inventory.find( { "instock.qty": 5, "instock.warehouse": "A" } )
 
 
-				3.
+				3.引用式嵌套查询
 					1.引用式嵌套查询：需分多次查询
  					如：
  						{
@@ -197,7 +228,7 @@ Mongodb简介:
 						}
  				
 
-			查询运算符：
+			5.查询运算符：
 				语法:{ <field1>: { <operator1>: <value1> }, ... }
 				运算符(operator):
 					$in:相当于'='
