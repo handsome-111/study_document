@@ -440,8 +440,138 @@ Mongodb简介:
 
 
 
-		5.批量写入
+		5.批量写操作：
+			1.MongoDB使客户端能够批量执行写操作。批量写入操作会影响单个集合。MongoDB允许应用程序确定批量写入操作所需的可接受的确认级别。
 
+			2.bulkWrite()接受一组写入操作并执行每个操作。默认情况下，操作按顺序执行。
+
+			3.db.collection.bulkWrite()可以在多文档事务中使用。
+
+			4.bulkWrite支持以下下操作：
+				insertOne
+				updateOne
+				updateMany
+				replaceOne
+				deleteOne
+				deleteMany	
+
+			5.语法：
+				db.collection.bulkWrite(
+				   [ <operation 1>, <operation 2>, ... ],
+				   {
+				      writeConcern : <document>,
+				      ordered : <boolean>
+				   }
+				)
+							
+			
+
+			6.例子：
+				1.已知characters集合已经有以下文档：
+					{ "_id" : 1, "char" : "Brisbane", "class" : "monk", "lvl" : 4 },
+					{ "_id" : 2, "char" : "Eldon", "class" : "alchemist", "lvl" : 3 },
+					{ "_id" : 3, "char" : "Meldane", "class" : "ranger", "lvl" : 3 }
+
+				2.执行批量写操作：
+				try {
+				   db.characters.bulkWrite(
+				      [
+				         { insertOne :
+				            {
+				               "document" :
+				               {
+				                  "_id" : 4, "char" : "Dithras", "class" : "barbarian", "lvl" : 4
+				               }
+				            }
+				         },
+
+				         { insertOne :
+				            {
+				               "document" :
+				               {
+				                  "_id" : 5, "char" : "Taeln", "class" : "fighter", "lvl" : 3
+				               }
+				            }
+				         },
+
+				         { updateOne :
+				            {
+				               "filter" : { "char" : "Eldon" },
+				               "update" : { $set : { "status" : "Critical Injury" } }
+				            }
+				         },
+
+				         { deleteOne :
+				            { "filter" : { "char" : "Brisbane"} }
+				         },
+
+				         { replaceOne :
+				            {
+				               "filter" : { "char" : "Meldane" },
+				               "replacement" : { "char" : "Tanys", "class" : "oracle", "lvl" : 4 }
+				            }
+				         }
+				      ]
+				   );
+				}
+				catch (e) {
+				   print(e);
+				}
+
+			7.批量插入分片集合的策略:大量的大容量插入操作（包括初始数据插入或常规数据导入）可能会影响分片群集的性能.对于批量插入，请考虑以下策略：
+				详见文档：https://docs.mongodb.com/manual/core/bulk-write-operations/#overview
+				1.预拆分集合:
+					如果分片集合为空，则该集合只有一个初始块，它位于单个分片上。然后，MongoDB必须花一些时间来接收数据，创建拆分并将拆分的块分发到可用的分片。为了避免这种性能损失，您可以按照“拆分碎片中的拆分块中的说明”预先拆分集合 。
+
+					“拆分碎片中的拆分块中的说明”：https://docs.mongodb.com/manual/tutorial/split-chunks-in-sharded-cluster/
+
+				2.无序写入mongos:
+					要提高对分片群集的写入性能，请使用 bulkWrite()可选参数ordered 设置为false。设置成无序写入。mongos可以尝试同时将写入发送到多个分片。对于空集合，首先按照分片群集中的分割块中的说明预分割集合 。
+
+		6.重试写操作：
+			1.简述：可重试写入允许MongoDB驱动程序在遇到网络错误或在 副本集或分片群集中找不到正常的主操作时，一次自动重试某些写入操作
+			2.条件：
+				1.可重试的写入需要副本集 或分片群集，并且不支持独立的，单个服务器运行，
+				2.可重试写入需要支持文档级锁定的存储引擎
+				3.集群中每个节点的MongoDB版本必须大于或等于3.6
+
+			3.重试写入和多文档事务：
+				1.事务提交和中止操作是可重试的写操作。如果提交操作或中止操作遇到错误，则MongoDB驱动程序将重试该操作一次，无论是否retryWrites将其设置为 false。
+				2.启用重试写操作：只需要在启动mongo服务器指定选项
+					mongo --retryWrites
+
+
+		7.SQL映射成MongoDB解释：
+			文档：https://docs.mongodb.com/manual/reference/sql-comparison/
+
+			如查询文档文档：
+				SQL:SELECT * FROM people
+				Mongo:db.people.find()
+
+
+		8.文本搜索(text Search)：
+			1.概述：MongoDB支持执行字符串内容的文本搜索的查询操作。为了执行文本搜索，MongoDB使用 文本索引和$text运算符。
+			2.注意：
+				视图不支持text Search
+
+			3.文本索引：
+				1.MongoDB提供文本索引以支持对字符串内容的文本搜索查询。text索引可以包含任何值为字符串或字符串元素数组的字段。
+				2.要执行文本搜索查询，您text的集合上必须有一个 索引。一个集合只能有一个 文本搜索索引，但是该索引可以涵盖多个字段。
+
+			4.例子：
+				1.集合：
+					db.stores.insert(
+					   [
+					     { _id: 1, name: "Java Hut", description: "Coffee and cakes" },
+					     { _id: 2, name: "Burger Buns", description: "Gourmet hamburgers" },
+					     { _id: 3, name: "Coffee Shop", description: "Just coffee" },
+					     { _id: 4, name: "Clothes Clothes Clothes", description: "Discount clothing" },
+					     { _id: 5, name: "Java Shopping", description: "Indonesian goods" }
+					   ]
+					)
+
+				2.创建索引：
+					db.stores.createIndex( { name: "text", description: "text" } )
 
 创建集合：
 	1.自增长的集合
