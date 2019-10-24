@@ -91,9 +91,12 @@ Mongodb简介:
 				db.<collection>.find();		:返回符合条件的所有文档
 				db.<collection>.findOne()	:返回符合条件的第一个文档
 
-			2.查询过滤：
-				1.{<Field>:<value>}
-			如:db.students.find();
+			2.查询语法：
+				db.collection.findOne(query, projection);
+				参数：
+					query：查询条件
+					projection:投影(即视图)
+
 
 			3.查询返回指定字段：
 				例子：
@@ -321,7 +324,9 @@ Mongodb简介:
 				评论
 					名称	描述
 					$comment	向查询谓词添加注释。
-				映射操作符
+
+				投影运算符(即,返回字段的值运算符)
+					文档：https://docs.mongodb.com/manual/reference/operator/projection/positional/
 					名称	描述
 					$	投影数组中与查询条件匹配的第一个元素。
 					$elemMatch	投影数组中与指定$elemMatch条件匹配的第一个元素。
@@ -571,7 +576,41 @@ Mongodb简介:
 					)
 
 				2.创建索引：
-					db.stores.createIndex( { name: "text", description: "text" } )
+					1.给name和description两个字段添加text索引
+					2.db.stores.createIndex( { name: "text", description: "text" } )
+
+				3.使用$text查询运算符对具有文本索引的集合执行文本搜索。
+					1.$text将使用空格和大多数标点符号作为分隔符来OR标记搜索字符串，并对搜索字符串中的所有此类标记执行逻辑运算。
+					db.stores.find( { $text: { $search: "java coffee shop" } } )
+
+					2.以上会查询出3个文档分别是1，3，5
+
+				4.搜索短语：
+					1.而不是单词，需要用双引号括起来
+					2.db.stores.find( { $text: { $search: "\"coffee shop\"" } } )
+
+				5.单词排除：
+					1.要排除一个单词，可以在前面加上一个“-”字符即可
+					2.db.stores.find( { $text: { $search: "java shop -coffee" } } )
+
+				6.排序：
+					1.默认情况下，MongoDB将以未排序的顺序返回结果。文本搜索查询将为每个文档计算相关性分数，以指定文档与查询的匹配程度。匹配读越高,分数越高。
+					2.要按相关性得分的顺序对结果进行排序，必须显式投影该字段并对其进行排序：$meta textScore
+
+					3.查询：						
+						db.stores.find(
+						   { $text: { $search: "java coffee shop" } },
+						   { score: { $meta: "textScore" } }
+						).sort( { score: { $meta: "textScore" } } )
+
+					4.结果：
+
+					{ "_id" : 3, "name" : "Coffee Shop", "description" : "Just coffee", "score" : 2.25 }
+					{ "_id" : 1, "name" : "Java Hut", "description" : "Coffee and cakes", "score" : 1.5 }
+					{ "_id" : 5, "name" : "Java Shopping", "description" : "Indonesian goods", "score" : 1.5 }
+
+
+
 
 创建集合：
 	1.自增长的集合
