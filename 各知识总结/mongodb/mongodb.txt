@@ -272,11 +272,11 @@ Mongodb简介:
 						//查询年龄=11或年龄小于10的用户
 						dp.user.find({$or:[{'age':11},{age:{$lt:10}}]});	
 
-			查询运算符：
+			查询运算符：详见文档：https://docs.mongodb.com/manual/reference/operator/query/
+
 				比较
-				要比较不同的BSON类型值，请参阅指定的BSON比较顺序。
 					名称	描述
-					$eq	匹配等于指定值的值。
+					$eq	匹配等于指定值的值 ：{ <field>: { $eq: <value> } }
 					$gt	匹配大于指定值的值。
 					$gte	匹配大于或等于指定值的值。
 					$in	匹配数组中指定的任何值。
@@ -559,7 +559,7 @@ Mongodb简介:
 			2.注意：
 				视图不支持text Search
 
-			3.文本索引：
+			3.文本索引：https://docs.mongodb.com/manual/text-search/
 				1.MongoDB提供文本索引以支持对字符串内容的文本搜索查询。text索引可以包含任何值为字符串或字符串元素数组的字段。
 				2.要执行文本搜索查询，您text的集合上必须有一个 索引。一个集合只能有一个 文本搜索索引，但是该索引可以涵盖多个字段。
 
@@ -585,29 +585,29 @@ Mongodb简介:
 
 					2.以上会查询出3个文档分别是1，3，5
 
-				4.搜索短语：
-					1.而不是单词，需要用双引号括起来
-					2.db.stores.find( { $text: { $search: "\"coffee shop\"" } } )
+			5.搜索短语：
+				1.而不是单词，需要用双引号括起来
+				2.db.stores.find( { $text: { $search: "\"coffee shop\"" } } )
 
-				5.单词排除：
-					1.要排除一个单词，可以在前面加上一个“-”字符即可
-					2.db.stores.find( { $text: { $search: "java shop -coffee" } } )
+			6.单词排除：
+				1.要排除一个单词，可以在前面加上一个“-”字符即可
+				2.db.stores.find( { $text: { $search: "java shop -coffee" } } )
 
-				6.排序：
-					1.默认情况下，MongoDB将以未排序的顺序返回结果。文本搜索查询将为每个文档计算相关性分数，以指定文档与查询的匹配程度。匹配读越高,分数越高。
-					2.要按相关性得分的顺序对结果进行排序，必须显式投影该字段并对其进行排序：$meta textScore
+			7.排序：
+				1.默认情况下，MongoDB将以未排序的顺序返回结果。文本搜索查询将为每个文档计算相关性分数，以指定文档与查询的匹配程度。匹配读越高,分数越高。
+				2.要按相关性得分的顺序对结果进行排序，必须显式投影该字段并对其进行排序：$meta textScore
 
-					3.查询：						
-						db.stores.find(
-						   { $text: { $search: "java coffee shop" } },
-						   { score: { $meta: "textScore" } }
-						).sort( { score: { $meta: "textScore" } } )
+				3.查询：						
+					db.stores.find(
+					   { $text: { $search: "java coffee shop" } },
+					   { score: { $meta: "textScore" } }
+					).sort( { score: { $meta: "textScore" } } )
 
-					4.结果：
+				4.结果：
 
-					{ "_id" : 3, "name" : "Coffee Shop", "description" : "Just coffee", "score" : 2.25 }
-					{ "_id" : 1, "name" : "Java Hut", "description" : "Coffee and cakes", "score" : 1.5 }
-					{ "_id" : 5, "name" : "Java Shopping", "description" : "Indonesian goods", "score" : 1.5 }
+				{ "_id" : 3, "name" : "Coffee Shop", "description" : "Just coffee", "score" : 2.25 }
+				{ "_id" : 1, "name" : "Java Hut", "description" : "Coffee and cakes", "score" : 1.5 }
+				{ "_id" : 5, "name" : "Java Shopping", "description" : "Indonesian goods", "score" : 1.5 }
 
 
 
