@@ -610,6 +610,15 @@ Mongodb简介:
 				{ "_id" : 5, "name" : "Java Shopping", "description" : "Indonesian goods", "score" : 1.5 }
 
 
+	聚合（Aggregation）：
+		1.概述:聚合操作处理数据记录并返回计算结果。聚合操作将来自多个文档的值分组在一起，并且可以对分组的数据执行各种操作以返回单个结果。MongoDB提供了三种执行聚合的方式：聚合管道，map-reduce函数和单一目的聚合方法。
+
+		2.管道：
+			1.概述：MongoDB聚合管道包括阶段。每个阶段在文档通过管道时都会对其进行转换。流水线阶段不需要为每个输入文档都生成一个输出文档。例如，某些阶段可能会生成新文档或过滤掉文档。
+			
+			2.MongoDB db.collection.aggregate()在mongo外壳程序中提供了方法， 并提供了aggregate运行聚合管道的命令。
+
+
 
 
 创建集合：
