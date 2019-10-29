@@ -615,11 +615,47 @@ Mongodb简介:
 
 		2.管道：
 			1.概述：MongoDB聚合管道包括阶段。每个阶段在文档通过管道时都会对其进行转换。流水线阶段不需要为每个输入文档都生成一个输出文档。例如，某些阶段可能会生成新文档或过滤掉文档。
-			
+
 			2.MongoDB db.collection.aggregate()在mongo外壳程序中提供了方法， 并提供了aggregate运行聚合管道的命令。
 
+		3.聚合管道表达式：
+			文档：https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
+			db.collection.aggregate( [ { <stage> }, ... ] )
+
+			聚合管道阶段(stage)：
+				1.$project:对输入文档进行再次投影
+				2.$match:对输入文档进行筛选,过滤
+				3.$limit:筛选出来的文档的限制,比如限制在N条记录
+				4.$skip:跳过管道内的N条文档
+				5.$unwind:展开输入文档的数组字段
+				6.$sort:对输入文档进行排序
+				7.$lookup:对输入文档进行查询操作
+				8.$group:对输入文档进行分组
+				9.$out:将管道中的文档输出
 
 
+			例子：
+				db.shop_product.aggregate([
+				    {$match:{stock:{$gte:0,$lt:7}}},
+				    {$skip:1},
+				    {$limit:10},
+				    {$project:{_id:0,imgs:1,status:1,item_desc:1}}
+				])
+
+				1.match:先过滤筛选
+				2.skip:跳过前1个文档
+				3.limit:筛选前出10个文档
+				4.project:投影指定的字段
+
+		/*	
+		1.字段路径表达式：
+			$<field> :使用$来表示字段路径
+			$<field>.<sub-field>:使用$和.来指示内嵌文档字段路径
+
+			例：
+			$name
+			$user.name
+		*/
 
 创建集合：
 	1.自增长的集合
