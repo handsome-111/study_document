@@ -642,6 +642,27 @@ Mongodb简介:
 				7.$lookup:对文档进行查询操作
 					https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/
 
+					语法：
+					{
+					   $lookup:
+					     {
+					       from: <collection to join>,		//要连接的集合
+					       localField: <field from the input documents>,	//管道文档当中需要查询字段的名字,就是要连接的字段,管道文档里的字段，而不是连接的文档字段
+					       foreignField: <field from the documents of the "from" collection>,	//字段名称，是连接的集合的字段
+					       as: <output array field>		//给新插入的字段取名字
+					     }
+					},
+
+					SQL语法:
+
+					SELECT *, <output array field>
+					FROM collection
+					WHERE <output array field> IN (SELECT *
+					                               FROM <collection to join>
+					                               WHERE <foreignField>= <collection.localField>);
+
+
+
 				8.$group:对文档进行分组	
 					https://docs.mongodb.com/manual/reference/operator/aggregation/group/
 
@@ -659,7 +680,7 @@ Mongodb简介:
 				])
 
 				1.match:先过滤筛选stock大于等于0小于7的
-				2.unwind:展开数组字段,比如文档里的一个数组有4个字段,则会生成这个文档的4份,接下来的文档以此类推，需要添加path路径属性,$表示当前路径。详细路径表达式
+				2.unwind:展开数组字段,和连接差不多，比如文档里的一个数组有4个字段,则会生成这个文档的4份,接下来的文档以此类推，需要添加path路径属性,$表示当前路径。详细路径表达式
 				3.
 					1 指定升序。
 					-1 指定降序。

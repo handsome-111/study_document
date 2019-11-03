@@ -1,0 +1,176 @@
+
+参考文档：https://www.runoob.com/sql/sql-tutorial.html
+
+1.SELECT：从数据库中选取数据
+
+2.SELECT DISTINCT:关键词用于返回唯一不同的值
+	语法：
+		SELECT DISTINCT column_name,column_name
+		FROM table_name;
+
+3.WHERE：用于过滤记录。
+	语法：
+		SELECT column_name,column_name
+		FROM table_name
+		WHERE column_name operator value;
+
+4. AND & OR 运算符：
+	如果第一个条件和第二个条件都成立，则 AND 运算符显示一条记录。
+	如果第一个条件和第二个条件中只要有一个成立，则 OR 运算符显示一条记录。
+
+	例子：
+		WHERE country='CN' AND alexa > 50;
+
+5.ORDER BY：关键字用于对结果集按照一个列或者多个列进行排序。默认按照升序对记录进行排序。如果需要按照降序对记录进行排序，使用 DESC 关键字。
+	ORDER BY 多列的时候，先按照第一个column name排序，在按照第二个column name排序；
+
+	语法：
+		SELECT column_name,column_name
+		FROM table_name
+		ORDER BY column_name,column_name ASC|DESC;
+
+6.INSERT INTO ：语句用于向表中插入新记录。
+	语法：
+	第一种形式无需指定要插入数据的列名，只需提供被插入的值即可：
+
+		INSERT INTO table_name
+		VALUES (value1,value2,value3,...);
+
+	第二种形式需要指定列名及被插入的值：
+
+		INSERT INTO table_name (column1,column2,column3,...)
+		VALUES (value1,value2,value3,...);
+
+7.UPDATE ：语句用于更新表中已存在的记录。
+
+	语法：
+		UPDATE table_name
+		SET column1=value1,column2=value2,...
+		WHERE some_column=some_value;
+
+8.DELETE :语句用于删除表中的行。
+
+	语法:
+		DELETE FROM table_name
+		WHERE some_column=some_value;
+
+9.SELECT TOP | LIMIT number   | ROWNUM <= number：子句用于规定要返回的记录的数目。不同的数据库使用方法不同
+
+10.LIKE：操作符用于在 WHERE 子句中搜索列中的指定模式。
+
+	语法：
+		SELECT column_name(s)
+		FROM table_name
+		WHERE column_name LIKE pattern;
+
+11.通配符：
+	%			：		替代 0 个或多个字符
+	_			：		替代一个字符
+	[charlist]	： 		字符列中的任何单一字符
+
+	[^charlist]或[!charlist]		：不在字符列中的任何单一字符
+
+12.IN ：操作符允许您在 WHERE 子句中规定多个值。
+	语法：
+		SELECT column_name(s)
+		FROM table_name
+		WHERE column_name IN (value1,value2,...);
+
+13.BETWEEN ：操作符选取介于两个值之间的数据范围内的值。这些值可以是数值、文本或者日期。
+	语法
+		SELECT column_name(s)
+		FROM table_name
+		WHERE column_name BETWEEN value1 AND value2;
+
+14.别名：通过使用 SQL，可以为表名称或列名称指定别名。
+
+	列的 SQL 别名语法：
+		SELECT column_name AS alias_name
+		FROM table_name;
+
+	表的 SQL 别名语法：
+		SELECT column_name(s)
+		FROM table_name AS alias_name;
+
+15.连接：
+	INNER JOIN：如果表中有至少一个匹配，则返回行
+	LEFT JOIN：即使右表中没有匹配，也从左表返回所有的行
+	RIGHT JOIN：即使左表中没有匹配，也从右表返回所有的行
+	FULL JOIN：只要其中一个表中存在匹配，则返回行
+
+
+16.SELECT INTO ：语句从一个表复制数据，然后把数据插入到另一个新表中。（目标表不存在，因为在插入时会自动创建）
+	注意： MySQL 数据库不支持 SELECT ... INTO 语句，但支持 INSERT INTO ... SELECT 
+
+	语法：
+	1.我们可以复制所有的列插入到新表中：
+		SELECT *
+		INTO newtable [IN externaldb]
+		FROM table1;
+
+	2.或者只复制希望的列插入到新表中：
+
+		SELECT column_name(s) INTO newtable [IN externaldb] FROM table1;
+
+	3.复制表结构及其数据：
+		create table table_name_new as select * from table_name_old
+
+	4.只复制表结构：
+		create table table_name_new as select * from table_name_old where 1=2;
+		或者：
+		create table table_name_new like table_name_old
+
+	例子：
+		1.创建 Websites 的备份复件：
+
+		SELECT *
+		INTO WebsitesBackup2016
+		FROM Websites;
+
+		2.只复制一些列插入到新表中：
+
+		SELECT name, url
+		INTO WebsitesBackup2016
+		FROM Websites;
+
+		3.复制多个表中的数据插入到新表中：
+
+		SELECT Websites.name, access_log.count, access_log.date
+		INTO WebsitesBackup2016
+		FROM Websites
+		LEFT JOIN access_log
+		ON Websites.id=access_log.site_id;
+
+		4.创建一个新的空表。只需要添加促使查询没有数据返回的 WHERE 子句即可：
+
+		SELECT *
+		INTO newtable
+		FROM table1
+		WHERE 1=0;
+
+		
+
+
+17.INSERT INTO SELECT：从一个表复制数据，然后把数据插入到一个已存在的表中。目标表中任何已存在的行都不会受影响。（要求目标表存在。）
+	1.从一个表中复制所有的列插入到另一个已存在的表中：
+
+		INSERT INTO table2
+		SELECT * FROM table1;
+
+	2.复制希望的列插入到另一个已存在的表中：
+
+		INSERT INTO table2
+		(column_name(s))
+		SELECT column_name(s)
+		FROM table1;
+
+	3.只复制表数据：
+
+	如果两个表结构一样：
+	insert into table_name_new select * from table_name_old
+
+	如果两个表结构不一样：
+	insert into table_name_new(column1,column2...) select column1,column2... from table_name_old
+
+
+
