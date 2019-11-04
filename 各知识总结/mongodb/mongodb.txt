@@ -658,8 +658,8 @@ Mongodb简介:
 					SELECT *, <output array field>
 					FROM collection
 					WHERE <output array field> IN (SELECT *
-					                               FROM <collection to join>
-					                               WHERE <foreignField>= <collection.localField>);
+                               FROM <collection to join>
+                               WHERE <foreignField>= <collection.localField>);
 
 
 

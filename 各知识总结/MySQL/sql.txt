@@ -173,4 +173,34 @@
 	insert into table_name_new(column1,column2...) select column1,column2... from table_name_old
 
 
+18.子查询：子查询一般新能很差，在实际开发中开发人员很少使用子查询
+	1.语法：
+		SELECT select_list FROM table 
+		WHERE expr operator 
+						(SELECT select_list FROM table);
 
+	2.注意：
+		1.子查询可以使用的位置：WHERE,SELECT,HAVING,FROM
+
+			1.SELECT 位置：在SELECT位置使用的子查询必须是单行子查询
+				如：
+					SELECT column1,column2,(SELECT column3 FROM table) AS column3;
+
+			2.FROM 位置：在FROM后面加入子查询，FROM后面的子查询可以看出一个新得表。
+				如：
+					SELECT * FROM (SELECT * FROM user) AS u;
+
+		2.不可以使用子查询的位置：GROUY BY
+		3.一般先执行子查询，再执行主查询，相关子查询例外
+		4.一般不在子查询中使用排序，但在Top-N分析中，必须对子查询排序
+		5.单行子查询只能使用单行操作符，多行子查询只能使用多行操作符
+		6.子查询的null问题
+
+	例1：
+		SELECT * FROM t1 WHERE column1 = (SELECT column1 FROM t2);
+
+	例2：子查询一般用于不能使用JOIN来完成的操作
+		SELECT column1 FROM t1 WHERE column1 = (SELECT MAX(column2) FROM t2);
+
+
+	1.独立子查询：独立子查询是不依赖外部查询而运行的子查询
