@@ -436,6 +436,13 @@ Mongodb-java-driver:MongoDB驱动程序
 				2.Aggregation:Aggregation代表MongoDB aggregate操作
 					AggregationOperation：代表MongoDB聚合管道操作，尽管您可以手动创建一个AggregationOperation，但我们建议您使用Aggregate该类提供的静态工厂方法来构造一个AggregateOperation。
 
+				例子：
+					Aggregation agg = Aggregation.newAggregation(
+							Aggregation.unwind("cates"),
+							Aggregation.lookup("cate", "cates", "_id", "cates")
+							);
+					AggregationResults result = mongoTemplate.aggregate(agg, "shop_product",ShopProduct.class);
+
 				3.支持的聚合操作：
 					管道聚合运算符
 					组汇总运算符

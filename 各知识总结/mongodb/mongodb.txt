@@ -622,7 +622,7 @@ Mongodb简介:
 			文档：https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline/
 			db.collection.aggregate( [ { <stage> }, ... ] )
 
-			聚合管道阶段(stage)：
+			1.聚合管道阶段(stage)：
 				1.$project:对文档进行再次投影
 					https://docs.mongodb.com/manual/reference/operator/aggregation/project/
 
@@ -681,6 +681,10 @@ Mongodb简介:
 
 				9.$out:将管道中的文档输出
 					https://docs.mongodb.com/manual/reference/operator/aggregation/out/
+
+
+			2.聚合管道运算符:https://docs.mongodb.com/manual/reference/operator/aggregation/
+				
 
 
 			例子：
