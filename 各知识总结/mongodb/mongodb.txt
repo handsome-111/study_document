@@ -642,6 +642,8 @@ Mongodb简介:
 				7.$lookup:对文档进行查询操作
 					https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/
 
+					概述：lookup允许参考数据库当中的另外一个集合(称之为查询集合),当管道中的文档经过了lookup阶段,那篇文档当中就会插入新得字段，这个字段的内容就是符合查询条件的查询集合中的文档的内容。
+					
 					语法：
 					{
 					   $lookup:
@@ -649,12 +651,11 @@ Mongodb简介:
 					       from: <collection to join>,		//要连接的集合
 					       localField: <field from the input documents>,	//管道文档当中需要查询字段的名字,就是要连接的字段,管道文档里的字段，而不是连接的文档字段
 					       foreignField: <field from the documents of the "from" collection>,	//字段名称，是连接的集合的字段
-					       as: <output array field>		//给新插入的字段取名字
+					       as: <output array field>		//给新插入的字段取名字,将符合查询条件的查询集合里的文档添加到该字段中
 					     }
 					},
 
 					SQL语法:
-
 					SELECT *, <output array field>
 					FROM collection
 					WHERE <output array field> IN (SELECT *
@@ -662,6 +663,18 @@ Mongodb简介:
                                WHERE <foreignField>= <collection.localField>);
 
 
+                    语法2,复杂条件查询：
+                    	{
+						  $lookup:
+						    {
+						       from: <collection to join>,
+						       let: { <var_1>: <expression>, …, <var_n>: <expression> },
+						       //对查询集合中的文档使用聚合阶段进行处理时，如果需要参考管道文档中的字段，则必须使用let参数对字段进行声明
+						       pipeline: [ <pipeline to execute on the joined collection> ],  
+						       //在查询集合里再进行一次聚合管道操作
+						       as: <output array field>
+						    }
+						}
 
 				8.$group:对文档进行分组	
 					https://docs.mongodb.com/manual/reference/operator/aggregation/group/
