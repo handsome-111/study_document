@@ -684,6 +684,29 @@ Mongodb简介:
 
 
 			2.聚合管道运算符:https://docs.mongodb.com/manual/reference/operator/aggregation/
+				详细例子见官网
+
+				$abs：返回数字的绝对值。
+					语法：{ $abs: <number> }
+
+				$acos:返回值的反余弦（弧余弦）。
+
+				$acosh:返回值的反双曲余弦（双曲反余弦）。
+
+				$add:将数字加在一起或添加数字和日期,说白了就是加法
+					语法：{  $ add ： [  < expression1 > ， < expression2 > ， ...  ]  }
+					例子：将price字段和fee字段加起来
+						db.sales.aggregate(
+						   [
+						     { $project: { item: 1, total: { $add: [ "$price", "$fee" ] } } }
+						   ]
+						)
+
+				$addToSet:返回所有唯一值的数组,仅在$group舞台上可用 。
+
+
+
+
 				
 
 
