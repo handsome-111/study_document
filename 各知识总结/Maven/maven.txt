@@ -14,5 +14,7 @@
 
 	mvn install:install-file -Dfile=./open-sdk-java-1.0.1.jar -DgroupId=open.weidian -DartifactId=open_sdk_java -Dversion=1.0.1 -Dpackaging=jar
 
+    mvn install:install-file -Dfile=com.google.gson-2.2.4.jar -DgroupId=at.bestsolution.efxclipse.eclipse  -DartifactId=com.google.gson -Dversion=2.2.4 -Dpackaging=jar
+
 3.maven打包命令,进入项目当前路径:
 	mvn clean package -DskipTests
