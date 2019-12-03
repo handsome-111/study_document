@@ -26,6 +26,22 @@ Spring MVC:
 		}
 	}
 
+3.x. 在构造函数里获取配置文件@Value
+	1.将@Value注解放在构造函数里即可
+
+	@Component
+	public class MongoParsehandler{
+		
+		private String mongopath;
+
+		private Map<String,String> xmlPath = new HashMap<String,String>();
+		
+		public MongoParsehandler(@Value("${mongopath}")String mongopath){
+			this.mongopath = mongopath;
+			System.out.println("mongopath:" + mongopath);
+		}
+	}
+
 4.调用外部http接口：
 	1.在配置类里配置好bean
 		@Bean	
@@ -183,6 +199,7 @@ Spring MVC:
 
 	6.获取项目的classes路径:
 		String path = ResourceUtils.getURL("classpath:").getPath();	//直接使用即可
+
 
 7.静态资源：
 	1.默认情况下，Spring Boot从类路径中的/static（ /public或/resources或/META-INF/resources）目录或者根目录中提供静态内容ServletContext
