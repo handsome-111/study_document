@@ -371,7 +371,28 @@ UI框架介绍：
 			      "hi":"WeChat"
 			    }
 
+	3.this对象的获取
+		注意局部变量，比如函数里的内嵌函数里调用this并不是表示page对象。需要如下访问
+		var that = this
 
+		如：
+		getShopProduct:function(page){
+	      var that = this
+	      
+	      wx.request({
+	        url: app.globalData.serverHost + '/shopProduct/getShopProducts',
+	        data:{
+	          page:page,
+	          size:30
+	        },
+	        success:function(data){
+	          that.setData({
+	            list:data.data.data
+	          })
+	          console.log( that.data.list)
+	        }
+	      })
+	    }
 
 
 
